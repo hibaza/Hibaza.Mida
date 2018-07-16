@@ -1,0 +1,73 @@
+﻿@model Hibaza.CCP.Web.Models.ChannelAddEdit
+@{
+    ViewBag.Title = "Add-Edit zalo channel";
+    Layout = null;
+}
+
+
+<form id="channels-zalo-form" style="margin:65px" class="lg-channel_zalo_edit">
+    <div class="form-group wz-container col-xs-12">
+        <div class="row wz-advanced col-xs-12">
+            <input class="form-control hidden" id="id_zalo_channelid" name="page_oaid" type="text" value="@(Model.ChannelId)">
+            <input class="form-control hidden" id="id_zalo_business_id" name="page_oaid" type="text" value="@(Model.BusinessId)">
+            <div class="form-group">
+                <label class="control-label">
+                    OA ID
+                </label>
+                <input class="form-control" id="id_zalo_oaid" name="page_oaid" type="text" value="@(Model.PageId)" required="">
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    OA Secret
+                </label>
+                <input class="form-control" id="id_zalo_oasecret" name="page_oasecret" type="text" value="@(Model.Token)" required="">
+            </div>
+            <div class="form-group">
+                <label class="control-label lg-channel-name">
+                    Channel's Name
+                </label>
+                <input class="form-control" id="id_zalo_name" name="page_name" type="text" value="@(Model.PageName)" required="">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label lg-template-id-customer">
+                    Template ID send to customer
+                </label>
+                <input class="form-control" id="id_zalo_templateid" name="templateid" type="text" value="@(Model.TemplateId)">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="btn btn-save lg-save" onclick="setZaloToken()">Save</div>
+        </div>
+        <h4 class="info-message"></h4>
+
+    </div>
+</form>
+
+
+<script>
+    readFileLang(localStorage.getItem("lang"), "channel_zalo_edit");
+    
+    function setZaloToken() {
+        try {
+            var channel_id = $("#id_zalo_channelid").val();
+            var business_id = $("#id_zalo_business_id").val();
+            var templateid = $("#id_zalo_templateid").val();
+
+            if (channel_id == null || channel_id == undefined || channel_id == "")
+                channel_id = business_id + "_" + $("#id_zalo_oaid").val();
+            var uri = cloud.getURLs().channels.upsert_page_zalo + myID + "/" + business_id + "/" + channel_id + "/" + $("#id_zalo_oaid").val() + "/" + $("#id_zalo_oasecret").val() + "/" + $("#id_zalo_name").val() + "/" + templateid;
+            console.log(uri);
+
+            $.get(uri, function (o) {
+                if (o.ok) {
+                    $('#channels-main').removeClass('hide');
+                    $('#channels-edit').addClass('hide');
+                    // $('.channels-edit').html(o.data);
+                }
+            });
+        } catch (e) { console.log(e); }
+    }
+</script>
+
+

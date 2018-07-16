@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@(ViewBag.Title)</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="meta desc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=0" />
+    <link id="favicon" rel="icon" type="image/png" href="/partners/square/hibaza.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/css/site1.css?v=@(ViewBag.Version)" />
+    <link rel="stylesheet" type="text/css" href="/css/site2.css?v=@(ViewBag.Version)" />
+    <link rel="stylesheet" type="text/css" href="/css/bot.css?v=@(ViewBag.Version)" />
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-datepicker.min.css?v=@(ViewBag.Version)" />
+    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/lang.js"></script>
+    <script type="text/javascript" src="~/js/base64js.min.js"></script>
+    <script type="text/javascript" src="~/js/config.js?v=@(ViewBag.Version)"></script>
+    <script src="~/lib/firebase/firebase.js?version=3.6.7"></script>
+    @*<link rel="stylesheet" type="text/css" href="/css/autocomplete.css?v=@(ViewBag.Version)" />*@
+    <link rel="stylesheet" type="text/css" href="/css/hotline.css?v=@(ViewBag.Version)" />
+</head>
+<body>
+    <script type="text/javascript">
+        var hotlineWS = new Object;
+        var hotlineJson = null;
+        var myID = '@(ViewBag.UserId)';
+        var firstName = '@(ViewBag.UserName)';
+        var businessID = '@(ViewBag.BusinessId)';
+        var role = '@(ViewBag.UserRole)';
+        var onlineStatus = '@(ViewBag.UserStatus)';
+        var businessName = '@(ViewBag.BusinessName)';
+        var firebaseToken = '@(ViewBag.FirebaseConfig.Token)';
+        var accessToken = '@(ViewBag.AccessToken)';
+        var apiURL = '@(ViewBag.ApiUrl)';
+        var appURL = '@(ViewBag.AppUrl)'
+        var baseUrls_Api = '@(ViewBag.BaseUrls_Api)';
+        var baseUrls_ApiAi = '@(ViewBag.BaseUrls_ApiAi)';
+        var baseUrls_ApiOrder = '@(ViewBag.BaseUrls_ApiOrder)';
+        var baseUrls_ApiHotline = '@(ViewBag.BaseUrls_ApiHotline)';
+        var BaseUrls_PhoneWeb = '@(ViewBag.BaseUrls_PhoneWeb)';
+        var BaseUrls_Web = '@(ViewBag.BaseUrls_Web)';
+        var AGENTS = {};
+        @foreach (Hibaza.CCP.Domain.Models.AgentModel agent in ViewBag.Agents) {
+        <text>
+        @Html.Raw("AGENTS['"+ agent.id + "'] = {" + string.Format("name:'{0}', avatar: '{1}', shogun:'{2}', status: '{3}'", agent.name, string.IsNullOrWhiteSpace(agent.avatar) ? "avatars/bot.png" : agent.avatar, agent.admin ? "True" : "False", agent.status) + "}");
+        </text>
+        }
+
+        var CHANNELS = {};
+        @foreach (Hibaza.CCP.Domain.Entities.Channel channel in ViewBag.Channels) {
+        <text>
+        @Html.Raw("CHANNELS['" + channel.id + "'] = {" + string.Format("name:'{0}', facebook_id: '{1}', phone: '{2}', type:'{3}', active: '{4}'", channel.name, channel.ext_id, "", channel.type, channel.active ? "active" : "") + "}");
+        </text>
+        }
+
+
+        var firebaseConfig = {
+            apiKey: "@(ViewBag.FirebaseConfig.ApiKey)",
+            authDomain: "@(ViewBag.FirebaseConfig.AuthDomain)",
+            databaseURL: "@(ViewBag.FirebaseConfig.DatabaseURL)",
+            storageBucket: "@(ViewBag.FirebaseConfig.StorageBucket)",
+            messagingSenderId: "@(ViewBag.FirebaseConfig.MessagingSenderId)"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+
+        //function connectSocket(ip, user, pass, app) {
+        //    try {
+        //        if (hotlineWS == null || hotlineWS == undefined)
+        //            hotlineWS =new Object();
+
+        //        hotlineWS.ip = ip;
+        //        hotlineWS.user = user;
+        //        hotlineWS.pass = pass;
+        //        hotlineWS.app = app;
+        //        hotlineWS.status = "Not connect";
+        //        hotlineWS.event =null;
+        //        var service = new WebSocket('ws://' + ip + '/ari/events?api_key=' + user + ':' + pass + '&app=' + app + '&subscribeAll=true');
+        //        hotlineWS.socket = service;
+        //        service.onmessage = function (event) {
+
+        //            if (event.data != null && event.data != "") {
+        //                var data = JSON.parse(event.data);
+
+        //                if (data.hasOwnProperty("channel") &&
+        //                    data.channel.hasOwnProperty("state") &&
+        //                    data.channel.hasOwnProperty("caller") &&
+        //                    (data.channel.caller.number == hotlineJson.event_receive_hotline ||
+        //                        data.channel.connected.number == hotlineJson.event_receive_hotline
+        //                    )
+        //                    //data.channel.state!="Ring"
+        //                ) {
+        //                    hotlineWS.status = data.channel.state;
+        //                    hotlineWS.event = data;
+        //                }
+        //            }
+        //            $(".hotline-status").html(hotlineWS.status);
+        //            try {
+        //                hotlineStatusChange();
+        //            } catch (e) { }
+
+        //           // parseEvent(event.data);
+        //        }
+        //        service.onopen = function () {
+        //            hotlineWS.status = "Connected";
+        //            $(".hotline-status").html(hotlineWS.status);
+        //            try {
+        //                hotlineStatusChange();
+        //            } catch (e) { }
+        //        }
+        //        service.onclose = function () {
+        //            hotlineWS.status = "Disconnected";
+        //            $(".hotline-status").html(hotlineWS.status);
+        //            try {
+        //                hotlineStatusChange();
+        //            } catch (e) { }
+        //        }
+        //        service.onerror = function () {
+        //            hotlineWS.status = "Connection error";
+        //            $(".hotline-status").html(hotlineWS.status);
+        //            try {
+        //                hotlineStatusChange();
+        //            } catch (e) { }
+        //        }
+        //    } catch (e) { console.log(e); }
+        //}
+
+    </script>
+
+    @RenderBody()
+
+    @Html.Partial("../Partial/Modals")
+    @Html.Partial("../Partial/Templates")
+
+
+    <audio id="wz-notification-audio" controls>
+        <source src="~/js/notification.mp3" type="audio/mpeg" />
+    </audio>
+
+    @*<script type="text/javascript" src="~/js/bootstrap-datepicker.min.js"></script>*@
+    <script type="text/javascript" src="~/js/api.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/site.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/9-LoadBlocks.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/8-Contact.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/7-CloudService.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/6-Message.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/4-MyWebSocket.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/5-FirebaseService.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/3-DashboardManager.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/2-ReportManager.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/Widget.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/0-Startup.js?v=@(ViewBag.Version)"></script>
+
+    <script type="text/javascript" src="~/js/bot.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/sendTemplate.js?v=@(ViewBag.Version)"></script>
+
+    <script type="text/javascript" src="~/js/cart-order.js?v=@(ViewBag.Version)"></script>
+    <script type="text/javascript" src="~/js/hotline.js?v=@(ViewBag.Version)"></script>
+
+</body>
+</html>

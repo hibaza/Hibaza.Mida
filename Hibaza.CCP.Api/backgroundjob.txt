@@ -1,0 +1,5 @@
+﻿GET /messages/autoupdatecusomterid limit 5 tam bo vi khi nao messages null se goi luon thu tuc
+GET /customers/autoassign limit 5
+GET /customers/autoupdateunreadcustomercounters
+GET /brands/agents/autobusy minutes 3
+GET /brands/agents/autologout minutes 30

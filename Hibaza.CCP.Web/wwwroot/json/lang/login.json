@@ -1,0 +1,97 @@
+﻿{
+  "en": {
+    "your-account": {
+      "text": "Log in to your<br/>Hibaza account",
+      "type": "text"
+    },
+    "username": {
+      "text": "YOUR EMAIL",
+      "type": "text"
+    },
+    "password": {
+      "text": "PASSWORD",
+      "type": "text"
+    },
+    "lost-password": {
+      "text": "Lost your password?",
+      "type": "text"
+    },
+    "send-login": {
+      "text": "LOG IN",
+      "type": "text"
+    },
+    "not-account": {
+      "text": "Don't have an account?",
+      "type": "text"
+    },
+    "signup": {
+      "text": "SIGNUP",
+      "type": "text"
+    },
+
+    "recover-account": {
+      "text": "Recover your<br/>Hibaza account",
+      "type": "text"
+    },
+    "recover-email": {
+      "text": "Your email",
+      "type": "text"
+    },
+    "recover-field-required": {
+      "text": "This field is required.",
+      "type": "text"
+    },
+    "recover-check": {
+      "text": "Check",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "your-account": {
+      "text": "Đăng nhập <br/>tài khoản Hibaza",
+      "type": "text"
+    },
+    "username": {
+      "text": "EMAIL",
+      "type": "text"
+    },
+    "password": {
+      "text": "MẬT KHẨU",
+      "type": "text"
+    },
+    "lost-password": {
+      "text": "Quên mật khẩu ?",
+      "type": "text"
+    },
+    "send-login": {
+      "text": "Đăng nhập",
+      "type": "text"
+    },
+    "not-account": {
+      "text": "Không có tải khoản ?",
+      "type": "text"
+    },
+    "signup": {
+      "text": "ĐĂNG KÝ",
+      "type": "text"
+    },
+
+    "recover-account": {
+      "text": "Phục hồi tài khoản Hibaza",
+      "type": "text"
+    },
+    "recover-email": {
+      "text": "Email",
+      "type": "text"
+    },
+    "recover-field-required": {
+      "text": "Không được để trống.",
+      "type": "text"
+    },
+    "recover-check": {
+      "text": "Kiểm tra",
+      "type": "text"
+    }
+
+  }
+}

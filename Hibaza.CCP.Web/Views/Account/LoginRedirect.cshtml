@@ -1,0 +1,20 @@
+﻿@model Hibaza.CCP.Web.Models.AccessToken
+@{ 
+    Layout = null;
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    //function setCookie(key, value) {
+    //    var expires = new Date();
+    //    expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+    //    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+    //}
+
+    $(document).ready(function(){
+        @*setCookie('user_id', '@(Model.user_id)');
+        setCookie('access_token', '@(Model.access_token)');*@
+        window.location.href = "/";
+    });
+</script>
+
+

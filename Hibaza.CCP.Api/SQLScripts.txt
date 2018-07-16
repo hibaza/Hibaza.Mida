@@ -1,0 +1,1187 @@
+﻿USE [HibazaDB]
+GO
+/****** Object:  User [Baza]    Script Date: 7/12/2017 3:23:12 PM ******/
+CREATE USER [Baza] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [Baza]
+GO
+/****** Object:  FullTextCatalog [HibazaFullTexIndx]    Script Date: 7/12/2017 3:23:13 PM ******/
+CREATE FULLTEXT CATALOG [HibazaFullTexIndx]WITH ACCENT_SENSITIVITY = OFF
+GO
+/****** Object:  Table [dbo].[Agents]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Agents](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NULL,
+	[channel_id] [nvarchar](200) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[ext_id] [nvarchar](200) NULL,
+	[global_id] [nvarchar](200) NULL,
+	[first_name] [nvarchar](200) NULL,
+	[last_name] [nvarchar](200) NULL,
+	[name] [nvarchar](200) NULL,
+	[email] [nvarchar](200) NULL,
+	[avatar] [nvarchar](1000) NULL,
+	[phone] [nvarchar](20) NULL,
+	[archived] [bit] NOT NULL,
+	[status] [nvarchar](200) NULL,
+	[username] [nvarchar](200) NOT NULL,
+	[password] [nvarchar](200) NOT NULL,
+	[password_confirmation] [nvarchar](200) NOT NULL,
+	[active] [bit] NOT NULL,
+	[login_status] [nvarchar](200) NULL,
+	[last_loggedin_time] [smalldatetime] NULL,
+	[last_loggedout_time] [smalldatetime] NULL,
+	[last_acted_time] [smalldatetime] NULL,
+	[facebook_access_token] [nvarchar](200) NULL,
+	[role] [nvarchar](200) NULL,
+	[business_name] [nvarchar](200) NULL,
+	[locked] [bit] NOT NULL,
+ CONSTRAINT [PK_Agents] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Attachments]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Attachments](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](1000) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[channel_id] [nvarchar](200) NULL,
+	[attachment_id] [nvarchar](200) NULL,
+	[attachment_url] [nvarchar](1000) NULL,
+	[type] [nvarchar](50) NULL,
+	[timestamp] [bigint] NULL,
+	[tag] [nvarchar](1000) NULL,
+	[target] [nvarchar](50) NULL,
+	[source_url] [nvarchar](1000) NULL,
+ CONSTRAINT [PK_Attachments] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Businesses]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Businesses](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[type] [nvarchar](200) NULL,
+	[name] [nvarchar](200) NULL,
+	[ext_id] [nvarchar](200) NULL,
+	[token] [nvarchar](200) NULL,
+	[active] [bit] NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[logo] [nvarchar](1000) NULL,
+	[zip] [nvarchar](10) NULL,
+	[city] [nvarchar](50) NULL,
+	[country] [nvarchar](10) NULL,
+	[email] [nvarchar](200) NULL,
+	[phone] [nvarchar](20) NULL,
+	[address] [nvarchar](2000) NULL,
+	[auto_hide] [bit] NULL,
+	[auto_like] [bit] NULL,
+	[auto_assign] [bit] NULL,
+	[auto_ticket] [bit] NULL,
+	[auto_message] [bit] NULL,
+ CONSTRAINT [PK_Businesses] PRIMARY KEY CLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Channels]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Channels](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NULL,
+	[name] [nvarchar](200) NOT NULL,
+	[type] [nvarchar](50) NULL,
+	[token] [nvarchar](200) NULL,
+	[ext_id] [nvarchar](200) NULL,
+	[active] [bit] NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+ CONSTRAINT [PK_Channels] PRIMARY KEY CLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Conversations]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Conversations](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[owner_ext_id] [nvarchar](200) NULL,
+	[owner_app_id] [nvarchar](200) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[link] [nvarchar](1000) NULL,
+	[status] [nvarchar](50) NULL,
+	[channel_id] [nvarchar](200) NULL,
+	[ext_id] [nvarchar](200) NULL,
+	[timestamp] [bigint] NULL,
+ CONSTRAINT [PK_Conversations] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Customers]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Customers](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[channel_id] [nvarchar](200) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[timestamp] [bigint] NOT NULL,
+	[ext_id] [nvarchar](200) NULL,
+	[app_id] [nvarchar](200) NULL,
+	[global_id] [nvarchar](200) NULL,
+	[first_name] [nvarchar](200) NULL,
+	[last_name] [nvarchar](200) NULL,
+	[name] [nvarchar](200) NULL,
+	[email] [nvarchar](200) NULL,
+	[avatar] [nvarchar](1000) NULL,
+	[phone] [nvarchar](20) NULL,
+	[archived] [bit] NOT NULL,
+	[status] [nvarchar](200) NULL,
+	[business_name] [nvarchar](200) NULL,
+	[agent_id] [nvarchar](200) NULL,
+	[active_thread] [nvarchar](max) NULL,
+	[unread] [bit] NULL,
+	[nonreply] [bit] NULL,
+	[phone_list] [nvarchar](1000) NULL,
+	[city] [nvarchar](50) NULL,
+	[sex] [nvarchar](50) NULL,
+	[address] [nvarchar](1000) NULL,
+	[blocked] [bit] NULL,
+	[zipcode] [nvarchar](50) NULL,
+	[birthdate] [smalldatetime] NULL,
+	[active_ticket] [nvarchar](max) NULL,
+	[open] [bit] NOT NULL,
+	[assigned_by] [nvarchar](200) NULL,
+	[assigned_at] [smalldatetime] NULL,
+ CONSTRAINT [PK_Customers] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Links]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Links](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[channel_id] [nvarchar](200) NULL,
+	[objectId] [nvarchar](200) NULL,
+	[url] [nvarchar](1000) NULL,
+	[type] [nvarchar](50) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[timestamp] [bigint] NULL,
+	[channel_ext_id] [nvarchar](200) NULL,
+	[author_id] [nvarchar](200) NULL,
+	[author_name] [nvarchar](200) NULL,
+	[message] [nvarchar](max) NULL,
+	[status] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Links] PRIMARY KEY CLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Logs]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Logs](
+	[id] [nvarchar](200) NULL,
+	[business_id] [nvarchar](200) NULL,
+	[link] [nvarchar](1000) NULL,
+	[details] [nvarchar](max) NULL,
+	[message] [nvarchar](max) NULL,
+	[name] [nvarchar](1000) NULL,
+	[category] [nvarchar](200) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[key] [int] IDENTITY(1,1) NOT NULL,
+ CONSTRAINT [PK_Logs] PRIMARY KEY CLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Messages]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Messages](
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[ext_id] [nvarchar](200) NULL,
+	[url] [nvarchar](1000) NULL,
+	[urls] [nvarchar](max) NULL,
+	[file_name] [nvarchar](200) NULL,
+	[size] [bigint] NULL,
+	[subject] [nvarchar](200) NULL,
+	[message] [nvarchar](max) NULL,
+	[agent_id] [nvarchar](200) NULL,
+	[thread_id] [nvarchar](200) NULL,
+	[conversation_ext_id] [nvarchar](200) NULL,
+	[sender_id] [nvarchar](200) NULL,
+	[sender_ext_id] [nvarchar](200) NULL,
+	[sender_name] [nvarchar](200) NULL,
+	[sender_avatar] [nvarchar](200) NULL,
+	[recipient_id] [nvarchar](200) NULL,
+	[recipient_ext_id] [nvarchar](200) NULL,
+	[recipient_name] [nvarchar](200) NULL,
+	[recipient_avatar] [nvarchar](1000) NULL,
+	[author] [nvarchar](200) NULL,
+	[customer_id] [nvarchar](200) NULL,
+	[type] [nvarchar](50) NULL,
+	[timestamp] [bigint] NULL,
+	[channel_id] [nvarchar](200) NULL,
+	[channel_ext_id] [nvarchar](200) NULL,
+	[channel_type] [nvarchar](200) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[parent_ext_id] [nvarchar](200) NULL,
+	[root_ext_id] [nvarchar](200) NULL,
+	[thread_type] [nvarchar](50) NULL,
+	[read] [bit] NULL,
+	[hidden] [bit] NULL,
+	[liked] [bit] NULL,
+	[starred] [bit] NULL,
+	[parent_id] [nvarchar](200) NULL,
+	[replied] [bit] NULL,
+	[replied_at] [bigint] NULL,
+	[tag] [nvarchar](200) NULL,
+	[template] [nvarchar](200) NULL,
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[deleted] [bit] NOT NULL,
+ CONSTRAINT [PK_Messages] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Nodes]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Nodes](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[channel_id] [nvarchar](200) NULL,
+	[type] [nvarchar](50) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[timestamp] [bigint] NULL,
+	[data] [nvarchar](max) NULL,
+	[status] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Nodes] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Notes]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Notes](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[customer_id] [nvarchar](200) NULL,
+	[type] [nvarchar](50) NULL,
+	[text] [nvarchar](max) NOT NULL,
+	[thread_id] [nvarchar](200) NULL,
+	[customer_name] [nvarchar](200) NULL,
+	[featured] [bit] NOT NULL,
+	[sender_id] [nvarchar](200) NULL,
+	[sender_name] [nvarchar](200) NULL,
+	[sender_avatar] [nvarchar](1000) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+ CONSTRAINT [PK_Notes] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Referrals]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Referrals](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[thread_id] [nvarchar](200) NULL,
+	[product_id] [nvarchar](200) NULL,
+	[product_sku] [nvarchar](200) NULL,
+	[product_url] [nvarchar](200) NULL,
+	[product_photo_url] [nvarchar](1000) NULL,
+	[type] [nvarchar](50) NOT NULL,
+	[data] [nvarchar](1000) NOT NULL,
+	[sender_ext_id] [nvarchar](200) NULL,
+	[recipient_ext_id] [nvarchar](200) NULL,
+	[timestamp] [bigint] NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[customer_id] [nvarchar](200) NULL,
+ CONSTRAINT [PK_Referrals] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Shortcuts]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Shortcuts](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[shortcut] [nvarchar](50) NOT NULL,
+	[name] [nvarchar](1000) NOT NULL,
+	[created_by] [nvarchar](200) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+ CONSTRAINT [PK_Shortcuts] PRIMARY KEY CLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Threads]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Threads](
+	[key] [bigint] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[channel_ext_id] [nvarchar](200) NULL,
+	[channel_id] [nvarchar](200) NOT NULL,
+	[archived] [bit] NULL,
+	[status] [nvarchar](200) NULL,
+	[unread] [bit] NULL,
+	[channel_type] [nvarchar](200) NULL,
+	[agent_id] [nvarchar](200) NULL,
+	[link_ext_id] [nvarchar](200) NULL,
+	[owner_id] [nvarchar](200) NOT NULL,
+	[owner_ext_id] [nvarchar](200) NULL,
+	[owner_app_id] [nvarchar](200) NULL,
+	[owner_name] [nvarchar](200) NULL,
+	[owner_avatar] [nvarchar](1000) NULL,
+	[onwer_timestamp] [bigint] NULL,
+	[last_message_ext_id] [nvarchar](200) NULL,
+	[last_message] [nvarchar](max) NULL,
+	[sender_id] [nvarchar](200) NULL,
+	[sender_ext_id] [nvarchar](200) NULL,
+	[sender_name] [nvarchar](200) NULL,
+	[sender_avatar] [nvarchar](1000) NULL,
+	[timestamp] [bigint] NULL,
+	[ext_id] [nvarchar](200) NULL,
+	[type] [nvarchar](50) NULL,
+	[last_message_parent_ext_id] [nvarchar](200) NULL,
+	[owner_last_message_ext_id] [nvarchar](200) NULL,
+	[owner_last_message_parent_ext_id] [nvarchar](200) NULL,
+	[customer_id] [nvarchar](200) NULL,
+	[read_at] [bigint] NULL,
+	[read_by] [nvarchar](200) NULL,
+	[nonreply] [bit] NULL,
+	[last_visits] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Threads] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Tickets]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Tickets](
+	[key] [int] IDENTITY(1,1) NOT NULL,
+	[id] [nvarchar](200) NOT NULL,
+	[business_id] [nvarchar](200) NOT NULL,
+	[customer_id] [nvarchar](200) NULL,
+	[type] [int] NOT NULL,
+	[short_description] [nvarchar](200) NULL,
+	[description] [nvarchar](max) NULL,
+	[thread_id] [nvarchar](200) NULL,
+	[customer_name] [nvarchar](200) NULL,
+	[status] [int] NOT NULL,
+	[tags] [nvarchar](1000) NULL,
+	[sender_id] [nvarchar](200) NULL,
+	[sender_name] [nvarchar](200) NULL,
+	[created_time] [smalldatetime] NOT NULL,
+	[updated_time] [smalldatetime] NULL,
+	[timestamp] [bigint] NOT NULL,
+	[channel_id] [nvarchar](200) NULL,
+ CONSTRAINT [PK_Tickets] PRIMARY KEY NONCLUSTERED 
+(
+	[key] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_hidden]  DEFAULT ((1)) FOR [hidden]
+GO
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_liked]  DEFAULT ((1)) FOR [liked]
+GO
+ALTER TABLE [dbo].[Messages] ADD  CONSTRAINT [DF_Messages_deleted]  DEFAULT ((0)) FOR [deleted]
+GO
+/****** Object:  StoredProcedure [dbo].[AgentsUpsert]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[AgentsUpsert] 
+(
+	   @id				nvarchar(200)
+      ,@business_id		nvarchar(200)
+      ,@created_time		datetime2
+      ,@updated_time		datetime2
+      ,@channel_id		nvarchar(200)
+      ,@archived			bit
+      ,@status			nvarchar(200)
+           ,@ext_id nvarchar(200)
+           ,@global_id nvarchar(200)
+           ,@first_name nvarchar(200)
+           ,@last_name nvarchar(200)
+           ,@name nvarchar(200)
+           ,@email nvarchar(200)
+           ,@avatar nvarchar(1000)
+           ,@phone nvarchar(20)
+      ,@username nvarchar(200)
+      ,@password nvarchar(200)
+      ,@password_confirmation  nvarchar(200)
+      ,@active bit
+      ,@locked bit
+      ,@login_status nvarchar(200)
+      ,@last_loggedin_time  datetime2
+      ,@last_loggedout_time  datetime2
+      ,@last_acted_time  datetime2
+      ,@facebook_access_token  nvarchar(200)
+      ,@role nvarchar(200)           
+           ,@business_name nvarchar(200)
+ )
+AS
+BEGIN
+
+SET NOCOUNT, XACT_ABORT ON;
+
+MERGE dbo.Agents WITH (HOLDLOCK) AS c
+USING (SELECT 
+       @id as id
+	  ,@business_id as business_id
+      ,@created_time as created_time
+      ,@updated_time as updated_time
+      ,@channel_id as channel_id
+      ,@ext_id as ext_id
+      ,@global_id as global_id
+      ,@first_name as first_name
+      ,@last_name as last_name
+      ,@name as name
+      ,@email as email
+      ,@avatar as avatar
+      ,@phone as phone
+      ,@archived as archived
+      ,@status as status
+      ,@username as username
+      ,@password as password
+      ,@password_confirmation as password_confirmation
+      ,@active as active
+      ,@locked as locked
+      ,@login_status as login_status
+      ,@last_loggedin_time as last_loggedin_time
+      ,@last_loggedout_time as last_loggedout_time
+      ,@last_acted_time as last_acted_time
+      ,@facebook_access_token as facebook_access_token
+      ,@role as role
+      ,@business_name as business_name)
+      
+ AS new_Agent  ON c.username = new_Agent.username
+WHEN MATCHED THEN
+    UPDATE SET
+       [id] = @id
+	  ,[business_id] = @business_id
+      ,[created_time] = @created_time
+      ,[updated_time] = @updated_time
+      ,[channel_id] = @channel_id
+      ,[ext_id] = @ext_id
+      ,[global_id] = @global_id
+      ,[first_name] = @first_name
+      ,[last_name] = @last_name
+      ,[name] = @name
+      ,[email] = @email
+      ,[avatar] = @avatar
+      ,[phone] = @phone
+      ,[archived] = @archived
+      ,[status] = @status
+      ,[username] = @username
+      ,[password] = @password
+      ,[password_confirmation] = @password_confirmation
+      ,[active] = @active
+      ,[locked] = @locked
+      ,[login_status] = @login_status
+      ,[last_loggedin_time] = @last_loggedin_time
+      ,[last_loggedout_time] = @last_loggedout_time
+      ,[last_acted_time] = @last_acted_time
+      ,[facebook_access_token] = @facebook_access_token
+      ,[role] = @role      
+      ,[business_name] = @business_name
+WHEN NOT MATCHED THEN
+    INSERT
+      (
+	   [id]
+	  ,[business_id]
+      ,[created_time]
+      ,[updated_time]
+      ,[channel_id]
+      ,[ext_id]
+      ,[global_id]
+      ,[first_name]
+      ,[last_name]
+      ,[name]
+      ,[email]
+      ,[avatar]
+      ,[phone]
+      ,[archived]
+      ,[status]
+      ,[username]
+      ,[password]
+      ,[password_confirmation]
+      ,[active]
+      ,[locked]
+      ,[login_status]
+      ,[last_loggedin_time]
+      ,[last_loggedout_time]
+      ,[last_acted_time]
+      ,[facebook_access_token]
+      ,[role]
+      ,[business_name]
+      )
+    VALUES
+      (
+	   new_Agent.[id]
+	  ,new_Agent.[business_id]
+      ,new_Agent.[created_time]
+      ,new_Agent.[updated_time]
+      ,new_Agent.[channel_id]
+      ,new_Agent.[ext_id]
+      ,new_Agent.[global_id]
+      ,new_Agent.[first_name]
+      ,new_Agent.[last_name]
+      ,new_Agent.[name]
+      ,new_Agent.[email]
+      ,new_Agent.[avatar]
+      ,new_Agent.[phone]
+      ,new_Agent.[archived]
+      ,new_Agent.[status]
+      ,new_Agent.[username]
+      ,new_Agent.[password]
+      ,new_Agent.[password_confirmation]
+      ,new_Agent.[active]
+      ,new_Agent.[locked]
+      ,new_Agent.[login_status]
+      ,new_Agent.[last_loggedin_time]
+      ,new_Agent.[last_loggedout_time]
+      ,new_Agent.[last_acted_time]
+      ,new_Agent.[facebook_access_token]
+      ,new_Agent.[role]
+      ,new_Agent.[business_name]
+      );
+
+RETURN @@ERROR;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[CustomersFTSearchByOwnerNameOrderByRankAndDate]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[CustomersFTSearchByOwnerNameOrderByRankAndDate] 
+(
+       @business_id		nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@status			nvarchar(200)
+      ,@flag			nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@keywords	nvarchar(200)
+      ,@limit	int
+      ,@end			bigint
+ )
+AS
+BEGIN
+   	
+	SELECT TOP(@limit) t.*, ft.rank  FROM Customers t
+	INNER JOIN FREETEXTTABLE (Customers, name  , @keywords) ft on t.[key] = ft.[key]
+     WHERE business_id=@business_id  and (Freetext(phone_list, @keywords) or  Freetext(name, @keywords)  or  Freetext(id, @keywords)   or  Freetext(ext_id, @keywords)   or  Freetext(app_id, @keywords)) and (channel_id = @channel_id or @channel_id = '' or @channel_id is null ) and (agent_id = @agent_id or @agent_id = '' or @agent_id is null ) and ([status] = @status or @status = '' or @status is null) and (('unread' = @flag and unread > 0) or ('nonreply' = @flag and nonreply > 0 and unread <=0) or ('open' = @flag and [open] > 0)) 
+     and [timestamp] <= @end
+     ORDER BY RANK DESC, [timestamp] DESC
+END
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[CustomersGetByFilterOrderByDate]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[CustomersGetByFilterOrderByDate] 
+(
+       @business_id		nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@status			nvarchar(200)
+      ,@flag			nvarchar(200)
+      ,@keywords			nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@limit	int
+      ,@end			bigint
+ )
+AS
+BEGIN
+	
+	SELECT TOP(@limit) * FROM dbo.Customers
+     WHERE business_id=@business_id and [timestamp] <= @end and (@status = '' or @status is null or [status] = @status) and (('unread' = @flag and unread > 0) or ('nonreply' = @flag and nonreply > 0 and unread <=0) or ('open' = @flag and [open] > 0) or @flag = '' or @flag  is null) and (channel_id = @channel_id or @channel_id = '' or @channel_id is null ) and (agent_id = @agent_id or @agent_id = '' or @agent_id is null ) and (@keywords = '' or @keywords is null or app_id like '%' +@keywords+ '%'  or ext_id like '%' +@keywords+ '%'  or id like '%' +@keywords+ '%' or name like '%' +@keywords+ '%' or phone_list like '%' +@keywords+ '%')
+     ORDER BY [timestamp] DESC
+
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[CustomersUpsert]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[CustomersUpsert] 
+(
+	   @id				nvarchar(200)
+      ,@business_id		nvarchar(200)
+      ,@created_time		datetime2
+      ,@updated_time		datetime2
+      ,@channel_id		nvarchar(200)
+      ,@archived			bit
+      ,@status			nvarchar(200)
+           ,@timestamp  bigint
+           ,@ext_id nvarchar(200)
+           ,@app_id nvarchar(200)
+           ,@global_id nvarchar(200)
+           ,@first_name nvarchar(200)
+           ,@last_name nvarchar(200)
+           ,@name nvarchar(200)
+           ,@email nvarchar(200)
+           ,@avatar nvarchar(1000)
+           ,@phone nvarchar(20)
+           ,@business_name nvarchar(200)
+ )
+AS
+BEGIN
+
+SET NOCOUNT, XACT_ABORT ON;
+
+MERGE dbo.Customers WITH (HOLDLOCK) AS c
+USING (SELECT 
+       @id as id
+	  ,@business_id as business_id
+      ,@created_time as created_time
+      ,@updated_time as updated_time
+      ,@channel_id as channel_id
+      ,@timestamp as timestamp
+      ,@ext_id as ext_id
+      ,@app_id as app_id
+      ,@global_id as global_id
+      ,@first_name as first_name
+      ,@last_name as last_name
+      ,@name as name
+      ,@email as email
+      ,@avatar as avatar
+      ,@phone as phone
+      ,@archived as archived
+      ,@status as status
+      ,@business_name as business_name)
+      
+ AS new_customer  ON c.id = new_customer.id and c.business_id = new_customer.business_id
+WHEN MATCHED THEN
+    UPDATE SET
+       [id] = @id
+	  ,[business_id] = @business_id
+      ,[created_time] = @created_time
+      ,[updated_time] = @updated_time
+      ,[channel_id] = @channel_id
+      ,[timestamp] = @timestamp
+      ,[ext_id] = @ext_id
+      ,[app_id] = @app_id
+      ,[global_id] = @global_id
+      ,[first_name] = @first_name
+      ,[last_name] = @last_name
+      ,[name] = @name
+      ,[email] = @email
+      ,[avatar] = @avatar
+      ,[phone] = @phone
+      ,[archived] = @archived
+      ,[status] = @status
+      ,[business_name] = @business_name
+WHEN NOT MATCHED THEN
+    INSERT
+      (
+	   [id]
+	  ,[business_id]
+      ,[created_time]
+      ,[updated_time]
+      ,[channel_id]
+      ,[timestamp]
+      ,[ext_id]
+      ,[app_id]
+      ,[global_id]
+      ,[first_name]
+      ,[last_name]
+      ,[name]
+      ,[email]
+      ,[avatar]
+      ,[phone]
+      ,[archived]
+      ,[status]
+      ,[business_name]
+      )
+    VALUES
+      (
+	   new_customer.[id]
+	  ,new_customer.[business_id]
+      ,new_customer.[created_time]
+      ,new_customer.[updated_time]
+      ,new_customer.[channel_id]
+      ,new_customer.[timestamp]
+      ,new_customer.[ext_id]
+      ,new_customer.[app_id]
+      ,new_customer.[global_id]
+      ,new_customer.[first_name]
+      ,new_customer.[last_name]
+      ,new_customer.[name]
+      ,new_customer.[email]
+      ,new_customer.[avatar]
+      ,new_customer.[phone]
+      ,new_customer.[archived]
+      ,new_customer.[status]
+      ,new_customer.[business_name]
+      );
+
+RETURN @@ERROR;
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetAgentUnreadCounters]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE PROCEDURE [dbo].[GetAgentUnreadCounters] 
+(
+       @business_id		nvarchar(200)
+ )
+AS
+BEGIN
+
+SELECT agent_id as id, COUNT(*) as unread,  COUNT(*) as count FROM Customers c
+    WHERE business_id=@business_id  and c.unread > 0 GROUP BY agent_id            
+END
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[GetChannelUnreadCounters]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE PROCEDURE [dbo].[GetChannelUnreadCounters] 
+(
+       @business_id		nvarchar(200)
+ )
+AS
+BEGIN
+
+SELECT channel_id as id, COUNT(*) as unread,  COUNT(*) as count FROM Customers c
+    WHERE business_id=@business_id  and c.unread > 0 GROUP BY channel_id            
+END
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ReportsGetAgentsData]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[ReportsGetAgentsData] 
+(
+       @business_id		nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@limit	int
+      ,@start			bigint      
+      ,@end			bigint
+ )
+AS
+BEGIN
+
+    SELECT TOP(@limit) m.agent_id as id, COUNT(DISTINCT m.customer_id) as customers, COUNT(DISTINCT m.thread_id) as conversations,  COUNT(*) as messages from Messages m 
+    WHERE m.timestamp > = @start and m.timestamp  <= @end and m.agent_id is not null and m.agent_id!=''  and m.business_id=@business_id
+    GROUP BY m.agent_id order by messages desc     
+END
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ReportsGetChatsData]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE PROCEDURE [dbo].[ReportsGetChatsData] 
+(
+       @business_id		nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@limit	int
+      ,@start			bigint      
+      ,@end			bigint
+ )
+AS
+BEGIN
+
+    SELECT TOP(@limit) CAST(m.created_time AS DATE) as [date], COUNT(DISTINCT m.customer_id) as customers, COUNT(DISTINCT m.thread_id) as conversations, SUM(CASE WHEN m.thread_type = 'message' THEN 1 ELSE 0 END) as inboxes, SUM(CASE WHEN m.thread_type = 'comment' THEN 1 ELSE 0 END) as comments from Messages m 
+    WHERE m.timestamp > = @start and m.timestamp  <= @end and m.agent_id is not null and m.agent_id!=''  and m.business_id=@business_id
+    GROUP BY CAST(m.created_time AS DATE) order by [date]
+END
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ReportsGetCustomerChatsData]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE PROCEDURE [dbo].[ReportsGetCustomerChatsData] 
+(
+       @business_id		nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@limit	int
+      ,@start			bigint      
+      ,@end			bigint
+ )
+AS
+BEGIN
+
+    SELECT TOP(@limit) CAST(m.created_time AS DATE) as [date], COUNT(DISTINCT m.customer_id) as customers, COUNT(DISTINCT m.thread_id) as conversations, SUM(CASE WHEN m.thread_type = 'message' and m.agent_id is not null and m.agent_id!='' THEN 1 ELSE 0 END) as inbox_replies, SUM(CASE WHEN m.thread_type = 'comment' and m.agent_id is not null and m.agent_id!='' THEN 1 ELSE 0 END) as comment_replies, SUM(CASE WHEN m.thread_type = 'message' and sender_ext_id!=channel_ext_id THEN 1 ELSE 0 END) as inboxes, SUM(CASE WHEN m.thread_type = 'comment' and sender_ext_id!=channel_ext_id THEN 1 ELSE 0 END) as comments from Messages m 
+    WHERE m.timestamp > = @start and m.timestamp  <= @end and m.business_id=@business_id
+    GROUP BY CAST(m.created_time AS DATE) order by [date]
+END
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ReportsGetTicketsData]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+
+CREATE PROCEDURE [dbo].[ReportsGetTicketsData] 
+(
+       @business_id		nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@limit	int
+      ,@start			datetime      
+      ,@end			datetime
+ )
+AS
+BEGIN
+
+    SELECT TOP(@limit) CAST(t.created_time AS DATE) as [date], COUNT(*) as tickets, SUM(CASE WHEN t.status = 0 THEN 1 ELSE 0 END) as pending_tickets, SUM(CASE WHEN t.status = 1 THEN 1 ELSE 0 END) as attention_tickets, SUM(CASE WHEN t.status = 2 THEN 1 ELSE 0 END) as completed_tickets from Tickets t 
+    WHERE t.created_time > = @start and t.created_time  <= @end and t.business_id=@business_id
+    GROUP BY CAST(t.created_time AS DATE) order by [date]
+END
+
+
+
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ThreadsFTSearchByOwnerNameOrderByRankAndDate]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ThreadsFTSearchByOwnerNameOrderByRankAndDate] 
+(
+       @business_id		nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@status			nvarchar(200)
+      ,@flag			nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@keywords	nvarchar(200)
+      ,@limit	int
+      ,@end			bigint
+ )
+AS
+BEGIN
+   	
+	SELECT TOP(@limit) t.*, ft.rank  FROM Threads t
+	INNER JOIN FREETEXTTABLE (Threads, owner_name  , @keywords) ft on t.[key] = ft.[key]
+     WHERE business_id=@business_id and (channel_id = @channel_id or @channel_id = '' or @channel_id is null ) and (agent_id = @agent_id or @agent_id = '' or @agent_id is null ) and ([status] = @status or @status = '' or @status is null) and (('unread' = @flag and unread > 0) or @flag = '' or @flag is null) and (owner_name like '%' +@keywords+ '%' or  Freetext(owner_name, @keywords)) 
+     and [timestamp] <= @end
+     ORDER BY RANK DESC, [timestamp] DESC
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[ThreadsGetByFilterOrderByDate]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[ThreadsGetByFilterOrderByDate] 
+(
+       @business_id		nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@status			nvarchar(200)
+      ,@flag			nvarchar(200)
+      ,@keywords			nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@limit	int
+      ,@end			bigint
+ )
+AS
+BEGIN
+	
+	SELECT TOP(@limit) * FROM dbo.Threads
+     WHERE business_id=@business_id and (channel_id = @channel_id or @channel_id = '' or @channel_id is null ) and (agent_id = @agent_id or @agent_id = '' or @agent_id is null ) and ([status] = @status or @status = '' or @status is null) and (('unread' = @flag and unread > 0) or ('nonreply' = @flag and sender_ext_id != channel_ext_id) or @flag = '' or @flag  is null) and (@keywords = '' or @keywords is null or owner_name like '%' +@keywords+ '%')
+     and [timestamp] <= @end
+     ORDER BY [timestamp] DESC
+
+END
+
+
+GO
+/****** Object:  StoredProcedure [dbo].[ThreadsUpsert]    Script Date: 7/12/2017 3:23:13 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[ThreadsUpsert] 
+(
+	   @id				nvarchar(200)
+      ,@business_id		nvarchar(200)
+      ,@created_time		datetime2
+      ,@updated_time		datetime2
+      ,@channel_ext_id	nvarchar(200)
+      ,@channel_id		nvarchar(200)
+      ,@archived			bit
+      ,@status			nvarchar(200)
+      ,@unread			bit
+      ,@channel_type		nvarchar(200)
+      ,@agent_id			nvarchar(200)
+      ,@owner_id			nvarchar(200)
+      ,@owner_ext_id		nvarchar(200)
+      ,@owner_app_id		nvarchar(200)
+      ,@owner_name		nvarchar(200)
+      ,@owner_avatar		nvarchar(1000)
+      ,@onwer_timestamp	bigint
+      ,@last_message		nvarchar(max)
+      ,@sender_id			nvarchar(200)
+      ,@sender_ext_id		nvarchar(200)
+      ,@sender_name		nvarchar(200)
+      ,@sender_avatar		nvarchar(1000)
+      ,@timestamp			bigint
+ )
+AS
+BEGIN
+
+SET NOCOUNT, XACT_ABORT ON;
+
+MERGE dbo.Threads WITH (HOLDLOCK) AS t
+USING (SELECT 
+       @id as id
+	  ,@business_id as business_id
+      ,@created_time as created_time
+      ,@updated_time as updated_time
+      ,@channel_ext_id as channel_ext_id
+      ,@channel_id as channel_id
+      ,@archived as archived
+      ,@status as status
+      ,@unread as unread
+      ,@channel_type as channel_type
+      ,@agent_id as agent_id
+      ,@owner_id as owner_id
+      ,@owner_ext_id as owner_ext_id
+      ,@owner_app_id as owner_app_id
+      ,@owner_name as owner_name
+      ,@owner_avatar as owner_avatar
+      ,@onwer_timestamp as onwer_timestamp
+      ,@last_message as last_message
+      ,@sender_id as sender_id
+      ,@sender_ext_id as sender_ext_id
+      ,@sender_name as sender_name
+      ,@sender_avatar as sender_avatar
+      ,@timestamp as timestamp)
+ AS new_thread  ON t.id = new_thread.id and t.business_id = new_thread.business_id
+WHEN MATCHED THEN
+    UPDATE SET
+       [created_time] = @created_time
+      ,[updated_time] = @updated_time
+      ,[channel_ext_id] = @channel_ext_id
+      ,[channel_id] = @channel_id
+      ,[archived] = @archived
+      ,[status] = @status
+      ,[unread] = @unread
+      ,[channel_type] = @channel_type
+      ,[agent_id] = @agent_id
+      ,[owner_id] = @owner_id
+      ,[owner_ext_id] = @owner_ext_id
+      ,[owner_app_id] = @owner_app_id
+      ,[owner_name] = @owner_name
+      ,[owner_avatar] = @owner_avatar
+      ,[onwer_timestamp] = @onwer_timestamp
+      ,[last_message] = @last_message
+      ,[sender_id] = @sender_id
+      ,[sender_ext_id] = @sender_ext_id
+      ,[sender_name] = @sender_name
+      ,[sender_avatar] = @sender_avatar
+      ,[timestamp] = @timestamp
+WHEN NOT MATCHED THEN
+    INSERT
+      (
+			[id]
+			,[business_id]
+            ,[created_time]
+           ,[updated_time]
+           ,[channel_ext_id]
+           ,[channel_id]
+           ,[archived]
+           ,[status]
+           ,[unread]
+           ,[channel_type]
+           ,[agent_id]
+           ,[owner_id]
+           ,[owner_ext_id]
+           ,[owner_app_id]
+           ,[owner_name]
+           ,[owner_avatar]
+           ,[onwer_timestamp]
+           ,[last_message]
+           ,[sender_id]
+           ,[sender_ext_id]
+           ,[sender_name]
+           ,[sender_avatar]
+           ,[timestamp]
+      )
+    VALUES
+      (
+      			new_thread.[id]
+			,new_thread.[business_id]
+            ,new_thread.created_time
+           ,new_thread.updated_time
+           ,new_thread.channel_ext_id
+           ,new_thread.channel_id
+           ,new_thread.archived
+           ,new_thread.status
+           ,new_thread.unread
+           ,new_thread.channel_type
+           ,new_thread.agent_id
+           ,new_thread.owner_id
+           ,new_thread.owner_ext_id
+           ,new_thread.owner_app_id
+           ,new_thread.owner_name
+           ,new_thread.owner_avatar
+           ,new_thread.onwer_timestamp
+           ,new_thread.last_message
+           ,new_thread.sender_id
+           ,new_thread.sender_ext_id
+           ,new_thread.sender_name
+           ,new_thread.sender_avatar
+           ,new_thread.[timestamp]
+      );
+
+RETURN @@ERROR;
+END
+
+GO

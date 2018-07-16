@@ -1,0 +1,298 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hibaza - Signup</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="meta desc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=0" />
+    <link id="favicon" rel="icon" type="image/png" href="/partners/square/hibaza.png" />
+    <link rel="stylesheet" type="text/css" href="/css/site.css?v=@(ViewBag.Version)" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/config.js?v=@(ViewBag.Version)"></script>
+    <script src="~/js/base64js.min.js"></script>
+    <script src="~/js/api.js"></script>
+    <style>
+        .lang_horizontal {
+            position: absolute;
+            top: 10px;
+            right: 27px;
+            width: 150px;
+        }
+
+            .lang_horizontal .lang {
+                color: #8D94E0;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+            .lang_horizontal .active {
+                color: white !important;
+            }
+    </style>
+</head>
+
+<body style="background-image:url('/images/login-background.jpg')" class="wz-overflow">
+
+    <div class="container lg-login">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 wz-margin-t-50">
+                <div class="steps">
+                    <div id="step-1">
+                        <div class="panel panel-default">
+                            <div class="lang_horizontal">
+                                <span class="lang lg-vi active" onclick="setLang('vi',this)">Tiếng Việt</span>
+                                <span class="lang lg-en" onclick="setLang('en',this)">English</span>
+                            </div>
+
+                        <div class="panel-body js-panel-login-form">
+                            <header>
+                                <img src="/partners/white/hibaza.png" width="100" />
+                                <h3 class="lg-your-account">
+                                    Log in to your<br />Hibaza account
+                                </h3>
+                            </header>
+                            <form id="login-form" method="POST" class="form wz-margin-t-35">
+                                <input type='hidden' name='csrfmiddlewaretoken' value='2DsrrDQNzOROvwYNAPSKUGsOaiYn3pXStQaXGtz2Zdbqrxh8ROeIQcFIv2EBQm3T' />
+                                <div class="form-group">
+                                    <label class="control-label lg-username">
+                                        Your email
+                                    </label>
+                                    <input class="form-control" id="id_email" name="username" type="email" required />
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label lg-password">
+                                        Password
+                                    </label>
+                                    <input class="form-control" id="id_password" name="password" type="password" required />
+
+                                    <span class="help-block lost-password"><a role="button" href="#" data-toggle="modal" aria-expanded="true" class="lg-lost-password">Lost your password?</a></span>
+                                </div>
+                            </form>
+                            <footer class="wz-margin-t-35">
+                                <div class="btn btn-default js-send-login lg-send-login">Log in</div>
+                                <p>
+                                    <i class="lg-not-account"> Don't have an account?</i> <a href="#" class="register-fb lg-signup">Sign up</a>
+                                </p>
+
+                            </footer>
+                        </div>
+                        <div style="display:none" class="panel-body js-panel-password-lost">
+                            <header>
+                                <img src="/partners/white/hibaza.png" width="100" /><i class="wz-close-password-lost close icon-cross"></i>
+                                <h3 class="lg-recover-account">
+                                    Recover your<br />Hibaza account
+                                </h3>
+                            </header>
+                            <form id="password-form" class="form wz-margin-t-35">
+                                <div class="form-group">
+                                    <label class="control-label lg-recover-email">
+                                        Your email
+                                    </label>
+                                    <input id="account-email" type="email" class="form-control" />
+                                    <ul class="errorlist hide js-password-required">
+                                        <li class="lg-recover-field-required">This field is required.</li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <div style="display:none" class="alert-warning alert dismissible js-password-notification text-center"></div>
+                                </div>
+                            </form>
+                            <footer class="wz-margin-t-35">
+                                <div class="btn btn-default js-recover-password lg-recover_check">Check</div>
+                                <p>
+                                    <i class="lg-not-account">  Don't have an account?</i><a  href="#" class="register-fb lg-signup" target="_blank">Sign up</a>
+                                   
+                                </p>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    @*<iframe src="@(ViewBag.BaseUrls_PhoneWeb)phone-action.html?userid=@(ViewBag.UserId)&token=@(ViewBag.AccessToken)" class="phone-container-logout hidden"></iframe>*@
+    <script>
+
+        var apiURL = '@(ViewBag.ApiUrl)';
+       
+        $(function () {
+            try {
+                 var state = { AppId:"@(ViewBag.AppId)", BaseUrls_Web:"@(ViewBag.BaseUrls_Web)", ApiUrl: "@(ViewBag.ApiUrl)" };
+        let objJsonStr = Base64Encode(JSON.stringify(state));
+        var url = "https://www.facebook.com/v3.0/dialog/oauth?client_id=@(ViewBag.AppId)&redirect_uri=" + '@(ViewBag.BaseUrls_Web)' 
+        + "registerfb&response_type=token&scope=public_profile,email,read_page_mailboxes,pages_messaging,pages_show_list,manage_pages,publish_pages" +
+                    "&state=" + objJsonStr;
+                $(".register-fb").each(function () { 
+                    $(this).attr("href", url);
+                })
+            } catch (ex) { console.log(ex); }
+            try {
+                document.getElementsByClassName('phone-container')[0].src = document.getElementsByClassName('phone-container')[0].src
+            } catch (e) { }
+            try {
+                setHotline("offline");
+            }
+            catch (e) { }
+            @*try {
+                    var apiHotline = '@(ViewBag.BaseUrls_ApiHotline)';
+                    console.log(apiHotline + "api/PhoneAccounts/changeStatus/" + '@(ViewBag.UserId)' + "/offline/?access_token=" + '@(ViewBag.AccessToken)');
+                    if (apiHotline != null && apiHotline != undefined && apiHotline != "") {
+                        $.ajax({
+                            url: apiHotline + "api/PhoneAccounts/changeStatus/" + '@(ViewBag.UserId)' + "/offline/?access_token=" + '@(ViewBag.AccessToken)',
+                            type: "GET",
+                            contentType: "application/json; charset=utf-8",
+                            cache: false,
+                            crossDomain: true,
+                            dataType: "json",
+                            async: false,
+                            success: function (data, textStatus, jqXHR) {
+                                document.getElementsByClassName('phone-container-logout')[0].src = document.getElementsByClassName('phone-container-logout')[0].src
+                            },
+                            complete: function () {
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                            }
+                        });
+                    }
+                }
+                catch (e) { console.log(e); }*@
+
+  // "Log in" button click
+    $('.js-send-login').on('click', function () {
+        localStorage.removeItem("SuggestionsSearch");
+        localStorage.removeItem("SuggestionsNoteAgent");
+    $('#login-form').submit();
+  });
+
+  // Keypress on login form
+  $('#login-form').keypress(function(e) {
+      if (e.keyCode == 13) {
+          localStorage.removeItem("SuggestionsSearch");
+          localStorage.removeItem("SuggestionsNoteAgent");
+      $('#login-form').submit();
+    }
+  });
+
+  // Prevent password form submit
+  $(' #password-form').submit(function(e) {
+    e.preventDefault();
+  });
+
+  // "Lost your password" button click
+  $('.lost-password').click(function(){
+    // Restart UI
+    $('#account-email').val($('#id_email').val());
+    $('.js-password-notification').fadeOut();
+    $('.js-recover-password').fadeIn();
+    $('#account-email').removeAttr('disabled');
+    $('.js-password-required').addClass('hide');
+
+    // Animation
+    $('.js-panel-login-form').slideUp('slow')
+    $('.js-panel-password-lost').slideDown('slow')
+  });
+
+  // Close "Lost your password" panel
+  $('.wz-close-password-lost').click(function(){
+    // Animation
+    $('.js-panel-password-lost').slideUp('slow')
+    $('.js-panel-login-form').slideDown('slow')
+  });
+
+  // "Check" button click
+  $('.js-recover-password').click(function(){
+    $('.js-password-required').addClass('hide');
+    var email = $.trim($('#account-email').val());
+    if (email.length > 0) {
+      // UI changes
+      $('.js-password-notification').fadeOut('slow');
+      $('.js-recover-password').fadeOut('fast');
+      $('#account-email').attr('disabled','disabled');
+
+      $.post(apiURL + 'brands/agents/reset/' + email, function (o) {
+          if (o.ok) {
+              // Success
+              $('.js-password-notification').text("We've sent you an email containing the instructions to recover your account.");
+              // UI changes
+              $('.js-password-notification').fadeIn('slow');
+          }
+          else {
+              // Error
+              $('.js-password-notification').text('Sorry but we have not found any matching account.');
+              // UI changes
+              $('.js-password-notification').fadeIn('slow');
+              $('.js-recover-password').fadeIn('fast');
+              $('#account-email').removeAttr('disabled');
+          }
+      });
+
+    } else {
+      // Shows Required email message
+      $('.js-password-required').removeClass('hide');
+    }
+  })
+});
+    </script>
+    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/tagsinput.js"></script>
+    <script type="text/javascript" src="/js/lang.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".lang_horizontal .lang").removeClass("active");
+            var lang = localStorage.getItem("lang");
+            if (lang == "en") 
+                $(".lang_horizontal .lg-en").addClass("active");
+            else
+                $(".lang_horizontal .lg-vi").addClass("active");
+            readFileLang(localStorage.getItem("lang"), "login");
+        });
+
+        function setLang(type, thiss) {
+            $(".lang_horizontal .lang").removeClass("active");
+            $(thiss).addClass("active");
+            localStorage.setItem("lang", type);
+            readFileLang(localStorage.getItem("lang"), "login");
+        }
+        
+        signUp();
+        firstSetup();
+
+        function signUp() {
+            $('.js-step').click(function () {
+                var target = $(this).attr('data-target');
+                $(this).parent().parent().parent().parent().slideUp("slow", function () {
+                    $(target).slideDown();
+                });
+            });
+        }
+
+        function nextStep(launcher) {
+            var target = launcher.attr('data-target');
+            launcher.parent().parent().parent().parent().slideUp("slow", function () {
+                $(target).slideDown();
+            });
+        }
+
+
+        function firstSetup() {
+
+            if ($('#first-setup').length > 0) {
+                $('input.taginput').tagsinput({
+                    confirmKeys: [13, 44]
+                });
+            }
+
+        }
+
+    </script>
+
+    
+</body>
+</html>

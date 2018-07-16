@@ -1,0 +1,2581 @@
+﻿/* 1 */
+{
+    "_id" : "Referrals_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Referrals");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id ,id:id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+          return JSON.stringify(array);
+    }
+}
+
+/* 2 */
+{
+    "_id" : "Referrals_GetAll",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Referrals");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id}).sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 3 */
+{
+    "_id" : "Referrals_GetReferrals",
+    "value" : function (business_id,thread_id,limits){
+            var collecttion = db.getCollection("Referrals");
+            var array =[];
+        
+            var cursor =collecttion.find({business_id: business_id,thread_id:thread_id}).sort({ created_time: -1 } ).limit(Number(limits));
+                        
+            while ( cursor.hasNext() ) {
+                  array.push(cursor.next());
+            }
+         return JSON.stringify(array);
+    }
+}
+
+/* 4 */
+{
+    "_id" : "Referrals_GetReferralsByCustomer",
+    "value" : function (business_id,customer_id,limits){
+            var collecttion = db.getCollection("Referrals");
+            var array =[];
+        
+            var cursor =collecttion.find({business_id: business_id,customer_id:customer_id}).sort({ created_time: -1 } ).limit(Number(limits));
+                        
+            while ( cursor.hasNext() ) {
+                  array.push(cursor.next());
+            }
+          return JSON.stringify(array);
+    }
+}
+
+/* 5 */
+{
+    "_id" : "Referrals_Delete",
+    "value" : function (business_id,id){
+            var collecttion = db.getCollection("Referrals");
+              
+           collecttion.deleteMany({business_id:business_id,id:id});
+         return JSON.stringify(array);
+    }
+}
+
+/* 6 */
+{
+    "_id" : "Ticket_GetById",
+    "value" : function (id){
+           var collecttion = db.getCollection("Tickets");
+                
+           var array =[]
+           var cursor =collecttion.find({id:id}).sort({ created_time: -1 }).limit(1);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+           return JSON.stringify(array);
+    }
+}
+
+/* 7 */
+{
+    "_id" : "Ticket_GetById01",
+    "value" : function (business_id,id){
+           var collecttion = db.getCollection("Tickets");
+                
+           var array =[]
+           var cursor =collecttion.find({business_id:business_id,id:id}).sort({ created_time: -1 }).limit(1);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+           return JSON.stringify(array);
+    }
+}
+
+/* 8 */
+{
+    "_id" : "Ticket_GetCustomerLastTicket",
+    "value" : function (business_id,customer_id,status,limit){
+           var collecttion = db.getCollection("Tickets");
+                
+           var array =[]
+           var cursor =collecttion.find({$and:[{business_id:business_id},{customer_id:customer_id}, 
+           {$or:[{status:status} , {statues :{$lte:0}}]}]}).sort({created_time:-1}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+           return JSON.stringify(array);
+    }
+}
+
+/* 9 */
+{
+    "_id" : "Ticket_GetTickets",
+    "value" : function (business_id,status,start,end,limit){
+           var collecttion = db.getCollection("Tickets");
+                
+           var array =[]
+           var cursor =collecttion.find({$and:[{business_id:business_id},
+           {created_time:{$gte: Number(start)}},
+                    {created_time:{$lte: Number(end)}},
+                    {$or:[{status:status} , {statues :{$lte:0}}]}]}).sort({created_time:-1}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+           return JSON.stringify(array);
+    }
+}
+
+/* 10 */
+{
+    "_id" : "Ticket_GetAll",
+    "value" : function (business_id,limit){
+           var collecttion = db.getCollection("Tickets");
+                
+           var array =[]
+           var cursor =collecttion.find({business_id:business_id}).sort({created_time:-1}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+           return JSON.stringify(array);
+    }
+}
+
+/* 11 */
+{
+    "_id" : "Ticket_Delete",
+    "value" : function (business_id,id){
+           var collecttion = db.getCollection("Tickets");
+           
+           collecttion.deleteMany({business_id:business_id,id:id});
+           return JSON.stringify(array);
+    }
+}
+
+/* 12 */
+{
+    "_id" : "Note_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Notes");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id ,id:id}).sort({ created_time: -1 }).limit(1);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 13 */
+{
+    "_id" : "Note_GetCustomerNotes",
+    "value" : function (business_id,customer_id,limit){
+         var collecttion = db.getCollection("Notes");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id ,customer_id:customer_id}).sort({created_time:-1}).limit(1);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 14 */
+{
+    "_id" : "Note_GetAll",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Notes");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id}).sort({created_time:-1}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 15 */
+{
+    "_id" : "Notes_Delete",
+    "value" : function (business_id,id){
+           var collecttion = db.getCollection("Notes");
+           
+           collecttion.deleteMany({business_id:business_id,id:id});
+           return JSON.stringify(array);
+    }
+}
+
+/* 16 */
+{
+    "_id" : "Shortcuts_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Shortcuts");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id ,id:id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 17 */
+{
+    "_id" : "Shortcuts_GetAll",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Shortcuts");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id}).sort({created_time:-1}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 18 */
+{
+    "_id" : "Shortcuts_Delete",
+    "value" : function (business_id,id){
+           var collecttion = db.getCollection("Shortcuts");
+           
+           collecttion.deleteMany({business_id:business_id,id:id});
+           return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 19 */
+{
+    "_id" : "Links_GetLinks",
+    "value" : function (business_id,channel_id,since,until,limit){
+         var collecttion = db.getCollection("Links");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id,
+           channel_id:channel_id,
+           timestamp:{$lte: Number(until)},
+           timestamp:{$gte: Number(since)}}
+           ).sort({created_time:-1}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 20 */
+{
+    "_id" : "Links_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Links");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id,id:id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 21 */
+{
+    "_id" : "Links_GetAll",
+    "value" : function (){
+         var collecttion = db.getCollection("Links");
+        var array =[]
+       var cursor =collecttion.find();
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 22 */
+{
+    "_id" : "Links_UpdateTimestamp",
+    "value" : function (business_id,id,timestamp){
+         var collecttion = db.getCollection("Links");
+        
+         collecttion.update({business_id:business_id,id:id,timestamp:{$lte:timestamp}},{$set:{timestamp:timestamp}},{multi:true,upsert:false}) 
+         return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 23 */
+{
+    "_id" : "Links_UpdateStatus",
+    "value" : function (business_id,id,status){
+         var collecttion = db.getCollection("Links");
+        
+         collecttion.update({business_id:business_id,id:id},{$set:{status:status,updated_time:new Date()}},{multi:true,upsert:false}) 
+         return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 24 */
+{
+    "_id" : "Nodes_GetNodes",
+    "value" : function (business_id,channel_id,since,until,limit){
+            var collecttion = db.getCollection("Nodes");
+            var array =[]
+            var cursor =collecttion.find({business_id: business_id,channel_id:channel_id
+               ,timestamp:{$lte: Number(until)},
+               timestamp:{$gte: Number(since)}}
+               ).sort({ created_time: -1 } ).limit(Number(limit));
+                    while ( cursor.hasNext() ) {
+                          array.push(cursor.next());
+                    }
+             return JSON.stringify(array);
+    }
+}
+
+/* 25 */
+{
+    "_id" : "Nodes_GetPendingNodes",
+    "value" : function (business_id,channel_id,type,since,until,limit){
+            var collecttion = db.getCollection("Nodes");
+            var array =[]
+            var cursor =collecttion.find({$and:[{business_id: business_id},
+                    {channel_id:channel_id},
+                    {status:'pending'},
+                    {timestamp:{$lte: Number(until)}},
+                    {timestamp:{$gte: Number(since)}},
+                    {$or :[{type:type },{type:''}]}
+                ]}
+                ).sort({ created_time: -1 } ).limit(Number(limit));
+                
+                    while ( cursor.hasNext() ) {
+                          array.push(cursor.next());
+                    }
+             return JSON.stringify(array);
+    }
+}
+
+/* 26 */
+{
+    "_id" : "Nodes_GetById",
+    "value" : function (business_id,id){
+            var collecttion = db.getCollection("Nodes");
+            var array =[]
+            var cursor =collecttion.find({business_id: business_id,id:id}
+                ).sort({ created_time: -1 } ).limit(1);
+                
+                    while ( cursor.hasNext() ) {
+                          array.push(cursor.next());
+                    }
+             return JSON.stringify(array);
+    }
+}
+
+/* 27 */
+{
+    "_id" : "Nodes_GetAll",
+    "value" : function (business_id,id){
+            var collecttion = db.getCollection("Nodes");
+            var array =[]
+            var cursor =collecttion.find({}).sort({ created_time: -1 } ).limit(10);
+                
+                    while ( cursor.hasNext() ) {
+                          array.push(cursor.next());
+                    }
+             return JSON.stringify(array);
+    }
+}
+
+/* 28 */
+{
+    "_id" : "Nodes_UpdateStatus",
+    "value" : function (business_id,id,status){
+            var collecttion = db.getCollection("Nodes");
+            
+            collecttion.update({business_id:business_id,id:id},{$set:{status:status,updated_time:new Date()}},{multi:true,upsert:false});
+                
+             return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 29 */
+{
+    "_id" : "Businesses_GetById",
+    "value" : function (id){
+         var collecttion = db.getCollection("Businesses");
+        var array =[]
+       var cursor =collecttion.find({id: id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 30 */
+{
+    "_id" : "Businesses_GetBusinesses",
+    "value" : function (limit){
+         var collecttion = db.getCollection("Businesses");
+        var array =[]
+       var cursor =collecttion.find({}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+       return JSON.stringify(array);
+    }
+}
+
+/* 31 */
+{
+    "_id" : "Businesses_Delete",
+    "value" : function (id){
+         var collecttion = db.getCollection("Businesses");
+        
+       var cursor =collecttion.deleteMany({id:id} );
+       return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 32 */
+{
+    "_id" : "Channels_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Channels");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id,id:id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 33 */
+{
+    "_id" : "Channels_GetAll",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Channels");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id}).sort({ created_time: -1 } ).limit(50);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+       return JSON.stringify(array);
+    }
+}
+
+/* 34 */
+{
+    "_id" : "Channels_GetChannels",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Channels");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 35 */
+{
+    "_id" : "Channels_GetChannelsByExtId",
+    "value" : function (ext_id,limit){
+         var collecttion = db.getCollection("Channels");
+        var array =[]
+       var cursor =collecttion.find({ext_id: ext_id}).sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 36 */
+{
+    "_id" : "Channels_Delete",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Channels");
+        
+       var cursor =collecttion.deleteMany({business_id:business_id,id:id});
+        return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 37 */
+{
+    "_id" : "Agents_GetAgents",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Agents");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id}
+       ]}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 38 */
+{
+    "_id" : "Agents_GetAll",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Agents");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 39 */
+{
+    "_id" : "Agents_GetById",
+    "value" : function (id){
+         var collecttion = db.getCollection("Agents");
+        var array =[]
+       var cursor =collecttion.find({id: id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 40 */
+{
+    "_id" : "Agents_GetById01",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Agents");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id,id:id});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 41 */
+{
+    "_id" : "GetByUserName",
+    "value" : function (username){
+         var collecttion = db.getCollection("Agents");
+        var array =[]
+       var cursor =collecttion.find({username:username}).limit(1);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 42 */
+{
+    "_id" : "Threads_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Threads");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id,id:id}).sort({ created_time: -1 } ).limit(1);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 43 */
+{
+    "_id" : "Threads_SearchThreadsDistinctCustomerByKeywords",
+    "value" : function (p_business_id,p_channel_id , p_agent_id , p_status, p_flag ,p_keywords,p_limit){
+         var collecttion = db.getCollection("Threads");
+        var array =[];
+        if(p_keywords==null || p_keywords=="" || p_keywords==undefined)
+        {
+            var cursor =collecttion.find({$and:[{business_id: p_business_id},
+                   {$or:[{p_channel_id:null},{channel_id:p_channel_id}]},
+                   {$or:[{p_agent_id:null},{agent_id:p_agent_id}]},
+                   {$or:[{p_status:null},{status:p_status}]},
+                   {$or:[{unread:true},{nonreply:true}]}
+               ]})
+            .sort({ created_time: -1 } ).limit(Number(p_limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         }
+         else
+         {
+             var cursor =collecttion.find({$text: { $search:  p_keywords }})
+                    .sort({ created_time: -1 } ).limit(Number(p_limit));
+           
+                    while ( cursor.hasNext() ) {
+                          array.push(cursor.next());
+                    } 
+         }
+         return JSON.stringify(array);
+    }
+}
+
+/* 44 */
+{
+    "_id" : "Threads_SearchThreadsByKeywords",
+    "value" : function (p_business_id,p_channel_id , p_agent_id , p_status, p_flag ,p_keywords,p_limit){
+         var collecttion = db.getCollection("Threads");
+        var array =[];
+        if(p_keywords==null || p_keywords=="" || p_keywords==undefined)
+        {
+           var cursor =collecttion.find({$and:[{business_id: p_business_id},
+                   {$or:[{p_channel_id:null},{channel_id:p_channel_id}]},
+                   {$or:[{p_agent_id:null},{agent_id:p_agent_id}]},
+                   {$or:[{p_status:null},{status:p_status}]},
+                   {$or:[{unread:true},{nonreply:true}]}
+               ]})
+               .sort({ created_time: -1 } ).limit(Number(p_limit));
+                        while ( cursor.hasNext() ) {
+                              array.push(cursor.next());
+                        }
+            }
+            else
+            {
+                 var cursor =collecttion.find({$text: { $search:  p_keywords }})
+                    .sort({ created_time: -1 } ).limit(Number(p_limit));
+           
+                    while ( cursor.hasNext() ) {
+                          array.push(cursor.next());
+                    }
+            }  
+         return JSON.stringify(array);
+    }
+}
+
+/* 45 */
+{
+    "_id" : "Threads_GetThreadsByCustomer",
+    "value" : function (business_id,customer_id,limit){
+         var collecttion = db.getCollection("Threads");
+        var array =[]
+       var cursor =collecttion.find({business_id: business_id,customer_id:customer_id})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 46 */
+{
+    "_id" : "Threads_GetUnreadOrNonReplyThreadsByCustomer",
+    "value" : function (business_id,customer_id,limit){
+         var collecttion = db.getCollection("Threads");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {customer_id: customer_id },
+                           {$or:[{unread:true},{nonreply:true}]} 
+                           ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 47 */
+{
+    "_id" : "Threads_GetThreadsWhereCustomerIsNull",
+    "value" : function (business_id,limit){
+        
+         var collecttion = db.getCollection("Threads");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id },
+               {$or:[{customer_id: "" },
+               {customer_id: null }]}
+                ]}).sort({ created_time: -1 } ).limit(Number(limit));
+                
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+          return JSON.stringify(array);
+    }
+}
+
+/* 48 */
+{
+    "_id" : "Threads_GetNoReponseThreads",
+    "value" : function (business_id,channel_id,since,until,limit){
+         var collecttion = db.getCollection("Threads");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                            {$or:[{$and:[{channel_id: {$ne:null}},{channel_id: {$ne:""}},{channel_id:channel_id}]}]},
+                           {type:"message" },
+                           {nonreply:false},
+                           {unread:false }
+                           ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 49 */
+{
+    "_id" : "Threads_GetChannelCounters",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Threads");
+        var array =[]
+       var cursor =collecttion.aggregate([
+                {$match:{business_id:business_id}},
+                {$group:{_id:{channel_id:$channel_id},
+                                    unread :{ $first: $unread },
+                                    id: { $first: $channel_id }
+                                    ,count:{$sum:1}}},
+                {$project:{_id:0}}                   
+        ]);
+                
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 50 */
+{
+    "_id" : "Threads_GetAgentCounters",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Threads");
+        var array =[]
+       var cursor =collecttion.aggregate([
+                {$match:{business_id:business_id}},
+                {$group:{_id:{agent_id:$agent_id},
+                                unread :{ $first: $unread },
+                                id: { $first: $agent_id }
+                                ,count:{$sum:1}}},
+                {$project:{_id:0}}                   
+        ]);
+                
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 51 */
+{
+    "_id" : "Threads_GetByIdFromCustomerId",
+    "value" : function (customer_id){
+         var collecttion = db.getCollection("Threads");
+        var array =[]
+       var cursor =collecttion.find({$and:[{id:customer_id }
+                           ]})
+       .sort({ created_time: -1 } ).limit(1);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 52 */
+{
+    "_id" : "Threads_UpdateLastVisits",
+    "value" : function (business_id,id,last_visits){
+            var collecttion = db.getCollection("Threads");
+                
+           collecttion.update({business_id:business_id,id:id},{$set:{last_visits:last_visits}},{upsert:false,multi:true})
+        return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 53 */
+{
+    "_id" : "Threads_UpdateCustomerId",
+    "value" : function (business_id,id,customer_id){
+            var collecttion = db.getCollection("Threads");
+                
+           collecttion.update({business_id:business_id,id:id},{$set:{customer_id:customer_id}},{upsert:false,multi:true})
+        return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 54 */
+{
+    "_id" : "Threads_Delete",
+    "value" : function (business_id,id,customer_id){
+            var collecttion = db.getCollection("Threads");
+                
+           collecttion.deleteMany({business_id:business_id,id:id})
+        return JSON.stringify(array);
+    }
+}
+
+/* 55 */
+{
+    "_id" : "Conversations_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Conversations");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {id:id }
+                           ]});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 56 */
+{
+    "_id" : "Conversations_GetConversations",
+    "value" : function (business_id,channel_id,since,until,limit){
+         var collecttion = db.getCollection("Conversations");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {channel_id:channel_id },
+                           {timestamp:{$gte: Number(since) } },
+                           {timestamp:{$lte: Number(until) } },
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 57 */
+{
+    "_id" : "Conversations_GetConversationsWhereExtIdIsNull",
+    "value" : function (business_id,channel_id,limit){
+         var collecttion = db.getCollection("Conversations");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {channel_id:channel_id },
+                           {$or:[{owner_ext_id:null},{owner_ext_id:""}]}
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 58 */
+{
+    "_id" : "Conversations_GetByOwnerExtId",
+    "value" : function (business_id,owner_ext_id){
+         var collecttion = db.getCollection("Conversations");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {owner_ext_id:owner_ext_id }
+                           ]})
+       .sort({ timestamp: -1 } ).limit(10);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 59 */
+{
+    "_id" : "Conversations_UpdateOwner",
+    "value" : function (business_id,id,owner_ext_id,owner_app_id){
+         var collecttion = db.getCollection("Conversations");
+        
+         collecttion.update({business_id:business_id,id:id},
+                   {$set:{owner_ext_id:owner_ext_id,owner_app_id:owner_app_id}},
+                   {multi:true,upsert:false}
+                   );
+       
+         return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 60 */
+{
+    "_id" : "Conversations_UpdateTimestamp",
+    "value" : function (business_id,id,timestamp){
+         var collecttion = db.getCollection("Conversations");
+        
+         collecttion.update({business_id:business_id,id:id},
+                   {$set:{timestamp:timestamp}},
+                   {multi:true,upsert:false}
+                   );
+       
+         return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 61 */
+{
+    "_id" : "Conversations_UpdateStatus",
+    "value" : function (business_id,id,status){
+         var collecttion = db.getCollection("Conversations");
+        
+         collecttion.update({business_id:business_id,id:id},
+                   {$set:{status:status,updated_time:new Date()}},
+                   {multi:true,upsert:false}
+                   );
+       
+        return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 62 */
+{
+    "_id" : "Customers_GetActiveUnreadCustomers",
+    "value" : function (business_id,agent_id,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {agent_id:agent_id },
+                           {status:"active" },
+                           {unread:true },
+                           ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 63 */
+{
+    "_id" : "Customers_GetActiveUnreadCustomers01",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {status:"active" },
+                           {unread:true },
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 64 */
+{
+    "_id" : "Customers_GetPendingUnreadCustomers",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {status:"pending" },
+                           {unread:true },
+                           ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 65 */
+{
+    "_id" : "Custormers_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                        {id:id }
+                           ]});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 66 */
+{
+    "_id" : "Custormers_GetCustomerId",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[
+                                {_id:id }
+                           ]});
+                           
+              while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 67 */
+{
+    "_id" : "Custormers_GetCustomers",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Customers");
+        var array =[];
+       var cursor =collecttion.find({$and:[{business_id:business_id }
+                           ]})
+       .sort({ created_time: -1 } ).limit(20);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 68 */
+{
+    "_id" : "Custormers_SearchCustomersByKeywords",
+    "value" : function (p_business_id,p_channel_id , p_agent_id , p_status, p_flag ,p_keywords,p_limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[];
+        if(p_keywords==null || p_keywords=="" || p_keywords==undefined)
+        {
+           var cursor =collecttion.find({$and:[{business_id: p_business_id},
+                   {$or:[{p_channel_id:null},{channel_id:p_channel_id}]},
+                   {$or:[{p_agent_id:null},{agent_id:p_agent_id}]},
+                   {$or:[{p_status:null},{status:p_status}]},
+                   {$or:[{p_flag: null},{$and:[{p_flag: "unread"},{unread:true}]},
+                           {$and:[{p_flag: "open"},{open:true}]},
+                           {$and:[{p_flag: "nonreply"},{unread:false},{nonreply:true}]}
+                   ]}
+               ]})
+               .sort({ timestamp: -1 } ).limit(Number(p_limit));
+                        while ( cursor.hasNext() ) {
+                              array.push(cursor.next());
+                        }
+            }
+            else
+            {
+                 var cursor =collecttion.find({$text: { $search:  p_keywords }})
+                    .sort({ timestamp: -1 } ).limit(Number(p_limit));
+           
+                    while ( cursor.hasNext() ) {
+                          array.push(cursor.next());
+                    }
+            }  
+         return JSON.stringify(array);
+                
+    }
+}
+
+/* 69 */
+{
+    "_id" : "Custormers_GetUnreadCustomers",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+              {timestamp:{$lte: Number(next)}},
+              {unread:true}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 70 */
+{
+    "_id" : "Custormers_GetUnreadCustomersByChannel",
+    "value" : function (business_id,channel_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+              {channel_id: channel_id},
+              {timestamp:{$lte: Number(next)}},
+              {unread:true}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 71 */
+{
+    "_id" : "Custormers_GetUnreadCustomersByAgent",
+    "value" : function (business_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+              {agent_id: agent_id},
+              {timestamp:{$lte: Number(next)}},
+              {unread:true}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 72 */
+{
+    "_id" : "Custormers_GetUnreadCustomersByChannelAndAgent",
+    "value" : function (business_id,channel_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},       
+               {agent_id: agent_id},
+               {timestamp:{$lte: Number(next)}},
+               {unread:true}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 73 */
+{
+    "_id" : "Custormers_GetCustomersWhereExtIdIsNull",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {timestamp:{$lte: Number(next)}},
+               {$or:[{ext_id:null},{ext_id:""}]}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 74 */
+{
+    "_id" : "Custormers_GetNonReplyCustomers",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {timestamp:{$lte: Number(next)}},
+               {nonreply:true}, 
+               {unread:false}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 75 */
+{
+    "_id" : "Custormers_GetNonReplyCustomersByChannel",
+    "value" : function (business_id,channel_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {timestamp:{$lte: Number(next)}},
+               {nonreply:true}, 
+               {unread:false}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 76 */
+{
+    "_id" : "Custormers_GetNonReplyCustomersByAgent",
+    "value" : function (business_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {agent_id: agent_id},
+               {timestamp:{$lte: Number(next)}},
+               {nonreply:true}, 
+               {unread:false}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 77 */
+{
+    "_id" : "Custormers_GetNonReplyCustomersByChannelAndAgent",
+    "value" : function (business_id,channel_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {agent_id: agent_id},
+               {timestamp:{$lte: Number(next)}},
+               {nonreply:true}, 
+               {unread:false}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 78 */
+{
+    "_id" : "Custormers_GetOpenCustomers",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {timestamp:{$lte: Number(next)}},
+               {open:true}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 79 */
+{
+    "_id" : "Custormers_GetAllCustomersByChannel",
+    "value" : function (business_id,channel_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {timestamp:{$lte: Number(next)}}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 80 */
+{
+    "_id" : "Custormers_GetOpenCustomersByChannel",
+    "value" : function (business_id,channel_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {timestamp:{$lte: Number(next)}},
+               {open:true}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 81 */
+{
+    "_id" : "Custormers_GetAllCustomersByAgent",
+    "value" : function (business_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {agent_id: agent_id},
+               {timestamp:{$lte: Number(next)}}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 82 */
+{
+    "_id" : "Custormers_GetOpenCustomersByAgent",
+    "value" : function (business_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {agent_id: agent_id},
+               {timestamp:{$lte: Number(next)}},
+               {open:true}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 83 */
+{
+    "_id" : "Custormers_GetAllCustomersByChannelAndAgent",
+    "value" : function (business_id,channel_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {agent_id: agent_id},
+               {timestamp:{$lte: Number(next)}}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 84 */
+{
+    "_id" : "Custormers_GetChannelCounters",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.aggregate([
+                {$match:{business_id:business_id ,unread:true}},
+                {$group: { _id: "$channel_id",
+                                unreads: {$sum: 1},
+                                counts: {$sum: 1}
+                                }},
+                {$project: {_id: 0,id: "$_id",
+                                        unread: "$unreads",
+                                        count: "$counts"
+                                    }}              
+        ]);
+                
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 85 */
+{
+    "_id" : "Customers_UpdateUserId",
+    "value" : function (business_id,key,user_id){
+         var collecttion = db.getCollection("Customers");
+     
+         collecttion.update({business_id:business_id,key:key,global_id:""},
+                {$set:{id:user_id,global_id:user_id}},
+                {multi:true,upsert:false});
+                
+      return JSON.stringify([{result:true}]); 
+    }
+}
+
+/* 86 */
+{
+    "_id" : "Customers_Delete",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Customers");
+     
+       collecttion.deleteMany({business_id:business_id,id:id});
+       return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 87 */
+{
+    "_id" : "Messages_GetAll",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Messages");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id }
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 88 */
+{
+    "_id" : "Messages_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Messages");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id} ,{id:id}
+                           ]});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 89 */
+{
+    "_id" : "Messages_GetCustomerOrAgentMessagesNonDeletedByThread",
+    "value" : function (business_id,customer_id,limit){
+         var collecttion = db.getCollection("Messages");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id} ,{customer_id:customer_id},{starred:true}
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 90 */
+{
+    "_id" : "Messages_GetNonDeletedMessagesByThread",
+    "value" : function (business_id,thread_id,next,limit){
+         var collecttion = db.getCollection("Messages");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id} ,
+                   {thread_id:thread_id},
+                   {deleted:false},
+                   {timestamp:{$lte: Number(next)}}
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 91 */
+{
+    "_id" : "Messages_GetMessagesByCustomer",
+    "value" : function (business_id,customer_id,next,limit){
+         var collecttion = db.getCollection("Messages");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id}
+                    ,{customer_id:customer_id}
+                    //,{timestamp:{$lte: Number(next)}}
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+       return JSON.stringify(array);
+    }
+}
+
+/* 92 */
+{
+    "_id" : "Messages_GetMessagesByCustomerExcludeCurrentThread",
+    "value" : function (business_id,customer_id,thread_id,next,limit){
+         var collecttion = db.getCollection("Messages");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id} ,
+                   {customer_id:customer_id},
+                   {thread_id: {$ne:thread_id}}
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 93 */
+{
+    "_id" : "Messages_MarkAsDeleted",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Messages");
+        
+         collecttion.update({business_id:business_id,id:id} ,
+                   {$set:{deleted:1}},
+                   {upsert:false, multi: true});
+                   
+         return JSON.stringify([{result:true}]);
+    }
+}
+
+/* 94 */
+{
+    "_id" : "Attachments_GetAttachments",
+    "value" : function (business_id,channel_id,product_id,since,until,limit){
+         var collecttion = db.getCollection("Attachments");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {product_id: product_id},
+               {timestamp: {$lte: Number(until)}},
+               {timestamp: {$gte:Number(since)}}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 95 */
+{
+    "_id" : "Attachments_GetById",
+    "value" : function (business_id,channel_id,id){
+         var collecttion = db.getCollection("Attachments");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {id: id}
+               ]})
+       .sort({ timestamp: -1 } ).limit(1);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 96 */
+{
+    "_id" : "Attachments_GetAll",
+    "value" : function (business_id,channel_id,limit){
+         var collecttion = db.getCollection("Attachments");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id}
+               ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 97 */
+{
+    "_id" : "Report_GetAgentChartData",
+    "value" : function (business_id,since,until){
+         var collecttion = db.getCollection("MessagesHistory");
+        var array =[];
+       var cursor =collecttion.aggregate([
+                {$match:{$and:[{timestamp:{$gte: Number(since) }},
+                                 {timestamp:{$lte:  Number(until) }},
+                                 {agent_id:{$ne: ""}},
+                                 {business_id: business_id }
+                                ]}},
+                {$group: {_id: "$agent_id",
+                                customer_ids: {$addToSet: "$customer_id"},
+                                thread_ids: {$addToSet: "$thread_id"},
+                                count: {$sum: 1}
+                                }},
+                {$project: {_id: 0, 
+                                        id: $_id, 
+                                        customers: {$size: "$customer_ids"}, 
+                                        conversations: {$size: "$thread_ids"}  ,
+                                        messages: $count
+                                   }}
+        ]);
+                
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 98 */
+{
+    "_id" : "Report_GetCustomerChatChartData",
+    "value" : function (business_id,since,until){
+         var collecttion = db.getCollection("MessagesHistory");
+        var array =[];
+       var cursor =collecttion.aggregate([
+                {$match:{$and:[{timestamp:{$gte: Number(since)}},
+                                 {timestamp:{$lte: Number(until) }},
+                                 {business_id: business_id }
+                                ]}},
+                {$group: {_id:  { $dateToString: { format: "%Y-%m-%d", date: "$created_time"}} ,
+                                customer_ids: {$addToSet: "$customer_id"},
+                                thread_ids: {$addToSet: "$thread_id"},
+                                inbox_replies: {$addToSet: {$cond: { if: {$and:[ {$eq: ["$thread_type", message]},{$ne: ["$agent_id", null]},{$ne: ["$agent_id",""]} ]}, then: 1, else: 0 } } },
+                                comment_replies: {$addToSet: {$cond: { if: {$and:[ {$eq: ["$thread_type", comment]},{$ne: ["$agent_id", null]},{$ne: ["$agent_id", ""]} ]}, then: 1, else: 0 } } },
+                                inboxes: {$addToSet: {$cond: { if: {$and:[ {$eq: ["$thread_type", message]},{$ne: ["$sender_ext_id", "$channel_ext_id"]} ]}, then: 1, else: 0 } } },
+                                comments: {$addToSet: {$cond: { if: {$and:[ {$eq: ["$thread_type", comment]},{$ne: ["$sender_ext_id", "$channel_ext_id"]} ]}, then: 1, else: 0 } } },
+                            }},
+               {$project: {_id: 0,
+                                        date: "$_id",
+                                        customers: {$size: "$customer_ids"},
+                                        conversations: {$size: "$thread_ids"},
+                                        inbox_replies: {$size: "$inbox_replies"},
+                                        comment_replies: {$size: "$comment_replies"},
+                                        inboxes: {$size: "$inboxes"},
+                                        comments: {$size: "$comments"}
+                                }}
+        ]).sort({ date: -1});
+                
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 99 */
+{
+    "_id" : "test",
+    "value" : function (){
+        
+         
+          var Customers= db.getCollection("Customers");
+        var Messages= db.getCollection("Messages");
+        var ar =[];
+        var nonreply = false;
+        Customers.find({nonreply:true,unread:false}).forEach(function(val){
+            var tt = Messages.find({customer_id:val.id}).sort({timestamp:-1}).limit(1);
+            if(tt[0].sender_ext_id != tt[0].channel_ext_id)
+            {
+                noreply=true;
+                 ar.push({id:tt[0].id, nonreply :true});
+                 Customers.update({id:val.id},{$set:{nonreply:true}},{upsert:false,multi:false});
+            }
+            else                
+            {ar.push({id:tt[0].id, nonreply :false});
+            Customers.update({id:val.id},{$set:{nonreply:false}},{upsert:false,multi:false});
+        }
+            //if(tt !=null && tt !=undefined && tt[0]!=null)
+            //Referrals.update({id:val.id},{$set:{customer_id: tt[0].customer_id}},{multi:false,upsert:false});
+        });
+        
+        return ar;
+      
+        /*
+        var Threads= db.getCollection("Threads");
+        var Messages= db.getCollection("Messages");
+        var ar =[];
+        Threads.find({customer_id:null}).forEach(function(val){
+             var cus = Messages.find({id:val.owner_last_message_ext_id});
+            if(cus !=null && cus !=undefined && cus[0]!=null  && cus!= undefined)
+            {
+               Threads.update({id:val.id},{$set:{customer_id: cus[0].customer_id}},{multi:false,upsert:false});
+            
+                ar.push({threadid: val.id, customer_id:cus[0].customer_id});
+            }
+            
+            var cus = Customers.find({active_thread:{$regex:val.id}});
+            
+            
+            if(cus !=null && cus !=undefined && cus[0]!=null  && cus!= undefined)
+            {
+                Threads.update({id:val.id},{$set:{customer_id: cus[0].id}},{multi:false,upsert:false});
+            
+                ar.push({threadid: val.id, customer:cus[0].id});
+            }
+            });
+            
+            return ar;
+            */
+        /*
+        var Threads= db.getCollection("Threads");
+       var Referrals= db.getCollection("Referrals");
+        var ar =[];
+        Referrals.find({}).forEach(function(val){
+            Threads.find({id:val.thread_id}).forEach(function(val1){
+                   Referrals.update({id:val.id},{$set:{customer_id: val1.customer_id}},{multi:false,upsert:false});
+                //ar.push({id:val.id,customer_id:val1.customer_id});
+                });
+            });
+        
+        return ar;
+        */
+        /*
+        var Customers= db.getCollection("Customers");
+        var ar =[];
+       Customers.find({phone_list:{ $regex:"]"}}).limit(200).forEach(function(val){
+           try{
+                if(val.phone_list =="[]")
+                {
+                    Customers.update({id:val.id},{$set:{phone_list:[]}},{multi:false, upsert:false});
+                    
+                }
+                else
+                {
+                    try{
+                            var sp = val.phone_list.split('\"');
+                            for(var i =0;i< sp.length ; i++)
+                            {
+                                if(i%2!=0)
+                                    ar.push(sp[i]);
+                            }
+                            Customers.update({id:val.id},{$set:{phone_list:ar}},{multi:false, upsert:false});
+                        }catch(e){return e;}
+                }
+            }catch(ex){return ex;}
+        });
+        
+        return ar;
+        */
+        /*
+       var today = new Date();
+var tomorrow = new Date();
+tomorrow.setDate(today.getDate()-2);
+        return tomorrow;
+        */
+    }
+}
+
+/* 100 */
+{
+    "_id" : "Agents_GetOnlineAgents",
+    "value" : function (business_id,limit){
+         var collecttion = db.getCollection("Agents");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+       {status: 'online'}
+       ]});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 101 */
+{
+    "_id" : "Messages_GetMessagesByThread",
+    "value" : function (business_id,thread_id,next,limit){
+         var collecttion = db.getCollection("Messages");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {thread_id:thread_id },
+                           //{timestamp:{$lte:Number(next)} }
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 102 */
+{
+    "_id" : "Messages_GetStarredMessagesByCustomer",
+    "value" : function (business_id,customer_id,limit){
+         var collecttion = db.getCollection("Messages");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id },
+                           {customer_id:customer_id },
+                           {starred:false }
+                           ]})
+       .sort({ timestamp: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 103 */
+{
+    "_id" : "Job_UpdateCustomerIdNull",
+    "value" : function (){
+        
+            var Threads = db.getCollection("Threads");
+            var Messages = db.getCollection("Messages");
+        var array=[];
+           Messages.find({customer_id: null}).limit(100).forEach(function(mes){
+              
+                  var checkThread = Threads.count({id :mes.thread_id });
+                  if(checkThread==0)
+                  {
+                        Messages.deleteMany({id:mes.id});
+                  }
+                  else
+                  {
+                        Threads.find({id :mes.thread_id }).forEach(function(thr)
+                        {
+                            array.push(mes);
+                            if(thr.customer_id==null)
+                            {
+                                
+                                Messages.deleteMany({id:mes.id});
+                                Threads.deleteMany({id:thr.id});
+                            }
+                            else
+                            {
+                                 Threads.update({id:thr.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});
+                                 Messages.update({id:mes.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});
+                            }
+                        })
+                    }
+                    });
+         return array;
+    }
+}
+
+/* 104 */
+{
+    "_id" : "Job_Excute",
+    "value" : function (){
+        Job_Referrals_UpdateCustomerId();
+        
+        
+ /*
+        Job_Customer_UpdateStatus();
+        Job_Messages_Update_CustomerNull01();
+        // Job_UpdateCustomerIdNull();
+       Job_Notes_UpdateCustomerId();
+       Job_Referrals_Update_CustomerIdNull();
+       Job_Tickets_Update_CustomerIdNull();
+        
+        */
+       return true;
+        
+    }
+}
+
+/* 105 */
+{
+    "_id" : "Job_Notes_UpdateCustomerId",
+    "value" : function (){
+            var Notes = db.getCollection("Notes");
+            var Threads = db.getCollection("Threads");
+            var array=[];
+        
+            Notes.find({customer_id: null}).limit(10).forEach(function(not){
+               var checkThread =Threads.count({id :not.thread_id });
+               if(checkThread==0)
+               {
+                   Notes.deleteMany({id: not.id});
+               }
+               else
+               {
+                  Threads.find({id :not.thread_id }).forEach(function(thr)
+                        {
+                            array.push(thr);
+                            if(thr.customer_id==null)
+                            {
+                                Notes.deleteMany({id: not.id});
+                            }
+                            else
+                            {
+                                  Threads.update({id:thr.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});
+                                  Notes.update({id:not.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});
+                            }
+                        })
+               }
+           });
+         return JSON.stringify(array);
+    }
+}
+
+/* 106 */
+{
+    "_id" : "Job_Referrals_Update_CustomerIdNull",
+    "value" : function (){
+            var Referrals = db.getCollection("Referrals");
+            var Threads = db.getCollection("Threads");
+            var array=[];
+        
+            Referrals.find({customer_id: null}).limit(10).forEach(function(ref){
+               var checkThread =Threads.count({id :ref.thread_id });
+               if(checkThread==0)
+               {
+                   Referrals.deleteMany({id: ref.id});
+               }
+               else
+               {
+                  Threads.find({id :ref.thread_id }).forEach(function(thr)
+                        {
+                            array.push(thr);
+                            if(thr.customer_id==null)
+                            {
+                                Referrals.deleteMany({id: ref.id});
+                            }
+                            else
+                            {
+                                        Threads.update({id:thr.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});
+                                        Referrals.update({id:ref.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});
+                            }
+                        })
+               }
+           });
+         return JSON.stringify(array);
+    }
+}
+
+/* 107 */
+{
+    "_id" : "Job_Tickets_Update_CustomerIdNull",
+    "value" : function (){
+            var Tickets = db.getCollection("Tickets");
+            var Threads = db.getCollection("Threads");
+            var array=[];
+        
+            Tickets.find({customer_id: null}).limit(10).forEach(function(tic){
+               var checkThread =Threads.count({id :tic.thread_id });
+               if(checkThread==0)
+               {
+                   Tickets.deleteMany({id: tic.id});
+               }
+               else
+               {
+                  Threads.find({id :tic.thread_id }).forEach(function(thr)
+                        {
+                            array.push(thr);
+                            if(thr.customer_id==null)
+                            {
+                                Tickets.deleteMany({id: tic.id});
+                            }
+                            else
+                            {
+                               Threads.update({id:thr.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});
+                               Tickets.update({id:tic.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});                               
+                            }
+                        })
+               }
+           });
+         return JSON.stringify(array);
+    }
+}
+
+/* 108 */
+{
+    "_id" : "Job_Messages_Update_CustomerNull01",
+    "value" : function (){
+        
+        Messages = db.getCollection("Messages");
+        var checkMessage= Messages.count({customer_id: null});
+        if(checkMessage==0) return 0;
+            
+        Threads = db.getCollection("Threads");
+        Customers = db.getCollection("Customers");
+        
+        var array=[];
+           Messages.find({customer_id: null}).limit(1000).forEach(function(mes){
+               var checkThread = Threads.count({id :mes.thread_id });
+                  if(checkThread==0)
+                  {
+                       array.push({messages_id:mes.id,same:0});
+                       //Messages.deleteMany({id:mes.id});
+                  }
+                  else
+                  {
+                      
+                      Threads.find({id :mes.thread_id }).forEach(function(thr)
+                        {
+                            if(thr.customer_id == null)
+                            {                               
+                                var today = new Date();
+                                var timeOld = new Date();
+                                timeOld.setDate(today.getDate()-2);
+                                // tim xem customer co ten do khong. xem co nhieu ten trung khong. neu 1 ten trung thì su dung luon, > 1 thi check them thoi diem gan nhat , con khong thi xoa ca 2
+                                var checkCustomer =Customers.find([{name :thr.owner_name},{name: thr.sender_name }]);
+                                array.push({messages_id:mes.id, thread_id: thr.id,same:4});
+                                if(checkCustomer >= 1)
+                                {                                     
+                                        if(checkCustomer == 1)
+                                        {
+                                             Customers.find({$or:[{name :thr.owner_name},{name: thr.sender_name }]}).forEach(function(cus)
+                                                {
+                                                    array.push({messages_id:mes.id, thread_id: thr.id, customer_id: cus.id,same:1});
+                                                    
+                                                    Threads.update({id:thr.id},{$set:{customer_id:cus.id}},{upsert:false,multi:false});
+                                                    Messages.update({id:mes.id},{$set:{customer_id:cus.id}},{upsert:false,multi:false});
+                                                });
+                                               
+                                        }
+                                        if(checkCustomer > 1)
+                                        {
+                                            Customers.find({$or:[{name :thr.owner_name},{name: thr.sender_name }, {updated_time :{$gte: timeOld}}]}).forEach(function(cus)
+                                            {
+                                                array.push({messages_id:mes.id, thread_id: thr.id, customer_id: cus.id,same:2});
+                                                
+                                                Threads.update({id:thr.id},{$set:{customer_id:cus.id}},{upsert:false,multi:false});
+                                                Messages.update({id:mes.id},{$set:{customer_id:cus.id}},{upsert:false,multi:false});
+                                            })
+                                        }
+                                }
+                                else
+                                {
+                                    array.push({messages_id:mes.id, thread_id: thr.id,same:5});
+                                    // neu khong co nua thi xoa
+                                //   Threads.deleteMany({id:thr.id});
+                                 //  Messages.deleteMany({id:mes.id});
+                                }
+                            }
+                            else
+                            {
+                                array.push({messages_id:mes.id, thread_id: thr.id,same:6});
+                                 Messages.update({id:mes.id},{$set:{customer_id:thr.customer_id}},{upsert:false,multi:false});
+                            }
+                        });
+                  }
+           })
+        
+       return array;
+    }
+}
+
+/* 109 */
+{
+    "_id" : "Customers_GetById",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[
+                        {_id:id }
+                           ]});
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 110 */
+{
+    "_id" : "Customers_GetAgentCounters",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Customers");
+        var array =[];
+       var cursor =collecttion.aggregate([
+                {$match:{business_id:business_id ,unread:true}},
+                {$group: {_id: "$agent_id", 
+                                unreads: {$sum: 1},
+                                counts: {$sum: 1}
+                                }},
+                {$project: {_id: 0, 
+                                        id: "$_id", 
+                                        unread: "$unreads",
+                                        count: "$counts"
+                                    }}
+        ]);
+                
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 111 */
+{
+    "_id" : "Customers_GetAll",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id }
+                           ]})
+       .sort({ created_time: -1 } ).limit(50);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+       return JSON.stringify(array);
+   }
+}
+
+/* 112 */
+{
+    "_id" : "Customers_GetAllCustomers",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id}
+               ]}).sort({created_time:-1}).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 113 */
+{
+    "_id" : "Customers_GetAllCustomersByChannel",
+    "value" : function (business_id,channel_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 114 */
+{
+    "_id" : "Customers_GetAllCustomersByChannelAndAgent",
+    "value" : function (business_id,channel_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {agent_id: agent_id}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 115 */
+{
+    "_id" : "Customers_GetCustomerId",
+    "value" : function (business_id,id){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id:business_id},
+                                {id:id }
+                           ]});
+                           
+              while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 116 */
+{
+    "_id" : "Customers_GetCustomers",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Customers");
+        var array =[];
+       var cursor =collecttion.find({$and:[{business_id:business_id }
+                           ]})
+       .sort({ created_time: -1 } ).limit(20);
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 117 */
+{
+    "_id" : "Customers_GetCustomersWhereExtIdIsNull",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {$or:[{ext_id:null},{ext_id:""}]}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 118 */
+{
+    "_id" : "Customers_GetNonReplyCustomers",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {nonreply:true}, 
+               {unread:false}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 119 */
+{
+    "_id" : "Customers_GetNonReplyCustomersByAgent",
+    "value" : function (business_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {agent_id: agent_id},
+               {nonreply:true}, 
+               {unread:false}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 120 */
+{
+    "_id" : "Customers_GetNonReplyCustomersByChannel",
+    "value" : function (business_id,channel_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {nonreply:true}, 
+               {unread:false}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 121 */
+{
+    "_id" : "Customers_GetNonReplyCustomersByChannelAndAgent",
+    "value" : function (business_id,channel_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {agent_id: agent_id},
+               {nonreply:true}, 
+               {unread:false}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 122 */
+{
+    "_id" : "Customers_GetOpenCustomers",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {open:true}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 123 */
+{
+    "_id" : "Customers_GetOpenCustomersByAgent",
+    "value" : function (business_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {agent_id: agent_id},
+               {open:true}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 124 */
+{
+    "_id" : "Customers_GetOpenCustomersByChannel",
+    "value" : function (business_id,channel_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},
+               {open:true}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 125 */
+{
+    "_id" : "Customers_GetUnreadCustomers",
+    "value" : function (business_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+              {unread:true}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 126 */
+{
+    "_id" : "Customers_GetUnreadCustomersByAgent",
+    "value" : function (business_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+              {agent_id: agent_id},
+              {unread:true}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 127 */
+{
+    "_id" : "Customers_GetUnreadCustomersByChannel",
+    "value" : function (business_id,channel_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+              {channel_id: channel_id},
+              {unread:true}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 128 */
+{
+    "_id" : "Customers_GetUnreadCustomersByChannelAndAgent",
+    "value" : function (business_id,channel_id,agent_id,next,limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.find({$and:[{business_id: business_id},
+               {channel_id: channel_id},       
+               {agent_id: agent_id},
+               {unread:true}
+               ]})
+       .sort({ created_time: -1 } ).limit(Number(limit));
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+        return JSON.stringify(array);
+    }
+}
+
+/* 129 */
+{
+    "_id" : "Customers_SearchCustomersByKeywords",
+    "value" : function (p_business_id,p_channel_id , p_agent_id , p_status, p_flag ,p_keywords,p_limit){
+         var collecttion = db.getCollection("Customers");
+        var array =[];
+        if(p_keywords==null || p_keywords=="" || p_keywords==undefined)
+        {
+           var cursor =collecttion.find({$and:[{business_id: p_business_id},
+                   {$or:[{p_channel_id:null},{channel_id:p_channel_id}]},
+                   {$or:[{p_agent_id:null},{agent_id:p_agent_id}]},
+                   {$or:[{p_status:null},{status:p_status}]},
+                   {$or:[{p_flag: null},{$and:[{p_flag: "unread"},{unread:true}]},
+                           {$and:[{p_flag: "open"},{open:true}]},
+                           {$and:[{p_flag: "nonreply"},{unread:false},{nonreply:true}]}
+                   ]}
+               ]})
+               .sort({ created_time: -1 } ).limit(Number(p_limit));
+                        while ( cursor.hasNext() ) {
+                              array.push(cursor.next());
+                        }
+            }
+            else
+            {
+                 var cursor =collecttion.find({$text: { $search:  p_keywords }})
+                    .sort({ created_time: -1 } ).limit(Number(p_limit));
+           
+                    while ( cursor.hasNext() ) {
+                          array.push(cursor.next());
+                    }
+            }  
+         return JSON.stringify(array);
+                
+    }
+}
+
+/* 130 */
+{
+    "_id" : "Customers_GetChannelCounters",
+    "value" : function (business_id){
+         var collecttion = db.getCollection("Customers");
+        var array =[]
+       var cursor =collecttion.aggregate([
+                {$match:{business_id:business_id ,unread:true}},
+                {$group: { _id: "$channel_id",
+                                unreads: {$sum: 1},
+                                counts: {$sum: 1}
+                                }},
+                {$project: {_id: 0,id: "$_id",
+                                        unread: "$unreads",
+                                        count: "$counts"
+                                    }}              
+        ]);
+                
+                while ( cursor.hasNext() ) {
+                      array.push(cursor.next());
+                }
+         return JSON.stringify(array);
+    }
+}
+
+/* 131 */
+{
+    "_id" : "Job_Customer_UpdateStatus",
+    "value" : function (){
+            var Customers = db.getCollection("Customers");
+            var Threads = db.getCollection("Threads");
+            var array=[];
+        
+            Threads.find({updated_time: {$gte:new Date(ISODate().getTime() - 1000 * 60 * 5)  }}).forEach(function(val){
+                Threads.find({customer_id: val.customer_id  }).sort({updated_time:-1}).limit(1).forEach(function(val1){
+                    Customers.update({id:val1.customer_id },{$set:{unread: val1.unread , nonreply:val1.nonreply}},{multi:false, upsert :false});
+                    array.push(val1.customer_id );
+                });
+             });
+         return array;
+     }
+}
+
+/* 132 */
+{
+    "_id" : "Web_GetSuggestionsNotAgent",
+    "value" : function (created_by,keyword){
+       // var ParentSession = db.getCollection("ParentSession");
+        //var ProductGeneral = db.getCollection("ProductGeneral");
+        var Shortcuts = db.getCollection("Shortcuts");
+        //var cursor = SuggestionsSearch.find({$text: {$search:  keyword}},{_id:0});
+        var array =[];
+        Shortcuts.find({created_by:created_by}).forEach(function(val){
+                      array.push({value:val.shortcut,data:val.name,title:val.shortcut});
+                  });
+         return JSON.stringify(array);
+        //return cursor[0];
+    }
+}
+
+/* 133 */
+{
+    "_id" : "Job_Referrals_UpdateCustomerId",
+    "value" : function (){
+            var Referrals= db.getCollection("Referrals");
+            var Threads= db.getCollection("Threads");
+            Referrals.find({customer_id:null}).forEach(function(val){
+            var tt = Threads.find({id:val.thread_id})
+            if(tt !=null && tt !=undefined && tt[0]!=null)
+            Referrals.update({id:val.id},{$set:{customer_id: tt[0].customer_id}},{multi:false,upsert:false});
+        });
+         return 1;
+    }
+}
+
+/* 134 */
+{
+    "_id" : "WitEntitiesCheck",
+    "value" : function (intent,keyword,synonym){
+        try{
+            var collection= db.getCollection('WitEntities');
+            if(intent != null && intent != undefined && intent != "")
+            {
+                var check= collection.find({ intent:intent});
+                if(check.length()<=0)
+                {
+                        WitEntitiesInsert(intent,keyword,synonym,"createentities");
+                        return {action: "CreateEntities",values:""};                    
+                }
+            }
+            if(keyword != null && keyword != undefined && keyword != "")
+            {
+                check= collection.find({ keyword:keyword});
+                if(check.length()<=0)
+                {
+                        WitEntitiesInsert(intent,keyword,synonym,"createkeyword");
+                        return {action: "CreateKeyword",values:""}
+                }
+            }
+            if(synonym != null && synonym != undefined && synonym != "")
+            {
+                check= collection.find({ synonyms:synonym});
+                if(check.length()<=0)
+                {
+                    var ar = [];
+                    var i =0;
+                      collection.find({ intent:intent }).forEach(function(val){
+                                if(val.keyword == keyword)
+                                {
+                                    ar.push({value: val.keyword, expressions:val.synonyms}) 
+                                    ar[i].expressions.push(synonym)   ; 
+                                }
+                                else
+                                    ar.push({value: val.keyword, expressions:val.synonyms})                                        
+                                    
+                                     // bo di so 0 trong synonyms
+                                      var spString = val.keyword.split('0');
+                                      var number = val.keyword.replace( /\D+/g, ''); 
+                                    var shortv =spString[0]+parseInt(number);
+                                   if(!ar[i].expressions.includes(shortv)) 
+                                      ar[i].expressions.push(shortv) ;    
+                                
+                                   // them keyword
+                                    if(!ar[i].expressions.includes(val.keyword)) 
+                                      ar[i].expressions.push(val.keyword) ;    
+                                   
+                                i++;   
+                          });  
+                          WitEntitiesInsert(intent,keyword,synonym,"addsynonym");
+                        return {action:"addsynonym",values: ar };
+                }
+            }
+            return {action:"AlreadyExists",values:""}
+        }catch(e){return [];}
+        }
+}

@@ -1,0 +1,74 @@
+﻿@model Hibaza.CCP.Domain.Models.NoteModel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog lg-note_send">
+    <div class="modal-content">
+        <!-- Modal Header-->
+        <div class="modal-header">
+            <button type="button" data-dismiss="modal" class="close">
+                <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+            </button>
+            <h4 id="myModalLabel" class="modal-title lg-add-note-customer">
+                Add a note about your customer
+            </h4>
+        </div>
+
+        <!-- Modal Body-->
+        <div class="modal-body">
+            <form id="send-note-form" role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label for="id_text" class="control-label col-sm-3 lg-your-note">Text of your note</label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control js-focus-on-load" cols="40" id="id_text" name="text" rows="10" required=""></textarea>
+
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">
+                        <input id="id_featured" name="featured" type="checkbox"> <span class="lg-highlighted-note">Is it a highlighted note?</span>
+                    </label>
+                </div>
+            </form>
+        </div>
+        <!-- Modal Footer-->
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-default lg-cancel">
+                Cancel
+            </button>
+            <button id="js-custome-note-save" type="button" class="btn btn-primary lg-save">
+                Save
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    readFileLang(localStorage.getItem("lang"), "note_send");
+
+    var url = new URL(cloud.getURLs().customers.send_note + businessID + "/" + "@(Model.thread_id)/");
+
+    $("#send-note-form").on('submit', function (e) {
+        e.preventDefault();
+        cloud.sendForm(document.getElementById("send-note-form"), url.getURL(), function (response) {
+            if (!response.ok && response.view) $("#wz-modal-add-note").html(response.view);
+            else {
+                $("#wz-modal-add-note").modal('hide');
+                cloud.getCustomerProfile(currentChat);
+            }
+        });
+    });
+    setShortcuts($("#id_text"), $("#send-note-form"));
+    $("#js-custome-note-save").on('click', function (e) {
+        e.preventDefault();
+        cloud.sendForm(document.getElementById("send-note-form"), url.getURL(), function (response) {
+            if (!response.ok && response.view) $("#wz-modal-add-note").html(response.view);
+            else {
+                $("#wz-modal-add-note").modal('hide');
+                cloud.getCustomerProfile(currentChat);
+            }
+        });
+    });
+    mixpanelEvents('addClientNote');
+</script>

@@ -1,0 +1,59 @@
+﻿#sideleft1-scroll .icon-phone {
+    float: left;
+    margin-left: 1px;
+}
+
+
+.phone-tr-row {
+    padding-top: 10px;
+}
+
+.phone-order-price {
+    float: right;
+    color: red;
+    font-weight: bold;
+}
+
+.phone-order-time {
+    float: right;
+    font-style: italic;
+    font-size: small;
+}
+
+.phone-order-status {
+    color: blue;
+}
+
+.phone-order-attribute {
+    padding-left: 10px;
+}
+
+.phone-order-line {
+    margin-top: 5px;
+    background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+    height: 1px;
+}
+
+
+.phone-order-detail {
+    padding-top: 8px;
+}
+
+.js-agent-phone {
+    position: absolute;
+    top: 9px;
+    left: 5px;
+    width: 14px;
+    height: 14px;
+    background-color: #8992f7;
+    border-radius:50%;
+    margin:2px;
+}
+
+.icon-phone {
+color:gainsboro;
+}
+
+.js-list-conversations .icon-phone {
+top:-3px !important;
+}

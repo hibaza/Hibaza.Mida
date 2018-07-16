@@ -1,0 +1,116 @@
+﻿@model Hibaza.CCP.Web.Models.ChannelAddEdit
+@{
+    ViewBag.Title = "Add zalo channel for personal";
+    Layout = null;
+}
+
+
+<form id="channels-zalo-form lg-channel_zalo_personal" style="margin:65px">
+    <div class="form-group wz-container col-xs-12">
+        <div class="row wz-advanced col-xs-12">
+            <input class="form-control hidden" id="id_zalo_channelid" name="page_oaid" type="text" value="@(Model.ChannelId)">
+            <input class="form-control hidden" id="id_zalo_business_id" name="page_oaid" type="text" value="@(Model.BusinessId)">
+            <div class="form-group">
+                <label class="control-label">
+                    App ID
+                </label>
+                <input class="form-control" id="id_zalo_appid" name="page_oaid" type="text" value="@(Model.PageId)" required="">
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    App Secret
+                </label>
+                <input class="form-control" id="id_zalo_appsecret" name="page_oasecret" type="text" value="@(Model.Secret)" required="">
+            </div>
+            <div class="form-group">
+                <label class="control-label lg-app-name">
+                    App Name
+                </label>
+                <input class="form-control" id="id_zalo_name" name="page_name" type="text" value="@(Model.PageName)" required="">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label lg-template-id-customer">
+                    Template ID send to customer
+                </label>
+                <input class="form-control" id="id_zalo_templateid" name="templateid" type="text" value="@(Model.TemplateId)" required="">
+            </div>
+
+        </div>
+        <div class="form-group">
+            <a href="" class="zalo-get-token" target="_blank">Save</a>           
+        </div>
+        <h4 class="info-message"></h4>
+
+    </div>
+</form>
+
+
+<script>
+    
+    readFileLang(localStorage.getItem("lang"), "channel_zalo_personal");
+    $(document).ready(function () {
+        $("#id_zalo_appid").change(function () {
+            createLinkToken();
+        });
+        $("#id_zalo_appsecret").change(function () {
+            createLinkToken();
+        });
+        $("#id_zalo_name").change(function () {
+            createLinkToken();
+        });
+        $("#id_zalo_templateid").change(function () {
+            createLinkToken();
+        });
+        createLinkToken();
+    });
+    //function setZaloToken() {
+    //    try {
+    //        var channel_id = $("#id_zalo_channelid").val();
+    //        var business_id = $("#id_zalo_business_id").val();
+    //        if (channel_id == null || channel_id == undefined || channel_id == "")
+    //            channel_id = business_id + "_" + $("#id_zalo_oaid").val();
+    //        var uri = cloud.getURLs().channels.zalo_upsert + myID + "/" + business_id + "/" + channel_id + "/" + $("#id_zalo_oaid").val() + "/" + $("#id_zalo_oasecret").val() + "/" + $("#id_zalo_name").val();
+    //        console.log(uri);
+
+    //        $.get(uri, function (o) {
+    //            if (o.ok) {
+    //                $('#channels-main').removeClass('hide');
+    //                $('#channels-edit').addClass('hide');
+    //                // $('.channels-edit').html(o.data);
+    //            }
+    //        });
+    //    } catch (e) { console.log(e); }
+    //}
+
+    function createLinkToken() {
+        try {
+            var id_zalo_appid = $("#id_zalo_appid").val();
+            var id_zalo_business_id = $("#id_zalo_business_id").val();
+            var id_zalo_appsecret = $("#id_zalo_appsecret").val();
+            var id_zalo_name = $("#id_zalo_name").val();
+            var id_zalo_templateid = $("#id_zalo_templateid").val();
+
+            var id_zalo_channelid = $("#id_zalo_channelid").val();
+            if (id_zalo_channelid == null || id_zalo_channelid == undefined || id_zalo_channelid == "")
+                id_zalo_channelid = id_zalo_business_id + "_" + id_zalo_appid;
+
+            setCookie("id_zalo_appid", id_zalo_appid, 1000);
+            setCookie("id_zalo_channelid", id_zalo_channelid, 1000);
+            setCookie("id_zalo_business_id", id_zalo_business_id, 1000);
+            setCookie("id_zalo_appsecret", id_zalo_appsecret, 1000);
+            setCookie("id_zalo_name", id_zalo_name, 1000);
+            setCookie("id_zalo_templateid", id_zalo_templateid, 1000);
+
+
+            var webhook = BaseUrls_Web + "zaloauth";
+            
+            var uri = "https://oauth.zaloapp.com/v3/auth?";
+
+            uri += "app_id=" + id_zalo_appid + "&redirect_uri=" + webhook;
+            $(".zalo-get-token").attr("href", uri);
+        } catch (e) { console.log(e); }
+    }
+</script>
+
+

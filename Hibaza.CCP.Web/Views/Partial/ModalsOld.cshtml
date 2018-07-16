@@ -1,0 +1,851 @@
+﻿@{ 
+    Layout = null;
+}
+    <!-- Modal-->
+<div id="wz-modal-add-ticket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-add-note" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-add-alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-ticket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade"></div><!-- Modal-->
+<div id="wz-modal-edit-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-payment-generator" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div>
+
+<!-- Modal-->
+<div id="wz-modal-upload-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade">
+    <div class="modal-dialog modal-sm">
+
+        <div class="modal-content">
+            <input id="input-modal-message-tag" type="hidden" value="" />
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close cancel">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 id="myModalLabel" class="modal-title">
+                    Send images
+                </h4>
+            </div>
+
+            <!-- Modal Body-->
+            <div class="modal-body">
+                <div id="js-gallery-image-upload" class="row wz-margin-t-20 wz-margin-b-20" style="min-height:140px; padding-top:20px; border-color:white; border-style:dotted; border-width:1px; margin: 10px 0">
+                </div>
+                <div id="js-gallery-error-upload" class="col-sm-12 hide">
+                    <ul class="errorlist">
+                        <li>
+                            Error! Only 6 images allowed in a message.
+                        </li>
+                    </ul>
+                </div>
+                <form class="form-horizontal js-form-image-upload" style="text-align:center">
+                    <label class="control-label col-sm-4 hidden" style="text-align:center">DRAG and DROP images URLs from WEB</label>
+                    <label class="control-label col-sm-3 hidden" style="text-align:center">or</label>
+                    <button type="button" class="btn btn-info js-open-shop" onclick="$(document).find('.js-client-view[data-view=products]').trigger('click');">
+                        DRAG FROM SHOP
+                    </button>
+                    <button type="button" class="btn btn-info js-open-image-gallery hidden">
+                        DRAG FROM WEB
+                    </button>
+                    <button type="button" class="btn btn-info js-form-image-upload" onclick="inputImage.click()">
+                        UPLOAD IMAGES
+                    </button>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Add a title [Max 80 characters]</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control js-image-caption-text" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal Footer-->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default js-reset-image">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-info js-submit-image">
+                    Send to chat
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        function loadImageToDropableZone(url) {
+            var numberOfImages = 0;
+            var freeSlotIndex = -1;
+            imgSendUrls.forEach(function (t, e) {
+                if (t) {
+                    numberOfImages++;
+                }
+                else {
+                    if (freeSlotIndex < 0) freeSlotIndex = numberOfImages;
+                }
+            });
+            if (numberOfImages < 6) {
+                imgSendUrls[freeSlotIndex] = addOrUpdateUrlParam(addOrUpdateUrlParam(url, 'width', '400'), 'height', '');
+                $("<div>", {
+                    "class": "col-xs-4"
+                }).append($("<a class='thumbnail js-drop-image' href='#' style='background-image: url(" + url + ")'><span class='js-thumbnail-close js-drop-image-close' data-index='" + freeSlotIndex + "' href='#'>×</span></a>")).appendTo("#js-gallery-image-upload");
+                $(".js-drop-image").off("click"), $(".js-drop-image-close").on("click", function () {
+                    var t = $(this).data("index"),
+                    e = $(this).parent().parent();
+                    imgSendUrls[t] = "", e.remove();
+                })
+            }
+
+        }
+        window.addEventListener("message", function (event) {
+            try {
+                var pass_data = JSON.parse(event.data);
+                if (pass_data.action == "update_source") {
+                    cloud.saveLastVisit(pass_data.source_url);
+                }
+                if (pass_data.action === "select_image") {
+                    loadImageToDropableZone(pass_data.image_url);
+                    cloud.sendFiles(addOrUpdateUrlParam(addOrUpdateUrlParam(pass_data.image_url, 'width', '400'), 'height', ''), pass_data.source_url);
+                }
+
+            } catch (e) {
+            }
+        });
+
+        window.addEventListener("dragover", function (e) {
+            e = e || event;
+            e.preventDefault();
+        }, false);
+        window.addEventListener("drop", function (e) {
+            e = e || event;
+            e.preventDefault();
+        }, false);
+        $('#js-gallery-image-upload')
+          .on('drop', function (e) {
+              e.stopPropagation();
+              e.preventDefault();
+              var url = e.originalEvent.dataTransfer.getData('url');
+              loadImageToDropableZone(url);
+          });
+    </script>
+</div><!-- Modal-->
+<div id="wz-modal-image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft wz-modal-right modal hidden">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Body-->
+            <div class="modal-body" style="overflow:hidden!important; padding:0px !important">
+                @*<iframe id="iframeweb" src="http://baza.vn" style="width:100%; height:100%">
+                </iframe>*@
+            </div>
+        </div>
+    </div>
+</div>
+<div id="wz-modal-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div>
+
+<!-- Modal open attachment-->
+<div id="wz-modal-full-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title js-attach-title"></h4>
+            </div>
+            <!-- Modal Body-->
+            <div class="modal-body">
+            </div>
+            <!-- Modal Footer-->
+        </div>
+    </div>
+</div>
+
+<!-- Modal-->
+<div id="wz-modal-shortcuts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+                <h4 id="myModalLabel" class="modal-title">
+                    Shortcuts
+                </h4>
+            </div>
+
+            <!-- Modal Body-->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 filterContainer">
+                        <i class="icon-search wz-icon-sm"></i>
+                        <input id="filterShortcut" type="text" placeholder="Type and search..." />
+                    </div>
+                    <div class="col-xs-12 tableContainer">
+                        <div id="shortcuts-table"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Footer-->
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">
+                    Close
+                </button>
+                <button type="button" data-target="#wz-modal-add-shortcut" data-toggle="modal" onClick="cloud.getShortcutForm('')" class="btn btn-info">
+                    Add a shortcut
+                </button>
+            </div>
+        </div>
+    </div>
+</div><!-- Modal-->
+<div id="wz-modal-add-shortcut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-responses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade"></div><!-- Modal-->
+<div id="wz-modal-edit-response" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade"></div><!-- Modal-->
+<div id="wz-modal-ronin" data-mode="none" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-stack="true" class="wz-modal-full modal fade"></div>
+
+
+<!-- Modal-->
+@*<div id="wz-submodal-ronin" data-mode="none" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-stack="true" class="wz-modal-full modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wz-ronin-other-fields panel panel-default col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 panel-body">
+                    <form id="js-ronin-field-form" role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="" class="control-label">
+                                ¿Qué tipo de dato vas a pedir?<br />(Ejemplo: talla de camisa)
+                            </label>
+                            <input class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="" class="control-label">
+                                Formula la pregunta que el bot hará para pedir este dato.<br />Ejemplo: ¿Cuál es tu talla de camisa?
+                            </label>
+                            <input class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <a class="wz-font-c-white js-add-other-field"><span>+ </span><span class="wz-font-u-underline">Añade otra pregunta</span></a>
+                        </div>
+                        <button id="js-ronin-other-field-cancel" type="button" data-dismiss="modal" class="btn btn-default">
+                            Cancel
+                        </button>
+                        <button id="js-ronin-other-field-submit" type="button" class="btn btn-primary">
+                            Save
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div id="wz-modal-bots-contact" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content modal-opaque">
+            <!-- Modal Body-->
+            <div class="modal-body full-height wz-margin-t-55">
+                <!-- STEP 1-->
+                <div class="js-bots-contact-1 row wz-margin-t-20">
+                    <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1">
+                        <div class="wz-panel text-center">
+                            <header>
+                                <h1 class="wz-bot-avatar">
+                                    🤖
+                                </h1>
+                                <h4 class="wz-font-w-med wz-font-c-white">
+                                    Hey, human!
+                                </h4>
+                            </header>
+                            <section>
+                                <h3 class="wz-font-w-med">
+                                    I'm afraid that we've temporarily disabled our chatbot section. We're working on it to put it back to work ASAP. But we can still help you out in the meantime.
+                                </h3>
+                                <h3 class="wz-font-w-med">
+                                    Tell me, what can we do for you?
+                                </h3>
+                                <div class="wz-container-300">
+                                    <div class="btn-group-vertical">
+                                        <div data-step="2A" class="btn btn-default btn-sm wz-font-w-med wz-font-u-uppercase">
+                                            Manage your chatbots
+                                        </div>
+                                        <div data-step="2B" class="btn btn-pink btn-sm wz-font-w-med wz-font-u-uppercase wz-font-c-white">
+                                            Create a chatbot
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2.A - MANAGE YOUR CHATBOTS-->
+                <div class="js-bots-contact-2A row wz-margin-t-20 hide">
+                    <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1">
+                        <div class="wz-panel text-center">
+                            <header>
+                                <h1 class="wz-bot-avatar">
+                                    🤖
+                                </h1>
+                            </header>
+                            <section>
+                                <h3 class="wz-font-w-med">
+                                    Great. Please, type below your chatbot name, its kind (register or auto-response) and what do you want us to do with it (e.g. change its script, turn it on/off...):
+                                </h3>
+                                <div class="form-group">
+                                    <textarea row="8" cols="40" class="textarea-2A form-control"></textarea>
+                                </div>
+                                <div class="wz-container-300">
+                                    <div class="btn-group-horizontal">
+                                        <div data-step="1" class="btn btn-default btn-sm wz-font-w-med wz-font-u-uppercase">
+                                            Back
+                                        </div>
+                                        <div data-step="3" data-cur-step="2A" class="js-next-step btn btn-pink btn-sm wz-font-w-med wz-font-u-uppercase wz-font-c-white disabled">
+                                            Next
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2.B - CREATE A CHATBOT-->
+                <div class="js-bots-contact-2B row wz-margin-t-20 hide">
+                    <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1">
+                        <div class="wz-panel text-center">
+                            <header>
+                                <h1 class="wz-bot-avatar">
+                                    🤖
+                                </h1>
+                                <h4 class="wz-font-w-med wz-font-c-white">
+                                    A new chatbot, cool
+                                </h4>
+                            </header>
+                            <section>
+                                <h3 class="wz-font-w-med">
+                                    Briefly describe what your chatbot will do.<span class="wz-form-hint">If you want something more customized or that involves any kind of integration, tell us too and we'll send you a quote.</span>
+                                </h3>
+
+                                <div class="form-group">
+                                    <textarea row="8" cols="40" style="height:126px" placeholder="Example: my chatbot will attend my clients when they first send me a message and ask them questions about their personal data..." class="textarea-2B form-control"></textarea>
+                                </div>
+                                <div class="wz-container-300">
+                                    <div class="btn-group-horizontal">
+                                        <div data-step="1" class="btn btn-default btn-sm wz-font-w-med wz-font-u-uppercase">
+                                            Back
+                                        </div>
+                                        <div data-step="3" data-cur-step="2B" class="js-next-step btn btn-pink btn-sm wz-font-w-med wz-font-u-uppercase wz-font-c-white disabled">
+                                            Next
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3 - BYE!-->
+                <div class="js-bots-contact-3 row wz-margin-t-20 hide">
+                    <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1">
+                        <div class="wz-panel text-center">
+                            <header>
+                                <h1 class="wz-bot-avatar">
+                                    🤖
+                                </h1>
+                            </header>
+                            <section>
+                                <h3 class="wz-font-w-med">
+                                    Awesome! We're done. A member of Hibaza 's team will get in touch with you as soon as possible to inform you about the next steps.
+                                </h3>
+                                <h3 class="wz-font-w-med">
+                                    Merry Christmas!
+                                </h3>
+                                <div class="wz-container-300">
+                                    <div class="btn-group-horizontal">
+                                        <div data-step="" class="js-prev-step btn btn-default btn-sm wz-font-w-med wz-font-u-uppercase">
+                                            Back
+                                        </div>
+                                        <div id="js-bots-contact-submit" data-dismiss="modal" class="btn btn-pink btn-sm wz-font-w-med wz-font-u-uppercase wz-font-c-white">
+                                            OK
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal-->
+<div id="wz-modal-clients" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-menu">
+                <h3>Settings</h3>
+                <ul class="wz-crm-menu">
+                    <li data-menu="customers">
+                        <a href="#user-settings" class="active"><span>Account</span></a>
+                    </li>
+                    <li data-menu="payments" class="@(ViewBag.UserRole == "admin" ? "" : "hide")">
+                        <a href="#channel-settings"><span>Channels</span></a>
+                    </li>
+                    <li data-menu="orders"  class="@(ViewBag.UserRole == "admin" ? "" : "hide")">
+                        <a href="#company-settings"><span>Company</span></a>
+                    </li>
+                    <li  class="@(ViewBag.UserRole == "admin" ? "" : "hide")">
+                        <a href="#agent-settings"><span>Agents</span></a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Modal Body-->
+            <div class="modal-body">
+                <div id="user-settings" class="block-show"></div>
+                <div id="company-settings" class="hide"></div>
+                <div id="channel-settings" class="js-settings-suscription-opt hide"></div>
+                <div id="agent-settings" class="js-settings-suscription-opt hide"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal-->
+<div id="wz-modal-pricing" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <!-- Modal Body-->
+            <div class="modal-body">
+                <div class="banner">
+                    <div class="content text-center wz-margin-t-50">
+                        <h5 class="wz-font-c-white wz-font-w-med-wz-font-s-sm wz-margin-0">Your trial has expired</h5>
+                        <h1 class="wz-font-c-white wz-margin-0 wz-font-u-uppercase wz-font-s-lg wz-font-w-bold">Select a plan</h1>
+                        <div class="row wz-margin-t-50 wz-padding-b-16">
+                            <div class="col-sm-4 col-md-4 col-sm-offset-4">
+                                <div class="panel panel-default panel-ronin">
+                                    <div class="panel-body">
+                                        <span class="badge"><i class="icon-share"></i></span>
+                                        <h5 class="wz-font-u-uppercase wz-font-c-violet-2 wz-margin-0">Ronin</h5>
+                                        <h2 class="wz-font-c-violet-2 wz-margin-0 js-pricing-ronin-total">€39.90</h2>
+                                        <p class="wz-font-c-violet-2 wz-font-s-xs wz-font-w-med js-pricing-period-legend">/month</p>
+                                        <div class="wz-font-c-violet-2 wz-font-s-xs wz-font-w-meds">
+                                            <div class="wz-switch">
+                                                <a href="#" data-period="M" class="wz-font-u-uppercase wz-font-s-xs js-pricing-switch wz-switch-active">Monthly</a><a href="#" data-period="A" class="wz-font-u-uppercase wz-font-s-xs js-pricing-switch wz-switch-inactive">Annually</a>
+                                            </div>
+                                        </div>
+                                        <ul class="list-group">
+                                            <li class="list-group-item wz-font-c-violet-2">
+                                                <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs">Helpdesk based on Facebook Messenger and Telegram</span>
+                                            </li>
+                                            <li class="list-group-item wz-font-c-violet-2 wz-font-s-xs">
+                                                <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs">Multi-agent</span>
+                                            </li>
+                                            <li class="list-group-item wz-font-c-violet-2">
+                                                <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs">Integrated CRM</span>
+                                            </li>
+                                            <li class="list-group-item wz-font-c-violet-2 wz-font-s-xs">
+                                                <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs">Payment gateway in-chat and billing tools</span>
+                                            </li>
+                                            <li class="list-group-item wz-font-c-violet-2">
+                                                <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs">Automated dialogs (Bots)</span>
+                                            </li>
+                                            <!--li.list-group-item.wz-font-c-violet-2-->
+                                            <!--  span.wz-font-w-med.wz-font-u-uppercase.wz-font-s-xs-->
+                                            <!--    i.icon-facebook.wz-font-s-xs.wz-margin-r-5(title="Facebook")-->
+                                            <!--    i.icon-telegram.wz-font-s-xs.wz-margin-r-5(title="Telegram")-->
+                                            <!--    | 1x Facebook and Telegram Channels-->
+                                        </ul>
+                                        <div class="btn btn-danger btn-block js-pricing-select-plan">Select Plan</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2 wz-margin-t-20">
+                                <div class="row">
+                                    <div class="col-xs-2"></div>
+                                    <div class="col-xs-10 wz-font-c-violet">
+                                        <h3>Channels included</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                        <i class="icon-facebook wz-font-c-violet wz-font-s-lg"></i>
+                                    </div>
+                                    <div class="col-xs-9 wz-margin-t-5">
+                                        <p>
+                                            <strong class="wz-margin-r-10">1 x</strong>Facebook Messenger Channel
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                        <i class="icon-telegram wz-font-c-violet wz-font-s-lg"></i>
+                                    </div>
+                                    <div class="col-xs-9 wz-margin-t-5">
+                                        <p>
+                                            <strong class="wz-margin-r-10">1 x</strong>Telegram Channel
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                        <i class="icon-whatsapp wz-font-c-violet wz-font-s-lg"></i>
+                                    </div>
+                                    <div class="col-xs-9 wz-margin-t-5">
+                                        <p>
+                                            <strong class="wz-margin-r-10">1 x</strong>WhatsApp Channel
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-8 col-sm-offset-2 wz-margin-t-20 wz-margin-b-50">
+                                <div class="row">
+                                    <div class="col-xs-2"></div>
+                                    <div class="col-xs-10 wz-font-c-violet">
+                                        <h3>Add-ons</h3>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                        <i class="icon-head wz-font-c-violet wz-font-s-lg"></i>
+                                    </div>
+                                    <div class="col-xs-9 wz-margin-t-5">
+                                        <p>
+                                            <strong class="wz-margin-r-10">+ 1 </strong> Agent (<span class="js-pricing-ronin-total">contact us</span>)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                        <i class="icon-whatsapp wz-font-c-violet wz-font-s-lg"></i>
+                                    </div>
+                                    <div class="col-xs-9 wz-margin-t-5">
+                                        <p>
+                                            <strong class="wz-margin-r-10">+ 1 </strong> WhatsApp Channel (<span class="js-pricing-whatsapp">contact us</span>)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                        <i class="icon-facebook wz-font-c-violet wz-font-s-lg"></i>
+                                    </div>
+                                    <div class="col-xs-9 wz-margin-t-5">
+                                        <p>
+                                            <strong class="wz-margin-r-10">+ 1 </strong>Facebook Messenger Channel (<span class="js-pricing-facebook">contact us</span>)
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                        <i class="icon-telegram wz-font-c-violet wz-font-s-lg"></i>
+                                    </div>
+                                    <div class="col-xs-9 wz-margin-t-5">
+                                        <p>
+                                            <strong class="wz-margin-r-10">+ 1 </strong>Telegram Channel (<span class="js-pricing-telegram">contact us</span>)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal-->
+<div id="wz-modal-qrcode" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <!--.modal-header-->
+            <!-- Modal Body-->
+            <div class="modal-body wz-margin-t-50">
+                <div class="row wz-margin-t-50">
+                    <div class="panel col-sm-5 col-md-5 col-sm-offset-3 wz-margin-t-50 wz-gradient">
+                        <header>
+                            <button type="button" data-dismiss="modal" class="js-modal-qrcode-close close">
+                                <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                            </button>
+                        </header>
+                        <section class="text-center wz-padding-b-16">
+                            <div id="qrcode-container"></div>
+                        </section>
+                        <footer class="text-center">
+                            <div class="badge">
+                                <i class="js-modal-qrcode-channel-icon icon-whatsapp wz-font-s-lg wz-font-w-bold"></i>
+                            </div>
+                            <h1 class="wz-font-c-violet-2 wz-font-s-lg wz-font-w-bold">
+                                QR-Code Verification
+                            </h1>
+                            <h5 class="wz-font-c-violet-2">
+                                Please, scan this code with your phone to verify your<span class="js-modal-qrcode-channel-name"></span> account.
+                            </h5>
+                            <div class="btn btn-danger btn-block wz-font-w-bold wz-font-u-uppercase js-modal-qrcode-close">Done</div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="wz-modal-qrcode-preload" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body wz-margin-t-50">
+                <!-- PRELOADER-->
+                <!-- =========-->
+                <div class="js-qr-preloader row wz-margin-t-50">
+                    <div style="background-image: url(/images/gears.png)" class="panel col-sm-5 col-md-5 col-sm-offset-3 wz-margin-t-35">
+                        <header>
+                            <p class="wz-font-w-med text-center">
+                                Creating your WhatsApp channel...
+                            </p>
+                        </header>
+                        <section>
+                            <ul>
+                                <li>
+                                    <i>🔔 </i>
+                                    <p>
+                                        It can take up to 1 minute
+                                    </p>
+                                </li>
+                                <li>
+                                    <i>💻 </i>
+                                    <p>
+                                        As we finish, you'll see a QR code you'll have to scan using your WhatsApp app from Settings > WhatsApp Web
+                                    </p>
+                                </li>
+                                <li>
+                                    <i>🤓</i>
+                                    <p>
+                                        We'll also send you an email once it's ready!
+                                    </p>
+                                </li>
+                            </ul>
+                        </section>
+                        <footer class="text-center">
+                            <button class="btn btn-pink">
+                                <div class="bar">
+                                    <div class="bar-progress">
+                                        <div style="background-image: url(/images/whatsapp.png)" class="wa-icon"></div>
+                                    </div>
+                                </div>
+                            </button>
+                        </footer>
+                    </div>
+                </div>
+                <!-- QR CODE SUCCESS-->
+                <!-- ===============-->
+                <div class="js-qr-success row wz-margin-t-50 hide">
+                    <div class="panel success col-sm-5 col-md-5 col-sm-offset-3 wz-margin-t-35">
+                        <header class="success">
+                            <span>🎉</span>
+                            <p class="wz-font-w-med text-center">
+                                Ready, Set, GO!
+                            </p>
+                        </header>
+                        <section>
+                            <ul>
+                                <li>
+                                    <i>🔔 </i>
+                                    <p>
+                                        First, ask someone to send you a WhatsApp and you'll receive it on the platform
+                                    </p>
+                                </li>
+                                <li>
+                                    <i>💻 </i>
+                                    <p>
+                                        You can also share your number among your customers and start taking the most out of Hibaza
+                                    </p>
+                                </li>
+                                <li>
+                                    <i>🤓</i>
+                                    <p>
+                                        We'll also send you a WhatsApp to make sure everything is fine. Ask us anything!
+                                    </p>
+                                </li>
+                            </ul>
+                        </section>
+                        <footer class="text-center">
+                            <button id="js-qr-finish" data-dismiss="modal" onclick="if(tutorialActive) { welcomeModal.modal('show'); }" class="btn btn-pink">
+                                Ok, thanks
+                            </button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal-->
+<div id="wz-modal-notification" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <!-- Modal Body-->
+            <div class="modal-body wz-margin-t-50">
+                <div class="row wz-margin-t-50">
+                    <div class="panel col-sm-5 col-md-5 col-sm-offset-3 wz-margin-t-50">
+                        <header>
+                            <button type="button" data-dismiss="modal" class="close">
+                                <span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                            </button>
+                        </header>
+                        <section class="text-center wz-padding-b-16">
+                            <i class="icon-sun js-modalnot-icon"></i>
+                        </section>
+                        <footer class="text-center">
+                            <h1 class="wz-font-c-violet-2 wz-font-s-lg wz-font-w-bold js-modalnot-title">
+                                Hey!
+                            </h1><span class="wz-separator"></span>
+                            <h5 class="wz-font-c-violet-2 js-modalnot-message">
+                                Nice to see you
+                            </h5>
+                            <div class="wz-margin-t-20 js-modalnot-buttons"></div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Modal-->
+<div id="wz-modal-reports" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right modal fade"></div><!-- Modal-->
+<div id="wz-modal-automations" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right wz-modal-sideright modal fade"></div>
+
+<!-- Modal-->
+<div id="wz-submodal-automations" data-mode="none" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-stack="true" class="wz-modal-full modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wz-ronin-other-bots panel panel-default col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 panel-body">
+                    <form id="js-other-bot-form" role="form" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="" class="control-label">
+                                Describe el tipo de funcionalidad que te interesa
+                            </label><textarea rows="4" class="form-control"></textarea>
+                        </div>
+                        <button id="js-ronin-other-field-cancel" type="button" data-dismiss="modal" class="btn btn-default">
+                            Cancel
+                        </button>
+                        <button id="js-ronin-other-field-submit" type="button" class="btn btn-primary">
+                            Save
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Modal-->
+<div id="wz-modal-ronin-manager" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right wz-modal-sideright modal fade"></div><!-- Modal-->
+<div id="wz-modal-clients" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right modal fade"></div>
+
+<div id="wz-modal-welcome" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" class="wz-welcome-new wz-modal-right modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="js-welcome-header panel panel-default panel-ronin wz-margin-t-50">
+                    <div class="panel-body">
+                        <p class="wz-font-c-violet wz-font-w-med js-welcome-subtitle not-added">
+                            You need to add a channel<br />to start using Hibaza!
+                        </p>
+                        <p class="wz-font-c-violet wz-font-w-med js-welcome-subtitle added">
+                            To begin talking with your customers<br />they have to write you a message first!
+                        </p>
+                        <p class="added">
+                            <span class="btn btn-pink"><strong>Tell me how</strong></span>
+                        </p>
+                        <p class="not-added">
+                            <img src="/images/customer-user-chat.png" alt="" />
+                        </p>
+                        <p class="wz-font-c-violet wz-font-w-med js-welcome-subfoot wz-margin-t-50 hide">
+                            Please, contact the admin of this account to integrate your first channel.
+                        </p>
+                    </div>
+                    <div class="panel-footer js-welcome-panel">
+                        <div role="group" aria-label="..." class="btn-group">
+                            <div data-channeltype="whatsapp" class="btn btn-pink whatsapp hidden">
+                                <div class="btn-head">
+                                    <i class="icon-whatsapp"></i>
+                                </div>
+                                <div class="btn-foot">
+                                    <span>Add WhatsApp</span><span class="added"><span>Whatsapp</span><i class="js-channel-status icon-circle-check"></i></span>
+                                </div>
+                            </div>
+                            <div data-channeltype="facebook" class="btn btn-pink facebook">
+                                <div class="btn-head">
+                                    <i class="icon-facebook"></i>
+                                </div>
+                                <div class="btn-foot">
+                                    <span>Add Messenger</span><span class="added"><span>Messenger</span><i class="js-channel-status icon-circle-check"></i></span>
+                                </div>
+                            </div>
+                            <div data-channeltype="telegram" class="btn btn-pink telegram hidden">
+                                <div class="btn-head">
+                                    <i class="icon-telegram"></i>
+                                </div>
+                                <div class="btn-foot">
+                                    <span>Add Telegram</span><span class="added"><span>Telegram</span><i class="js-channel-status icon-circle-check"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wz-team hide">
+                            <p>Do you work on a team?</p>
+                            <div class="btn btn-gray js-invite-agent">
+                                Invite other agents
+                            </div>
+                        </div>
+                        <div class="wz-how">
+                            <p>
+                                Once a <span data-toggle="tooltip" title="Facebook Messenger, WhatsApp or Telegram">channel</span> is added to your Hibaza account, <b>you must wait for your customers to message you </b>and then show up on the platform, so you can continue the conversation there.
+                            </p>
+                            <p>
+                                We suggest you to <b>push your customers to write you a message</b> by publishing your <span data-toggle="tooltip" title="Your Facebook Messenger URL, your WhatsApp number or your Telegram number/username">contact details</span> on:
+                            </p>
+                            <p>
+                                <i><i>💻 </i>Your Facebook Page or Twitter.</i><br /><i><i>🌐 </i>Your website.</i><br /><i><i>📪 </i>Your newsletter.</i><br /><i><i>🖊 </i>Your business card.</i>
+                            </p>
+                            <div class="js-disable-tutorial btn btn-save btn-block">Ok, I understand</div>
+                            <div class="js-share-facebook btn btn-gray btn-block">
+                                Copy your Facebook Messenger URL<i class="icon-arrow-right"></i>
+                            </div>
+                            <div class="js-share-facebook-copied btn btn-gray btn-block hide">
+                                <span></span><i class="icon-clipboard pull-right"></i>
+                            </div>
+                            <div class="js-share-whatsapp btn btn-gray btn-block">
+                                Copy your WhatsApp Number<i class="icon-arrow-right"></i>
+                            </div>
+                            <div class="js-share-whatsapp-copied btn btn-gray btn-block hide">
+                                <span></span><i class="icon-clipboard pull-right"></i>
+                            </div>
+                            <div class="js-share-telegram btn btn-gray btn-block">
+                                Copy your Telegram Number<i class="icon-arrow-right"></i>
+                            </div>
+                            <div class="js-share-telegram-copied btn btn-gray btn-block hide">
+                                <span></span><i class="icon-clipboard pull-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+﻿{
+  "en": {
+    "your-personal-data": {
+      "text": "Your personal data",
+      "type": "text"
+    },
+    "avatar": {
+      "text": "Avatar",
+      "type": "text"
+    },
+    "browse": {
+      "text": "Browse",
+      "type": "text"
+    },
+    "error-again-later": {
+      "text": "An error ocurred. Please, try again later or contact us.",
+      "type": "text"
+    },
+    "first-name": {
+      "text": "First name",
+      "type": "text"
+    },
+    "second-name": {
+      "text": "Second name",
+      "type": "text"
+    },
+    "password": {
+      "text": "Password",
+      "type": "text"
+    },
+    "confirm-password": {
+      "text": "Confirm your password",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "your-personal-data": {
+      "text": "Dữ liệu cá nhân",
+      "type": "text"
+    },
+    "avatar": {
+      "text": "Ảnh đại diện",
+      "type": "text"
+    },
+    "browse": {
+      "text": "Chọn",
+      "type": "text"
+    },
+    "error-again-later": {
+      "text": "Đã xảy ra lỗi. Vui lòng thử lại sau hoặc liên hệ với chúng tôi.",
+      "type": "text"
+    },
+    "first-name": {
+      "text": "Tên",
+      "type": "text"
+    },
+    "second-name": {
+      "text": "Tên phụ",
+      "type": "text"
+    },
+    "password": {
+      "text": "Mật khẩu",
+      "type": "text"
+    },
+    "confirm-password": {
+      "text": "Xác nhận lại mật khẩu",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+  }
+}

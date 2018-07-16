@@ -1,0 +1,798 @@
+﻿{
+  "en": {
+    "conversation-download": {
+      "text": "Conversation download",
+      "type": "text"
+    },
+    "close": {
+      "text": "Close",
+      "type": "text"
+    },
+    "send-images": {
+      "text": "Send images",
+      "type": "text"
+    },
+    "6-images-allowed": {
+      "text": "Error! Only 6 images allowed in a message.",
+      "type": "text"
+    },
+    "drag-drop-images": {
+      "text": "DRAG and DROP images URLs from WEB",
+      "type": "text"
+    },
+    "or": {
+      "text": "or",
+      "type": "text"
+    },
+    "drag-from-bot": {
+      "text": "DRAG FROM BOT",
+      "type": "text"
+    },
+    "drag-from-shop": {
+      "text": "DRAG FROM SHOP",
+      "type": "text"
+    },
+    "drag-from-web": {
+      "text": "DRAG FROM WEB",
+      "type": "text"
+    },
+    "upload-images": {
+      "text": "UPLOAD IMAGES",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Cancel",
+      "type": "text"
+    },
+    "apply": {
+      "text": "Apply",
+      "type": "text"
+    },
+    "save-to-shop": {
+      "text": "Save to shop",
+      "type": "text"
+    },
+    "send-to-chat": {
+      "text": "Send to chat",
+      "type": "text"
+    },
+    "shortcuts": {
+      "text": "Shortcuts",
+      "type": "text"
+    },
+    "add-shortcut": {
+      "text": "Add a shortcut",
+      "type": "text"
+    },
+    "hey-human": {
+      "text": "Hey, human!",
+      "type": "text"
+    },
+    "temporarily-disabled-chatbot": {
+      "text": "I'm afraid that we've temporarily disabled our chatbot section. We're working on it to put it back to work ASAP. But we can still help you out in the meantime.",
+      "type": "text"
+    },
+    "tell-me-do-for-you": {
+      "text": "Tell me, what can we do for you?",
+      "type": "text"
+    },
+    "manage-your-chatbots": {
+      "text": "Manage your chatbots",
+      "type": "text"
+    },
+    "create-chatbot": {
+      "text": "Create a chatbot",
+      "type": "text"
+    },
+    "chatbot-name-its-kind": {
+      "text": "Great. Please, type below your chatbot name, its kind (register or auto-response) and what do you want us to do with it (e.g. change its script, turn it on/off...):",
+      "type": "text"
+    },
+    "back": {
+      "text": "Back",
+      "type": "text"
+    },
+    "next": {
+      "text": "Next",
+      "type": "text"
+    },
+    "new-chatbot": {
+      "text": "A new chatbot, cool",
+      "type": "text"
+    },
+    "describe-will-do": {
+      "text": "Briefly describe what your chatbot will do.",
+      "type": "text"
+    },
+    "involves-integration": {
+      "text": "If you want something more customized or that involves any kind of integration, tell us too and we'll send you a quote.",
+      "type": "text"
+    },
+    "possible-inform": {
+      "text": "Awesome! We're done. A member of Hibaza 's team will get in touch with you as soon as possible to inform you about the next steps.",
+      "type": "text"
+    },
+    "merry-christmas": {
+      "text": "Merry Christmas!",
+      "type": "text"
+    },
+    "settings": {
+      "text": "Settings",
+      "type": "text"
+    },
+    "account": {
+      "text": "Account",
+      "type": "text"
+    },
+    "channels": {
+      "text": "Channels",
+      "type": "text"
+    },
+    "company": {
+      "text": "Company",
+      "type": "text"
+    },
+    "agents": {
+      "text": "Agents",
+      "type": "text"
+    },
+    "trial-expired": {
+      "text": "Your trial has expired",
+      "type": "text"
+    },
+    "select-plan": {
+      "text": "Select a plan",
+      "type": "text"
+    },
+    "ronin": {
+      "text": "Ronin",
+      "type": "text"
+    },
+    "month": {
+      "text": "/month",
+      "type": "text"
+    },
+    "monthly": {
+      "text": "Monthly",
+      "type": "text"
+    },
+    "annually": {
+      "text": "Annually",
+      "type": "text"
+    },
+    "messenger-telegram": {
+      "text": "Helpdesk based on Facebook Messenger and Telegram",
+      "type": "text"
+    },
+    "multi-agent": {
+      "text": "Multi-agent",
+      "type": "text"
+    },
+    "integrated-crm": {
+      "text": "integrated-crm",
+      "type": "text"
+    },
+    "billing-tools": {
+      "text": "Payment gateway in-chat and billing tools",
+      "type": "text"
+    },
+    "automated-dialogs": {
+      "text": "Automated dialogs (Bots)",
+      "type": "text"
+    },
+    "channels-included": {
+      "text": "Channels included",
+      "type": "text"
+    },
+    "facebook-channel": {
+      "text": "Facebook Messenger Channel",
+      "type": "text"
+    },
+    "telegram-channel": {
+      "text": "Telegram Channel",
+      "type": "text"
+    },
+    "whatsapp-channel": {
+      "text": "WhatsApp Channel",
+      "type": "text"
+    },
+    "add-ons": {
+      "text": "Add-ons",
+      "type": "text"
+    },
+    "agent": {
+      "text": "Agent (",
+      "type": "text"
+    },
+    "contact-us": {
+      "text": "contact us",
+      "type": "text"
+    },
+    "qr-code-verification": {
+      "text": "QR-Code Verification",
+      "type": "text"
+    },
+    "scan-code-your-phone": {
+      "text": "Please, scan this code with your phone to verify your",
+      "type": "text"
+    },
+    "done": {
+      "text": "Done",
+      "type": "text"
+    },
+    "creating-whatsapp-channel": {
+      "text": "Creating your WhatsApp channel...",
+      "type": "text"
+    },
+    "take-1-minute": {
+      "text": "It can take up to 1 minute",
+      "type": "text"
+    },
+    "whatsapp-settings": {
+      "text": "As we finish, you'll see a QR code you'll have to scan using your WhatsApp app from Settings > WhatsApp Web",
+      "type": "text"
+    },
+    "send-email-ready": {
+      "text": "We'll also send you an email once it's ready!",
+      "type": "text"
+    },
+    "ready-set-go": {
+      "text": "Ready, Set, GO!",
+      "type": "text"
+    },
+    "whatsapp-receive-platform": {
+      "text": "First, ask someone to send you a WhatsApp and you'll receive it on the platform",
+      "type": "text"
+    },
+    "share-customers-start": {
+      "text": "You can also share your number among your customers and start taking the most out of Hibaza",
+      "type": "text"
+    },
+    "ok-thanks": {
+      "text": "Ok, thanks",
+      "type": "text"
+    },
+    "hey": {
+      "text": "Hey!",
+      "type": "text"
+    },
+    "nice-see-you": {
+      "text": "Nice to see you",
+      "type": "text"
+    },
+    "funcionalidad-interesa": {
+      "text": "Describe el tipo de funcionalidad que te interesa",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    },
+    "need-add-channel": {
+      "text": "You need to add a channel<br />to start using Hibaza!",
+      "type": "text"
+    },
+    "write-message-first": {
+      "text": "To begin talking with your customers<br />they have to write you a message first!",
+      "type": "text"
+    },
+    "tell-me-how": {
+      "text": "Tell me how",
+      "type": "text"
+    },
+    "integrate-first-channel": {
+      "text": "Please, contact the admin of this account to integrate your first channel.",
+      "type": "text"
+    },
+    "add-whatsapp": {
+      "text": "Add WhatsApp",
+      "type": "text"
+    },
+    "whatsapp": {
+      "text": "Whatsapp",
+      "type": "text"
+    },
+    "add-messenger": {
+      "text": "Add Messenger",
+      "type": "text"
+    },
+    "messenger": {
+      "text": "Messenger",
+      "type": "text"
+    },
+    "add-telegram": {
+      "text": "Add Telegram",
+      "type": "text"
+    },
+    "telegram": {
+      "text": "Telegram",
+      "type": "text"
+    },
+    "work-team": {
+      "text": "Do you work on a team?",
+      "type": "text"
+    },
+    "invite-agents": {
+      "text": "Invite other agents",
+      "type": "text"
+    },
+    "once-a": {
+      "text": "Once a",
+      "type": "text"
+    },
+    "wait-customers": {
+      "text": "is added to your Hibaza account, <b>you must wait for your customers to message you </b>and then show up on the platform, so you can continue the conversation there.",
+      "type": "text"
+    },
+    "write-message": {
+      "text": "We suggest you to <b>push your customers to write you a message</b> by publishing your",
+      "type": "text"
+    },
+    "contact-details": {
+      "text": "contact details",
+      "type": "text"
+    },
+    "on": {
+      "text": "on:",
+      "type": "text"
+    },
+    "facebook-twitter": {
+      "text": "Your Facebook Page or Twitter.",
+      "type": "text"
+    },
+    "your-website": {
+      "text": "Your website.",
+      "type": "text"
+    },
+    "your-newsletter": {
+      "text": "Your newsletter.",
+      "type": "text"
+    },
+    "business-card": {
+      "text": "Your business card.",
+      "type": "text"
+    },
+    "ok-understand": {
+      "text": "Ok, I understand",
+      "type": "text"
+    },
+    "copy-facebook-url": {
+      "text": "Copy your Facebook Messenger URL",
+      "type": "text"
+    },
+    "copy-whatsapp-number": {
+      "text": "Copy your WhatsApp Number",
+      "type": "text"
+    },
+    "copy-telegram-number": {
+      "text": "Copy your Telegram Number",
+      "type": "text"
+    },
+    "order": {
+      "text": "Order",
+      "type": "text"
+    },
+    "fullname": {
+      "text": "Fullname",
+      "type": "text"
+    },
+    "phone": {
+      "text": "Phone",
+      "type": "text"
+    },
+    "address": {
+      "text": "Address",
+      "type": "text"
+    },
+    "province": {
+      "text": "Province",
+      "type": "text"
+    },
+    "note": {
+      "text": "Note",
+      "type": "text"
+    },
+    "comment-url": {
+      "text": "Comment Url",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "close": {
+      "text": "Đóng",
+      "type": "text"
+    },
+    "send-images": {
+      "text": "Gửi ảnh",
+      "type": "text"
+    },
+    "6-images-allowed": {
+      "text": "Lỗi! Gửi 4 ảnh tối đa cho mỗi lần.",
+      "type": "text"
+    },
+    "drag-drop-images": {
+      "text": "Kéo thả ảnh từ web tới đây",
+      "type": "text"
+    },
+    "or": {
+      "text": "hoặc",
+      "type": "text"
+    },
+    "drag-from-bot": {
+      "text": "LẤY ẢNH TỪ BOT",
+      "type": "text"
+    },
+    "drag-from-shop": {
+      "text": "LẤY ẢNH TỪ SHOP",
+      "type": "text"
+    },
+    "drag-from-web": {
+      "text": "LẤY ẢNH TỪ WEB",
+      "type": "text"
+    },
+    "upload-images": {
+      "text": "UPLOAD ẢNH",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Thôi",
+      "type": "text"
+    },
+    "apply": {
+      "text": "Đồng ý",
+      "type": "text"
+    },
+    "save-to-shop": {
+      "text": "Lưu tới shop",
+      "type": "text"
+    },
+    "send-to-chat": {
+      "text": "Gửi chat",
+      "type": "text"
+    },
+    "shortcuts": {
+      "text": "Phím nhanh",
+      "type": "text"
+    },
+    "add-shortcut": {
+      "text": "Thêm phím nhanh",
+      "type": "text"
+    },
+    "hey-human": {
+      "text": "Hey, human!",
+      "type": "text"
+    },
+    "temporarily-disabled-chatbot": {
+      "text": "Tôi e rằng chúng tôi sẽ tạm thời vô hiệu hóa phần chatbot của mình. Chúng tôi đang sửa để đưa bot trở lại làm việc càng sớm càng tốt. Nhưng chúng tôi vẫn có thể giúp bạn trong thời gian chờ đợi.",
+      "type": "text"
+    },
+    "tell-me-do-for-you": {
+      "text": "Nói với tôi, tôi có thể giúp gì cho bạn ?",
+      "type": "text"
+    },
+    "manage-your-chatbots": {
+      "text": "Quản lý chatbots",
+      "type": "text"
+    },
+    "create-chatbot": {
+      "text": "Tạo chatbot",
+      "type": "text"
+    },
+    "chatbot-name-its-kind": {
+      "text": "Tuyệt quá. Vui lòng nhập tên bên dưới tên chatbot của bạn, loại của nó (đăng ký hoặc trả lời tự động) và bạn muốn chúng tôi làm gì với nó (ví dụ: thay đổi tập lệnh, bật / tắt ...):",
+      "type": "text"
+    },
+    "back": {
+      "text": "Quay lại",
+      "type": "text"
+    },
+    "next": {
+      "text": "Thoát",
+      "type": "text"
+    },
+    "new-chatbot": {
+      "text": "Một chatbot mới, thật thú vị",
+      "type": "text"
+    },
+    "describe-will-do": {
+      "text": "Mô tả ngắn gọn những gì mà chatbot của bạn sẽ làm.",
+      "type": "text"
+    },
+    "involves-integration": {
+      "text": "Nếu bạn muốn một cái gì đó tùy chỉnh nhiều hơn hoặc có liên quan đến bất kỳ loại tích hợp, cho chúng tôi biết và chúng tôi sẽ gửi cho bạn một báo giá.",
+      "type": "text"
+    },
+    "possible-inform": {
+      "text": "Tuyệt vời! Đã được thực hiện. Một thành viên của nhóm Hibaza sẽ liên lạc với bạn, để thông báo cho bạn về các bước tiếp theo.",
+      "type": "text"
+    },
+    "merry-christmas": {
+      "text": "Giáng sinh vui vẻ!",
+      "type": "text"
+    },
+    "settings": {
+      "text": "Cài đặt",
+      "type": "text"
+    },
+    "account": {
+      "text": "Tài khoản",
+      "type": "text"
+    },
+    "channels": {
+      "text": "Kênh",
+      "type": "text"
+    },
+    "company": {
+      "text": "Công ty",
+      "type": "text"
+    },
+    "agents": {
+      "text": "Tài khoản ủy quyền",
+      "type": "text"
+    },
+    "trial-expired": {
+      "text": "Dùng thử của bạn đã hết hạn",
+      "type": "text"
+    },
+    "select-plan": {
+      "text": "Chọn gói",
+      "type": "text"
+    },
+    "ronin": {
+      "text": "Ronin",
+      "type": "text"
+    },
+    "month": {
+      "text": "/tháng",
+      "type": "text"
+    },
+    "monthly": {
+      "text": "Hàng tháng",
+      "type": "text"
+    },
+    "annually": {
+      "text": "Hàng năm",
+      "type": "text"
+    },
+    "messenger-telegram": {
+      "text": "Giúp đỡ về Facebook Messenger và Telegram",
+      "type": "text"
+    },
+    "multi-agent": {
+      "text": "Các tài khoản ủy quyền",
+      "type": "text"
+    },
+    "integrated-crm": {
+      "text": "Tích hợp CRM",
+      "type": "text"
+    },
+    "billing-tools": {
+      "text": "Cổng thanh toán trong hibaza",
+      "type": "text"
+    },
+    "automated-dialogs": {
+      "text": "Tạo hội thoại tự động bởi Bot",
+      "type": "text"
+    },
+    "channels-included": {
+      "text": "Đã bao gồm kênh",
+      "type": "text"
+    },
+    "facebook-channel": {
+      "text": "Kênh Facebook Messenger",
+      "type": "text"
+    },
+    "telegram-channel": {
+      "text": "Kênh Telegram",
+      "type": "text"
+    },
+    "whatsapp-channel": {
+      "text": "WhatsApp Channel",
+      "type": "text"
+    },
+    "add-ons": {
+      "text": "Tiện ích",
+      "type": "text"
+    },
+    "agent": {
+      "text": "Tài khoản ủy quyền (",
+      "type": "text"
+    },
+    "contact-us": {
+      "text": "liên hệ chúng tôi",
+      "type": "text"
+    },
+    "qr-code-verification": {
+      "text": "Xác minh QR-Code",
+      "type": "text"
+    },
+    "scan-code-your-phone": {
+      "text": "Vui lòng quét mã này bằng điện thoại của bạn để xác minh",
+      "type": "text"
+    },
+    "done": {
+      "text": "Hoàn thành",
+      "type": "text"
+    },
+    "creating-whatsapp-channel": {
+      "text": "Tạo kênh WhatsApp...",
+      "type": "text"
+    },
+    "take-1-minute": {
+      "text": "Nó có thể mất 1 phút",
+      "type": "text"
+    },
+    "whatsapp-settings": {
+      "text": "Khi chúng tôi hoàn tất, bạn sẽ thấy mã QR bạn sẽ phải quét bằng ứng dụng WhatsApp của mình",
+      "type": "text"
+    },
+    "send-email-ready": {
+      "text": "Ngoài ra chúng tôi sẽ gửi email cho bạn khi đã sẵn sàng!",
+      "type": "text"
+    },
+    "ready-set-go": {
+      "text": "Sẵn sàng, Thiết lập, Đi nào!",
+      "type": "text"
+    },
+    "whatsapp-receive-platform": {
+      "text": "Trước tiên, yêu cầu ai đó gửi cho bạn WhatsApp",
+      "type": "text"
+    },
+    "share-customers-start": {
+      "text": "Bạn cũng có thể chia sẻ cho các khách hàng của bạn và tận dụng tối đa Hibaza",
+      "type": "text"
+    },
+    "ok-thanks": {
+      "text": "Ok, thanks",
+      "type": "text"
+    },
+    "hey": {
+      "text": "Hey!",
+      "type": "text"
+    },
+    "nice-see-you": {
+      "text": "Rất vui được gặp bạn",
+      "type": "text"
+    },
+    "funcionalidad-interesa": {
+      "text": "",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    },
+    "need-add-channel": {
+      "text": "Bạn cần thêm kênh <br /> để bắt đầu sử dụng Hibaza!",
+      "type": "text"
+    },
+    "write-message-first": {
+      "text": "Để bắt đầu cuộc trò chuyện <br /> khách hàng phải viết cho bạn một tin nhắn trước!",
+      "type": "text"
+    },
+    "tell-me-how": {
+      "text": "Cho tôi biết làm thế nào",
+      "type": "text"
+    },
+    "integrate-first-channel": {
+      "text": "Vui lòng liên hệ với quản trị viên của tài khoản này để tích hợp kênh đầu tiên của bạn.",
+      "type": "text"
+    },
+    "add-whatsapp": {
+      "text": "Thêm WhatsApp",
+      "type": "text"
+    },
+    "whatsapp": {
+      "text": "Whatsapp",
+      "type": "text"
+    },
+    "add-messenger": {
+      "text": "Thêm Messenger",
+      "type": "text"
+    },
+    "messenger": {
+      "text": "Messenger",
+      "type": "text"
+    },
+    "add-telegram": {
+      "text": "Thêm Telegram",
+      "type": "text"
+    },
+    "telegram": {
+      "text": "Telegram",
+      "type": "text"
+    },
+    "work-team": {
+      "text": "Bạn có làm việc nhóm không?",
+      "type": "text"
+    },
+    "invite-agents": {
+      "text": "Mời các tài khoản ủy quyền khác",
+      "type": "text"
+    },
+    "once-a": {
+      "text": "Một lần",
+      "type": "text"
+    },
+    "wait-customers": {
+      "text": "Sau khi thêm kênh vào Hibaza, <b> bạn phải chờ khách hàng nhắn tin cho bạn </ b> lúc đó sẽ hiển thị trên Hibaza",
+      "type": "text"
+    },
+    "write-message": {
+      "text": "Chúng tôi khuyên bạn nên <b> để khách hàng của bạn chat cho bạn </ b> bằng cách chia sẻ, quảng cáo trang",
+      "type": "text"
+    },
+    "contact-details": {
+      "text": "chi tiết liên hệ",
+      "type": "text"
+    },
+    "on": {
+      "text": "mở:",
+      "type": "text"
+    },
+    "facebook-twitter": {
+      "text": "Trang Facebook hay Twitter.",
+      "type": "text"
+    },
+    "your-website": {
+      "text": "Website của bạn.",
+      "type": "text"
+    },
+    "your-newsletter": {
+      "text": "Tin nhắn mới của bạn",
+      "type": "text"
+    },
+    "business-card": {
+      "text": "Danh thiếp của bạn.",
+      "type": "text"
+    },
+    "ok-understand": {
+      "text": "Ok, I hiểu",
+      "type": "text"
+    },
+    "copy-facebook-url": {
+      "text": "Sao chép URL trên Facebook Messenger của bạn",
+      "type": "text"
+    },
+    "copy-whatsapp-number": {
+      "text": "Sao chép số WhatsApp của bạn",
+      "type": "text"
+    },
+    "copy-telegram-number": {
+      "text": "Sao chép số Telegram của bạn",
+      "type": "text"
+    },
+    "order": {
+      "text": "Đặt hàng",
+      "type": "text"
+    },
+    "fullname": {
+      "text": "Tên đầy đủ",
+      "type": "text"
+    },
+    "phone": {
+      "text": "Điện thoại",
+      "type": "text"
+    },
+    "address": {
+      "text": "Địa chỉ",
+      "type": "text"
+    },
+    "province": {
+      "text": "Khu vực",
+      "type": "text"
+    },
+    "note": {
+      "text": "Ghi chú",
+      "type": "text"
+    },
+    "comment-url": {
+      "text": "Link Url bình luận",
+      "type": "text"
+    },
+    "conversation-download": {
+      "text": "Tải cuộc hội thoại",
+      "type": "text"
+    }
+  }
+}

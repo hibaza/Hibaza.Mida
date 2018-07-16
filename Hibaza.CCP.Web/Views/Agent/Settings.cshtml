@@ -1,0 +1,134 @@
+﻿@model Hibaza.CCP.Web.Models.AgentSettings
+@{
+    ViewBag.Title = "Agent settings";
+    Layout = null;
+}
+
+<div id="agents-main" class="col-xs-12 lg-agent_settings">
+    <form class="form-horizontal form-white-bg">
+        <div class="form-group-title">
+            <h3 lg-agents>Agents</h3>
+        </div>
+        <div role="group" aria-label="..." class="wz-icon-buttons">
+            @foreach (var item in Model.Agents)
+            {
+                <div id="settings-agent-@(item.id)" class="dropdown">
+                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div data-agent="@(item.id)" class="btn actived agent">
+                            <div class="btn-head">
+                                <div class="btn-subhead">
+                                    <div href="#" data-toggle="tooltip" title="" data-placement="top" data-container="body" class="icon-ball Online" data-original-title="Online"></div>
+                                    <div class="icon-cog"></div>
+                                </div>
+                                <div style="background-image: url(@(string.IsNullOrWhiteSpace(item.avatar) ? "/avatars/bot.png" : item.avatar))" class="wz-agent-avatar js-picture-agent-@(item.id)"></div>
+                            </div>
+                            <div class="btn-foot">
+                                <span class="added"><span>@(item.name)</span><i class="@(item.admin ? "icon-ribbon" :"")"></i></span>
+                            </div>
+                        </div>
+                    </a>
+                    <ul aria-labelledby="dLabel" class="dropdown-menu">
+                        @if (!item.admin && Model.admin)
+                        {
+                            <li>
+                                <a href="#" data-agent="@(item.id)" class="js-toggle-admin">
+                                    <span class="wz-font-s-md wz-font-w-med wz-status-text">
+                                        <i class="lg-make-admin"> Make admin</i><i class="pull-right icon-ribbon"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        }
+                        @if (item.admin && item.id != Model.user_id && Model.admin)
+                        {
+                            <li>
+                                <a href="#" data-agent="@(item.id)" class="js-toggle-admin">
+                                    <span class="wz-font-s-md wz-font-w-med wz-status-text">
+                                        <i class="lg-revoke-admin">Revoke admin</i><i class="pull-right icon-ribbon"></i>
+                                    </span>
+                                </a>
+                            </li>
+
+                        }
+                        @if (Model.admin || item.id == Model.user_id)
+                        {
+                            <li>
+                                <a href="#" data-agent="@(item.id)" class="js-show-edit-agent"><span class="wz-font-s-md wz-font-w-med lg-edit-info">Edit info<i class="pull-right icon-pencil"></i></span></a>
+                            </li>
+                        }
+                        @if (!item.admin && Model.admin)
+                        {
+                            <li>
+                                <a href="#" class="js-delete"><span class="wz-font-s-md wz-font-w-med lg-delete">Delete<i class="pull-right icon-cross"></i></span><span class="wz-font-s-md wz-font-w-med hide lg-are-you-sure">Are you sure?<i class="pull-right icon-cross"></i></span></a>
+                                <div class="wz-sub-dropdown" style="display: none;">
+                                    <a data-agent="@(item.id)" href="#" class="btn-white-pink js-settings-delete-agent"><span class="wz-font-s-md wz-font-w-med lg-yes">Yes<i class="pull-right icon-check"></i></span></a><a href="#" class="js-delete-cancel btn-default"><span class="wz-font-s-md wz-font-w-med lg-no">No<i class="pull-right icon-cross"></i></span></a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+            @if (Model.admin)
+            {
+                <div class="js-show-edit-agent btn btn-full agent">
+                    <i class="icon-plus"></i>
+                </div>
+            }
+        </div>
+    </form>
+</div>
+<div id="agents-edit" class="col-sm-12 col-md-10 hide">
+</div>
+<script>
+    /**
+    * Document onload
+    */
+    $(function () {
+        readFileLang(localStorage.getItem("lang"), "agent_settings");
+        settingsUI('#agents-main');
+        tooltips('#agents-main');
+
+        $('.js-toggle-admin').on('click', function (e) {
+            cloud.toggleAdminRights($(this).data("agent"));
+        });
+
+        $('.js-settings-delete-agent').on('click', function (e) {
+            e.preventDefault();
+            var $agent = $('#settings-agent-' + $(this).data("agent"));
+            $agent.addClass('loading');
+            cloud.deleteAgent($(this).data("agent"))
+                .done(function () {
+                    $agent.fadeOut(500, function () { $(this).remove() });
+                })
+                .fail(showDefaultErrorNotification);
+        });
+
+        $('.js-show-edit-agent').on('click', function (e) {
+            if ($(this).data("agent") !== undefined) {
+                $.post(cloud.getURLs().agents.edit + $(this).data("agent"), function (o) {
+                    if (o.view) {
+                        $('#agents-main').addClass('hide');
+                        $('#agents-edit').addClass('col-lg-8');
+                        $('#agents-edit').removeClass('hide');
+                        $("#agents-edit").html(o.view);
+                    }
+                });
+            }
+            else {
+                $.post(cloud.getURLs().agents.new + businessID, function (o) {
+                    if (o.view) {
+                        $('#agents-main').addClass('hide');
+                        $('#agents-edit').removeClass('hide col-lg-8');
+                        $("#agents-edit").html(o.view);
+                        // On cancel adding agent, show tutorial
+                        if (tutorialActive) {
+                            $('#cancel-settings-agent').click(function () {
+                                //- $topBarChats.trigger('click');
+                                welcomeModal.modal('show');
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>

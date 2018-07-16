@@ -1,0 +1,217 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Facebook To Hibaza</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="meta desc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=0" />
+    <link id="favicon" rel="icon" type="image/png" href="/partners/square/hibaza.png" />
+    <link rel="stylesheet" type="text/css" href="/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/js/api.js"></script>
+    <script src="~/js/config.js"></script>
+    <script type="text/javascript" src="~/js/base64js.min.js"></script>
+    <script type="text/javascript" src="~/js/lang.js"></script>
+</head>
+<body class="wz-overflow" style="background-color:#F5F5F5">
+    <div class="container lg-register">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-md-offset-3 col-sm-offset-2 wz-margin-t-50">
+                <div class="steps">
+                    <div id="step-1">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <header>
+                                    <img src="/partners/white/hibaza.png" width="100" />
+                                    <h3 class="lg-ask-invitation">
+                                        Ask for your invitation<br /> to Hibaza
+                                    </h3>
+                                </header>
+                                <div class="form-container">
+                                    <form class="lg-register-fb" id="register-fb-form" style="margin:50px">
+                                        <input class="form-control" id="id_token" name="token" type="hidden" value="">
+                                        <input class="form-control" id="id_page_id" name="page_id" type="hidden" value="">
+                                        <input class="form-control" id="id_name" name="page_name" type="hidden" value="">
+                                        <input class="form-control" id="facebook_access_token" name="facebook_access_token" type="hidden" value="">
+                                        <input class="form-control" id="id_first_name" name="first_name" type="hidden" value="">
+                                        <input class="form-control" id="id_last_name" name="last_name" type="hidden" value="">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <h4 class="info-message" style="color:#8c8c8c"></h4>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label lg-your-company">
+                                                Tên công ty
+                                            </label>
+                                            <input class="form-control" id="id_business" name="business_name" type="text" required />
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label lg-your-email">
+                                                Email
+                                            </label>
+                                            <input class="form-control" id="id_email" name="email" type="email" required />
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label lg-password">
+                                                Mật khẩu
+                                            </label>
+                                            <input class="form-control" id="id_password" name="password" type="password" required />
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label lg-repeat-password">
+                                                Mật khẩu
+                                            </label>
+                                            <input class="form-control" id="id_password_confirmation" name="password_confirmation" type="password" required />
+
+
+                                        </div>
+
+
+                                    </form>
+
+                                </div>
+                                <footer class="wz-margin-t-35">
+                                    <div class="btn btn-default js-send-register lg-register" onclick="registerFbSubmit()">Register</div>
+                                    <p>
+                                        <span class="lg-already_account"> Already have an account?</span><a href="/login" class="lg-login">Login</a>
+                                    </p>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function getParameterFromUrl(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            else {
+                return decodeURI(results[1]) || 0;
+            }
+        }
+
+        function getParameterFromUrl01(start, end) {
+            var uri = window.location.href;
+
+            var str = uri.substring(uri.indexOf(start), uri.length);
+            str = str.replace(start, "");
+            var sp = str.split(end);
+            var result = sp[0].replace("%3D", "=");
+            return result;
+        }
+
+        var access_token = "";
+        var state;
+        var lang = "en";
+        var customerInfo = {};
+        $(document).ready(function () {
+            try {
+                readFileLang(localStorage.getItem("lang"), "register-fb");
+                access_token = getParameterFromUrl01("access_token=", "&");
+                $("#facebook_access_token").val(access_token);
+                var stateObj = getParameterFromUrl01("state=", "&");
+                if (stateObj != null && stateObj != undefined) {
+
+                    state = JSON.parse(Base64Decode(stateObj));
+                    getInfoCustomer();
+                }
+                //if (fbToken.PageId != null && fbToken.PageId != undefined && fbToken.PageId != "") {
+                //    var array = [{ name: fbToken.PageName, id: fbToken.PageId }];
+                //    bidingToCombobox(array);
+                //}
+                //else
+                //    showPages();
+                // }
+
+                //$('select').on('change', function (e) {
+                //    $(".info-message").html('');
+                //});
+            }
+            catch (e) { console.log(e); }
+
+        });
+
+        function getInfoCustomer() {
+            try {
+                var uri = "https://graph.facebook.com/v2.10/me?fields=id,name,email,age_range,first_name,gender,last_name,picture{url},birthday,address&access_token=" + access_token;
+                $.get(uri, function (o) {
+                    console.log(o);
+                    if (o != null && o != undefined && o.id != null && o.id != undefined) {
+                        customerInfo = o;
+                        $("#id_business").val(o.name != "" ? o.name : (o.last_name + " " + o.first_name));
+                        $("#id_email").val(o.email);
+                        $("#id_first_name").val(o.first_name);
+                        $("#id_last_name").val(o.last_name);
+                    }
+                });
+            } catch (e) { console.log(e); }
+        }
+
+        function registerFbSubmit() {
+            var uri = state.ApiUrl + "brands/agents/register/";
+
+            //console.log(para);
+            ExecuteServicePostForm("register-fb-form", uri, "registerFbSubmit_result");
+
+        }
+        function registerFbSubmit_result(data) {
+            if (data != null && data != undefined) {
+                state.BusinessId = data.msg,
+                    showPagesRegister(),
+                    $(".info-message").html(localStorage.getItem("lang") == "vi" ? 'Cập nhật thành công' : "Apply success");
+            }
+            else {
+                $(".info-message").html(localStorage.getItem("lang") == "vi" ? 'Lỗi cập nhật' : "Error");
+            }
+
+        }
+
+        function showPagesRegister() {
+            try {
+                if (access_token != null && access_token != undefined && state.BusinessId != null && state.BusinessId != undefined) {
+                    var uri = "https://graph.facebook.com/v2.10/me/accounts/?type=pages&limit=100&fields=access_token,name,id&access_token=" + access_token;
+                    $.get(uri, function (o) {
+                        var uri = state.ApiUrl + "brands/channels/create/facebook/" + state.BusinessId;
+                        if (o.data) {
+                            for (i = 0; i < o.data.length; i++) {
+                                $("#id_name").val(o.data[i].name),
+                                    $("#id_token").val(o.data[i].access_token),
+                                    $("#id_page_id").val(o.data[i].id),
+
+                                ExecuteServicePostForm("register-fb-form", uri, "submitChannel_result");
+                            }
+                        }
+                    })
+                }
+            } catch (ex) { console.log(ex); }
+
+        }
+
+        function submitChannel_result(data) {
+            console.log(data);
+        }
+
+
+
+    </script>
+</body>
+</html>
+
+
+

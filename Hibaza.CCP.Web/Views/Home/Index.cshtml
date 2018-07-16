@@ -1,0 +1,498 @@
+﻿@{
+    ViewBag.Title = "HiBaza - Conversational ecommerce platform";
+}
+<div class="lg-conversations">
+    <div id="preloader" style="position:fixed;width:100%;height:100%;z-index:1060;background-color:#646bbc;top:0;left:0;text-align:center;padding-top: 160px;overflow:auto;">
+        <p>
+            <img src="/partners/white/hibaza.png" width="148" />
+        </p>
+        <p>
+            <img src="/images/preloader.gif" width="148" />
+        </p>
+        <p>
+            <img src="/images/caption.png" width="148" />
+        </p>
+    </div>
+    <div class="container-fluid ">
+        <div class="wz-topbar">
+            <div class="wz-col-sideleft-1 wz-topbar-col off">
+                <i id="left-navigation" class="icon-menu"></i>
+                <h4 class="wz-font-c-white wz-font-u-uppercase wz-margin-t-13">
+                    @(ViewBag.BusinessName)
+                </h4>
+            </div>
+            <div class="wz-col-sideleft-2 wz-topbar-col off">
+
+                <div class="wz-sideleft2-search">
+                    <form id="wz-sl2-finder" role="search">
+                        <div class="form-group">
+                            <input id="sideleft2-search" type="text" placeholder="Type and search..." name="sideleft2-search" class="form-control" /><a href="#" class="js-close-wz-sl2-finder"><i class="icon-cross wz-icon-md"></i></a>
+                        </div>
+                    </form><a href="#" class="btn btn-primary btn-lg btn-block js-open-wz-sl2-finder"><i class="icon-search wz-font-w-bold wz-icon-sm "></i><i class="lg-search-customers">Search customers...</i></a>
+                </div>
+            </div>
+            <div class="wz-col-sideleft-3 wz-topbar-col off">
+            </div>
+            <div class="wz-col-central wz-topbar-col off">
+                <div class="text-right">
+                    <ul class="list-inline">
+                        <li class="active js-topbar-option js-topbar-chats">
+                            <a href="#"><i class="icon-speech-bubble"></i><span class="lg-conversations">Conversations</span></a>
+                        </li>
+                        <li class="js-topbar-option">
+                            <a role="button" href="#wz-modal-reports"><i class="icon-pie-graph"></i><span class="lg-reports">Reports</span></a>
+                        </li>
+                        <li class="js-topbar-option js-topbar-settings js-settings-suscription-opt">
+                            <a role="button" href="#wz-modal-clients"><i class="icon-cog"></i><span class="lg-settings">Settings</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="wz-col-sideright wz-topbar-col off">
+                <div class="pull-left">
+                    <div class="dropdown">
+                        <a id="wz-dropdown-operator" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" username="@(ViewBag.UserName)">
+                            <p class="wz-font-s-md wz-font-w-med wz-font-c-violet">
+                                <span class="wz-operator-status @(ViewBag.UserStatus)"></span><span>@(ViewBag.UserName)</span><span class="caret"></span>
+                            </p>
+                        </a>
+                        <ul aria-labelledby="dLabel" class="dropdown-menu">
+                            <li>
+                                <a href="#" onclick="changeStatus();"><span class="wz-font-s-md wz-font-w-med wz-status-text">@(ViewBag.UserActive ? "Busy" : "Active")<i class="pull-right @(ViewBag.UserActive ? "icon-ban" : "icon-reload")"></i></span></a>
+                            </li>
+                            @*<li>
+                                    <a href="#" onclick="changeStatusHotline(this);"><span class="wz-font-s-md wz-font-w-med wz-status-phone">OFFLINE PHONE<i class="pull-right icon-reload"></i></span></a>
+                                </li>*@
+                            <li>
+                                <a href="/logout/" onclick="closeEvent=false;"><span class="wz-font-s-md wz-font-w-med lg-logout">Log out<i class="icon-power"></i></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <div class="dropdown">
+                        <a id="wz-dropdown-notifications" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="notificationBellClick();">
+                            <p class="wz-font-c-violet">
+                                <i class="icon-bell js-bell"></i>
+                            </p>
+                        </a>
+                        <ul aria-labelledby="dLabel" class="dropdown-menu dropdown-menu-left js-notifications-list">
+                            <li class="dropdown-header">
+                                <p>
+                                    <i class="icon-bell"></i><span class="lg-notifications">Notifications</span>
+                                </p>
+                            </li>
+                            <li>
+                                <a href="#" class="wz-no-notifications">
+                                    <p class="wz-notification-title wz-font-w-med wz-font-s-sm wz-font-u-uppercase wz-margin-0 lg-no-new-alerts">
+                                        No new alerts
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+
+        <div class="container-fluid wz-container-height">
+            <div class="row wz-row-height">
+                <div class="col-sm-2 wz-col-height wz-col-sideleft-1 off">
+                    <section>
+
+                        <nav id="sideleft1-scroll">
+
+                            <div class="panel-group">
+                                <div id="wz-acc-01" class="panel panel-default">
+                                    <div id="wz-acc-h-01" class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="#" data-option="channel" data-channel="all" class="js-add-channel">
+                                                <span class="wz-font-u-uppercase wz-font-w-med lg-channels">Channels<i class="all-channel-count hidden"></i></span>
+
+                                                <div class="pull-right">
+                                                    <span class="badge">
+                                                        @if (ViewBag.UserRole == "admin")
+                                                        {
+                                                            <i data-toggle="tooltip" title="Add channels" data-placement="bottom" data-container="body" class="icon-circle-plus"></i>
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="wz-acc-c-01">
+                                        <div class="panel-body">
+                                            <ul class="nav nav-pills nav-stacked">
+                                                <li role="presentation" data-option="channel" data-channel="all" class="active js-tab-chats js-channel-list js-channel-list-all">
+                                                    <a href="#" data-option="channel" data-channel="all" class="js-chats-select"><span><i class="icon-eye wz-sideleft-channel-icon"></i><span class="lg-all">All</span></span><span data-toggle="tooltip" title="All chats" data-placement="bottom" data-container="body" class="badge loading wz-margin-r-5 js-chat-count"></span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="wz-acc-02" class="panel panel-default">
+                                    <div id="wz-acc-h-02" class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a href="#" data-option="agent" data-agent="all" class="js-add-agent">
+                                                <span class="wz-font-u-uppercase wz-font-w-med lg-agents">Agents<i class="all-agent-count hidden"></i></span>
+
+                                                <div class="pull-right">
+                                                    <span class="badge">
+                                                        @if (ViewBag.UserRole == "admin")
+                                                        {
+                                                            <i data-toggle="tooltip" title="Add agents" data-placement="bottom" data-container="body" class="icon-circle-plus"></i>
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="wz-acc-a-01">
+                                        <div class="panel-body">
+                                            <ul class="nav nav-pills nav-stacked">
+                                                <li role="presentation" data-option="agent" data-agent="all" class="js-tab-chats js-agent-list js-agent-list-all">
+                                                    <a href="#" data-option="agent" data-agent="all" class="js-chats-select"><span><i class="icon-eye wz-sideleft-channel-icon"></i><span class="lg-all">All</span></span><span data-toggle="tooltip" title="Active chats" data-placement="bottom" data-container="body" class="badge loading wz-margin-r-5 js-chat-count"></span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+
+                    </section>
+                </div>
+                <div class="col-sm-3 wz-col-height wz-col-sideleft-2 off">
+                    <section>
+
+                        <header>
+                            <ul class="wz-filter">
+                                <li class="js-all">
+                                    <a href="#" data-option="all" class="active js-chats-select js-select-all unread lg-all">All</a>
+                                </li>
+                                <li class="js-pending">
+                                    <a href="#" data-option="open" class="js-chats-select unread lg-pending">Pending</a>
+                                </li>
+                                <li class="js-active hide">
+                                    <a href="#" data-option="active" class="js-chats-select unread lg-assigned">Assigned</a>
+                                </li>
+                                <li class="js-nonreply">
+                                    <a href="#" data-option="nonreply" class="js-chats-select unread lg-nonreply">NonReply</a>
+                                </li>
+                                <li class="js-unread">
+                                    <a href="#" data-option="unread" title="Unread" class="js-chats-select unread hidden"><i class="icon-mail"></i></a>
+                                </li>
+                                <li class="js-filter">
+                                    <a href="#" data-option="filter" title="Filter" class="js-chats-select filter"><i class="icon-calendar"></i></a>
+                                </li>
+                                <li class="js-archived hidden">
+                                    <a href="#" data-option="archived" title="Archived" class="js-chats-select"><i class="icon-archive"></i></a>
+                                </li>
+                            </ul>
+                            <a href=".wz-col-sideleft-2" class="js-close-wz-column pull-right visible-xs-2"><i class="icon-arrow-right wz-icon-md"></i></a>
+                            <div class="filter-home col-lg-12">
+
+                                <div class="js-filter-date-from-to hidden">
+                                    <input size="14" readonly="readonly" class="form-control js-filter-date-selector-init" type="text" style=" width:  118px;display:  inline-block;">
+                                    <input class="form-control js-filter-date-init" type="hidden">
+
+                                    <input size="14" readonly="readonly" class="form-control js-filter-date-selector-finish" type="text" style=" display:  inline-block;width: 118px;">
+                                    <input class="form-control js-filter-date-finish" type="hidden">
+                                    <div class="js-save-range " style="width: 15px;display: inline-block;"><span class="glyphicon">&#xe013;</span></div>
+
+                                </div>
+                            </div>
+
+
+                        </header>
+                        <section id="sideleft2-scroll">
+                            <div class="empty-state">
+                                <i class="icon-zami-07 zami-face"></i>
+                                <h3 class="lg-no-chats-human">No chats here, human.</h3>
+                                <div class="message">
+                                    <p class="lg-another-filter">
+                                        Select another filter on the top or left menu
+                                    </p>
+                                </div>
+                            </div>
+                            <ul class="list-group js-list-contacts"></ul>
+                            <div class="js-see-older-contacts">
+                                <ul class="list-group">
+                                    <li class="list-group-item wz-flex-card">
+                                        <div class="wz-flex-card-item wz-l-c-f">
+                                            <div class="wz-contact-avatar"></div>
+                                        </div>
+                                        <div class="wz-flex-card-item wz-l-c-s">
+                                            <p class="wz-font-w-med"></p>
+                                            <p class="wz-l-c-s-2"></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="wz-filler js-filler-contact"></div>
+                        </section>
+                    </section>
+                </div>
+
+                <div class="wz-col-height wz-col-sideleft-3 off">
+                    <section>
+                        <header>
+                            <a href=".wz-col-sideleft-2" class="js-open-wz-column pull-right visible-xs"><i class="icon-arrow-left wz-icon-md"></i></a>
+                            <ul role="tablist" class="nav nav-tabs">
+                                <li role="presentation" class="active">
+                                    <a href="#wz-tab-converssation" aria-controls="wz-tab-conversation" role="tab" data-toggle="tab" data-view="conversation" class="js-client-view">
+                                        <p class="wz-font-s-sm wz-font-w-med lg-conversation">
+                                            Conversation
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="wz-filter hidden">
+                                <li class="js-all">
+                                    <a href="#" data-option="all" class="active js-chats-select js-select-all unread lg-conversation">Conversation</a>
+                                </li>
+                            </ul><a href=".wz-col-sideleft-2, .wz-col-sideleft-3" class="js-close-wz-column pull-right visible-xs"><i class="icon-arrow-right wz-icon-md"></i></a>
+                        </header>
+                        <section id="sideleft3-scroll">
+                            <ul class="list-group js-list-conversations"></ul>
+                        </section>
+                        <footer></footer>
+                    </section>
+                </div>
+
+                <div class="col-sm-5 wz-col-height wz-col-central off">
+                    <section class="main">
+                        <header class="col-sm-5">
+
+                            <nav class="navbar">
+                                <div class="container-fluid">
+                                    <div class="nav-contents">
+                                        <div id="wz-finder">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Type and search..." name="chat-search" class="form-control" /><a href="#" class="js-close-wz-finder"><i class="icon-cross wz-icon-md"></i></a>
+                                            </div>
+                                        </div>
+
+                                        <ul class="nav navbar-nav navbar-left js-last-ticket"></ul>
+                                        <ul class="nav navbar-nav navbar-right">
+
+                                            <li class="visible-xs-2">
+                                                <a href=".wz-col-sideleft-3" class="js-open-wz-column"><i class="icon-arrow-left wz-icon-md"></i></a>
+                                            </li>
+                                            <li class="js-view-current hide">
+                                                <a href="#" role="button" data-ticket="" class="wz-menu-icons"><i data-toggle="tooltip" title="View current ticket" data-placement="bottom" data-container="body" class="icon-eye wz-icon-md"></i><span class="wz-font-s-xs wz-font-w-bold wz-font-c-dark hidden lg-view_ticket">VIEW TICKET</span></a>
+                                            </li>
+                                            <li class="js-unread-current hidden">
+                                                <a href="#" role="button" class="wz-menu-icons"><i data-toggle="tooltip" title="Mark as unread" data-placement="bottom" data-container="body" class="icon-mail wz-icon-md"></i><span class="wz-font-s-xs wz-font-w-bold wz-font-c-dark hidden lg-unread">UNREAD</span></a>
+                                            </li>
+                                            <li class="js-nonreply-current">
+                                                @*icon-mail*@
+                                                <a href="#" role="button" class="wz-menu-icons" onclick="markAsReply(this)"><i data-toggle="tooltip" title="Mark as replied" data-placement="bottom" data-container="body" class="icon-mail-open wz-icon-md"></i><span class="wz-font-s-xs wz-font-w-bold wz-font-c-dark hidden lg-readed">READED</span></a>
+
+                                            </li>
+                                            <li class="js-archive-current wz-archive-current hidden">
+                                                <a href="#" data-toggle="dropdown" role="button" ariaria-haspopup="true" aria-expanded="false" class="wz-menu-icons"><i data-toggle="tooltip" title="Archive chat" data-placement="bottom" data-container="body" class="icon-archive wz-icon-md"></i><span class="wz-font-s-xs wz-font-w-bold wz-font-c-dark lg-archive">ARCHIVE</span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a href="#" class="selected"><span class="wz-font-s-md wz-font-w-med lg-save-ticket">And save ticket as...<i class="icon-cross pull-right"></i></span></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#"><span class="wz-font-s-md wz-font-w-med"><i class="wz-circle"></i><i class="lg-opened">Opened</i></span></a>
+                                                    </li>
+                                                    <li data-status="2">
+                                                        <a href="#"><span class="wz-font-s-md wz-font-w-med"><i class="wz-circle"></i><i class="lg-successful">Successful</i></span></a>
+                                                    </li>
+                                                    <li data-status="3">
+                                                        <a href="#"><span class="wz-font-s-md wz-font-w-med"><i class="wz-circle"></i><i class="lg-rejected">Rejected</i></span></a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li class="hidden">
+                                                <a href="#" role="button" class="wz-menu-icons js-open-wz-finder"><i data-toggle="tooltip" title="Search in conversation" data-placement="bottom" data-container="body" class="icon-search wz-icon-md"></i><span class="wz-font-s-xs wz-font-w-bold wz-font-c-dark lg-search">SEARCH</span></a>
+                                            </li>
+                                            <li class="js-open-current">
+                                                <a href="#" role="button" class="wz-menu-icons"><i data-toggle="tooltip" title="Open chat" data-placement="bottom" data-container="body" class="icon-open wz-icon-md"></i><span class="wz-font-s-xs wz-font-w-bold wz-font-c-dark hidden lg-open">OPEN</span></a>
+                                            </li>
+                                            <li class="visible-xs">
+                                                <a href="#wz-col-sideright" class="js-open-wz-column"><i class="icon-arrow-right wz-icon-md"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                        </header>
+                        <section id="central-scroll" class="col-sm-5">
+                            <div id="wz-disconnection-alert" class="col-sm-5"></div>
+                            <div class="js-see-older-chats">
+                                <ul class="list-group">
+                                    <li class="list-group-item wz-flex-card">
+                                        <div class="wz-flex-card-item wz-l-c-f">
+                                            <img src="" alt="" width="40" />
+                                        </div>
+                                        <div class="wz-flex-card-item wz-l-c-s">
+                                            <p class="wz-font-w-med"></p>
+                                            <p class="wz-l-c-s-2"></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <ul class="list-group js-list-chat"></ul>
+                            <div class="wz-filler js-filler-chat"></div>
+                        </section>
+                        <footer class="col-sm-5">
+
+                            <form id="send_form" data-step="2" data-toggle="popover" data-container="body" data-trigger="manual" data-placement="top" data-content="Write your answer and press enter" enctype="multipart/form-data">
+                                <input type='hidden' name='clienttoken' value='' />
+                                <input class="js-business-input" id="id_business" name="business_id" value="@(ViewBag.BusinessId)" type="hidden" />
+                                <input class="js-channel-input" id="id_channel" name="channel_id" type="hidden" />
+                                <input class="js-agent-input" id="id_agent" value="@(ViewBag.UserId)" name="agent_id" type="hidden" />
+
+                                <div class="status">
+                                    <div class="upper">
+                                        <div class="textarea">
+                                            <div class="btn btn-info btn-archive hide js-open-current lg-chat-in-facebook">Chat in Facebook</div>
+                                            <div class="hide">
+                                                <input accept="image/*" id="id_images" multiple="multiple" name="images" type="file" />
+                                            </div>
+                                            <textarea class="form-control common js-typearea" cols="40" id="js-typearea" onkeypress="return getNoteAgent(event,this);" name="message" placeholder="Type a message..." rows="10" style="border-style:none;"></textarea>
+                                            <input class="js-customer-input" id="id_customer" name="recipient_id" type="hidden" />
+                                            <input class="js-thread-input" id="id_thread" name="thread_id" type="hidden" />
+                                            <input class="js-channel-type-chat" name="channel_type" type="hidden" value="facebook" />
+                                            <input class="js-channel-format-chat" name="channel_format" type="hidden" value="message" />
+                                            <input class="js-tag-chat" name="tagchat" type="hidden" value="ISSUE_RESOLUTION" />
+                                            <input class="js-config-chat" name="config" type="hidden" value="" />
+                                            <input class="js-para-chat" name="para" type="hidden" value="" />
+                                        </div>
+                                        <div class="shortcuts"></div>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="pull-left">
+                                            <div id="js-button-checknote" class="btn wz-button-check hidden">
+                                                <span class="wz-check"></span><span class="lg-private-reply">Private reply</span>
+                                            </div>
+                                        </div>
+                                        <div class="pull-right">
+                                            <div class="icons">
+                                                <a id="js-button-sendimage" href="#"><span class="wz-font-s-md wz-font-w-med"></span><i class="icon-image"></i></a><a href="#"><span class="wz-font-s-md wz-font-w-med"></span><span id="emoji-btn"><i class="icon-smiley"></i></span></a>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </footer>
+                    </section>
+                </div>
+                <div id="wz-col-sideright" class="col-sm-2 wz-col-height off wz-col-sideright">
+                    <section>
+                        <div class="wz-sideright-client"></div>
+                        <div style="display:none;" class="wz-sideright-ticket"></div>
+                        <div style="display:none;" class="wz-sideright-agent"></div>
+                        <div style="display:none;" class="wz-sideright-payment"></div>
+
+
+
+                    </section>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+@*hotline*@
+<iframe src="@(ViewBag.BaseUrls_PhoneWeb)phone-action.html?userid=@(ViewBag.UserId)&token=@(ViewBag.AccessToken)" allow="geolocation ;microphone ;camera ;midi;encrypted-media" class="phone-container"></iframe>
+<style>
+    .phone-container {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background-color: transparent;
+        width: 250px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: hidden;
+        height: 105px;
+        border: none;
+    }
+</style>
+
+<script>
+    var timestampDefault = "99999999999";
+    $(document).ready(function () {
+
+        try {
+
+            var filter = getDateRange("today");
+            $(".filter-home .js-filter-date-selector-init").val(filter.initText);
+            $(".filter-home .js-filter-date-init").val(filter.init);
+
+
+            $(".filter-home .js-filter-date-selector-finish").val(filter.finishText);
+            $(".filter-home .js-filter-date-finish").val(timestampDefault);
+
+            $('.filter-home .js-filter-date-selector-init')
+                .on('click', function (e) { stopPropagation(e); })
+                .datepicker({
+                    dateFormat: "dd M yy",
+                    changeMonth: true,
+                    changeYear: true,
+
+                    onSelect: function (dateText, inst) {
+                        var date = new Date(dateText);
+                        var timestamp = date.getTime() / 1000;
+                        $(".filter-home .js-filter-date-init").val(timestamp);
+                        $(".filter-home .js-filter-date-selector-init").val(dateText);
+                    },
+                    beforeShow: function (input, inst) {
+                        inst.settings.maxDate = new Date($(".filter-home .js-filter-date-selector-finish").val());
+                    }
+                });
+
+            //
+            // FINISH DATEPICKER
+            //
+            $('.filter-home .js-filter-date-selector-finish')
+                .on('click', function (e) { stopPropagation(e); })
+                .datepicker({
+                    dateFormat: "dd M yy",
+                    changeMonth: true,
+                    changeYear: true,
+
+                    onSelect: function (dateText, inst) {
+                        var date = new Date(dateText);
+                        date.setDate(date.getDate() + 1);
+                        var timestamp = date.getTime() / 1000;
+                        $(".filter-home .js-filter-date-finish").val(timestamp);
+                        $(".filter-home .js-filter-date-selector-finish").val(dateText);
+                    },
+                    beforeShow: function (input, inst) {
+                        inst.settings.maxDate = new Date();
+                        inst.settings.minDate = new Date($(".filter-home .js-filter-date-selector-init").val());
+                    }
+                });
+
+            $('.wz-filter .filter').on('click', function () {
+                if ($('.js-filter-date-from-to').hasClass("hidden"))
+                    $('.js-filter-date-from-to').removeClass("hidden");
+                else {
+                    $('.js-filter-date-from-to').addClass("hidden");
+                    $(".filter-home .js-filter-date-finish").val(timestampDefault);
+                }
+            });
+
+            $(".filter-home .js-save-range").click(function () {
+                $(".js-all .js-select-all").click();
+
+            });
+
+        } catch (e) { console.log(e); }
+    });
+    readFileLang(localStorage.getItem("lang"), "conversations");
+</script>
+
+
+

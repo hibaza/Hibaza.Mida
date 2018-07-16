@@ -1,0 +1,62 @@
+﻿{
+  "en": {
+    "download-title": {
+      "text": "Conversation download",
+      "type": "text"
+    },
+    "channel-select": {
+      "text": "Channel select",
+      "type": "text"
+    },
+    "date-from": {
+      "text": "Date from",
+      "type": "text"
+    },
+    "date-to": {
+      "text": "Date to",
+      "type": "text"
+    },
+    "messages": {
+      "text": "Messages",
+      "type": "text"
+    },
+    "comments": {
+      "text": "Comments",
+      "type": "text"
+    },
+    "submit": {
+      "text": "Download",
+      "type": "text"
+    }
+  },
+  "vi": {
+     "download-title": {
+      "text": "Tải cuộc hội thoại",
+      "type": "text"
+    },
+    "channel-select": {
+      "text": "Chọn kênh",
+      "type": "text"
+    },
+    "date-from": {
+      "text": "Từ thời điểm",
+      "type": "text"
+    },
+    "date-to": {
+      "text": "Đến thời điểm",
+      "type": "text"
+    },
+    "messages": {
+      "text": "Tin nhắn",
+      "type": "text"
+    },
+    "comments": {
+      "text": "Bình luận",
+      "type": "text"
+    },
+    "submit": {
+      "text": "Tải",
+      "type": "text"
+    }
+  }
+}

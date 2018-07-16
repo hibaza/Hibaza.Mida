@@ -1,0 +1,54 @@
+﻿{
+  "en": {
+    "close": {
+      "text": "Close",
+      "type": "text"
+    },
+    "add-note-customer": {
+      "text": "Add a note about your customer",
+      "type": "text"
+    },
+    "your-note": {
+      "text": "Text of your note",
+      "type": "text"
+    },
+    "highlighted-note": {
+      "text": "Is it a highlighted note?",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Cancel",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "close": {
+      "text": "Đóng",
+      "type": "text"
+    },
+    "add-note-customer": {
+      "text": "Thêm ghi chú về khách hàng",
+      "type": "text"
+    },
+    "your-note": {
+      "text": "Nội dung ghi chú",
+      "type": "text"
+    },
+    "highlighted-note": {
+      "text": "Đây là ghi chú được đánh dấu ?",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Thoát",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+  }
+}

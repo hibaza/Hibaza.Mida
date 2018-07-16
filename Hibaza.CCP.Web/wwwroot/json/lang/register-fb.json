@@ -1,0 +1,104 @@
+﻿{
+  "en": {
+    "ask-invitation": {
+      "text": "Ask for your invitation<br/> to Hibaza",
+      "type": "text"
+    },
+    "your-company": {
+      "text": "Your company name",
+      "type": "text"
+    },
+    "your-email": {
+      "text": "Your email",
+      "type": "text"
+    },
+    "password": {
+      "text": "Password",
+      "type": "text"
+    },
+    "repeat-password": {
+      "text": "Repeat password",
+      "type": "text"
+    },
+    "read-and-agree": {
+      "text": "I have read and agree to the",
+      "type": "text"
+    },
+    "terms": {
+      "text": "Terms",
+      "type": "text"
+    },
+    "and": {
+      "text": "and",
+      "type": "text"
+    },
+    "privacy-policy": {
+      "text": "Privacy Policy",
+      "type": "text"
+    },
+    "register": {
+      "text": "Register",
+      "type": "text"
+    },
+    "already-account": {
+      "text": "Already have an account?",
+      "type": "text"
+    },
+    "login": {
+      "text": "Login",
+      "type": "text"
+    }
+
+  },
+  "vi": {
+    "ask-invitation": {
+      "text": "Đăng ký tài khoản Hibaza",
+      "type": "text"
+    },
+    "your-company": {
+      "text": "Tên công ty",
+      "type": "text"
+    },
+    "your-email": {
+      "text": "email",
+      "type": "text"
+    },
+    "password": {
+      "text": "Mật khẩu",
+      "type": "text"
+    },
+    "repeat-password": {
+      "text": "Lặp lại password",
+      "type": "text"
+    },
+    "read-and-agree": {
+      "text": "Tôi đã đọc và đồng ý",
+      "type": "text"
+    },
+    "terms": {
+      "text": "điều kiện",
+      "type": "text"
+    },
+    "and": {
+      "text": "và",
+      "type": "text"
+    },
+    "privacy-policy": {
+      "text": "Chính sách bảo mật",
+      "type": "text"
+    },
+    "register": {
+      "text": "Đăng ký",
+      "type": "text"
+    },
+    "already-account": {
+      "text": "Đã có tài khoản ?",
+      "type": "text"
+    },
+    "login": {
+      "text": "Đăng nhập",
+      "type": "text"
+    }
+
+  }
+}

@@ -1,0 +1,110 @@
+﻿{
+  "en": {
+    "assign-to": {
+      "text": "Assign to:",
+      "type": "text"
+    },
+    "unassign": {
+      "text": "Unassign",
+      "type": "text"
+    },
+    "agent": {
+      "text": "Agent",
+      "type": "text"
+    },
+    "assign": {
+      "text": "Assign",
+      "type": "text"
+    },
+    "activity": {
+      "text": "Activity",
+      "type": "text"
+    },
+    "info": {
+      "text": "Info",
+      "type": "text"
+    },
+    "chats-assigned": {
+      "text": "Chats assigned",
+      "type": "text"
+    },
+    "average-first-response-time": {
+      "text": "Average First Response Time",
+      "type": "text"
+    },
+    "average-response-time": {
+      "text": "Average Response Time",
+      "type": "text"
+    },
+    "tickets-opened": {
+      "text": "Tickets Opened",
+      "type": "text"
+    },
+    "tickets-completed": {
+      "text": "Tickets Completed",
+      "type": "text"
+    },
+    "tickets": {
+      "text": "Tickets",
+      "type": "text"
+    },
+    "name": {
+      "text": "Name",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "assign-to": {
+      "text": "Phân tin tới",
+      "type": "text"
+    },
+    "unassign": {
+      "text": "Chưa phân tin",
+      "type": "text"
+    },
+    "agent": {
+      "text": "Tài khoản ủy quyền",
+      "type": "text"
+    },
+    "assign": {
+      "text": "Phân tin",
+      "type": "text"
+    },
+    "activity": {
+      "text": "Hoạt động",
+      "type": "text"
+    },
+    "info": {
+      "text": "Thông tin",
+      "type": "text"
+    },
+    "chats-assigned": {
+      "text": "Đã phân tin",
+      "type": "text"
+    },
+    "average-first-response-time": {
+      "text": "Thời gian phản hồi đầu tiên trung bình",
+      "type": "text"
+    },
+    "average-response-time": {
+      "text": "Thời gian phản hồi trung bình",
+      "type": "text"
+    },
+    "tickets-opened": {
+      "text": "Tickets đã tạo",
+      "type": "text"
+    },
+    "tickets-completed": {
+      "text": "Tickets sử lý xong",
+      "type": "text"
+    },
+    "tickets": {
+      "text": "Tổng ticket",
+      "type": "text"
+    },
+    "name": {
+      "text": "Tên",
+      "type": "text"
+    }
+  }
+}

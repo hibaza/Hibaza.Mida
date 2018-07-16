@@ -1,0 +1,413 @@
+﻿@model Hibaza.CCP.Domain.Models.TicketModel
+@{
+    Layout = null;
+}
+<div class="lg-ticket_profile">
+    <div class="wz-btn-panel">
+        <a href="#" data-toggle="tooltip" title="" data-placement="right" data-container="body" class="btn btn-filter js-hide-sideright" data-original-title="Hide detail"><span class="pull-left"><i class="icon-arrow-right"></i></span></a><a href="#" class="btn btn-info btn-block js-switch-client"><span class="pull-left"><i class="icon-reply"></i></span><span class="lg-back-customer">Back to customer</span></a>
+    </div>
+    <script>
+        /**
+        * Document onload
+        */
+        $(function () {
+            $('.js-switch-client').on("click", function (e) {
+                e.preventDefault();
+                viewProfileClient();
+                viewTicketSelected = false;
+                viewAgentSelected = false;
+            });
+
+            // This buttons is shown when viewing sideright column from reports modal
+            $('.js-hide-sideright').on("click", function (e) {
+                e.preventDefault();
+                hideSideright();
+            });
+        });
+    </script>
+    <div class="wz-central js-perfect-scroll ps-container ps-theme-default" data-ps-id="">
+        <div class="wz-ticket-panel">
+            <div class="wz-central">
+                <div>
+                    <div class="wz-ticket-header">
+                        <p class="wz-ticket-date">
+                            <i class="icon-clock"></i><span class="wz-font-s-sm wz-font-w-med wz-font-u-uppercase">@(Model.created_time)</span>
+                        </p>
+                        <div class="wz-ticket-title wz-flex-card">
+                            <a href="#" data-toggle="tooltip" title="" data-placement="bottom" class="wz-ticket-status wz-flex-card-item wz-status-@(Model.status)" data-original-title="Pending"><i class="icon-none"></i></a>
+                            <div class="wz-ticket-data wz-flex-card-item">
+                                <p class="wz-font-s-sm wz-font-w-bold wz-font-u-uppercase">
+                                    <span contenteditable="false" data-placeholder="Add a title" data-ticket="@(Model.id)" data-backup="#@(Model.number)" class="wz-ticket-title-val">#@(Model.number)</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="wz-ticket-change-status dropdown">
+                            <a href="#" data-toggle="dropdown" role="button" ariaria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-info wz-font-s-xs wz-font-w-reg wz-flex-card-item dropdown-toggle"><span class="text lg-open-in">Open in <strong>@(Model.getStatusName(Model.status))</strong></span><span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                @for (var i = 0; i < 4; i++)
+                                {
+                                    <li>
+                                        <a role="@(Model.status == i ? "button" : "")" href="#" data-status="@(i)" data-ticket="@(Model.id)" class="js-ticket-status @(Model.status == i ? "selected" : "")"><span class="wz-font-s-md wz-font-w-med"><i class="wz-circle"></i>@(Model.getStatusName(i))</span></a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="wz-ticket-description">
+                            <p class="wz-font-s-sm">
+                                <i class="icon-align-left"></i><span contenteditable="true" data-placeholder="Add a description" data-ticket="@(Model.id)" data-backup="None" class="wz-ticket-description-val wz-font-w-med">@(Model.description)</span>
+                            </p><span class="wz-read-more hide lg-read-more">Read more...</span>
+                        </div>
+                        <div class="wz-ticket-agents">
+                            <div class="wz-agents">
+                                <div style="background-image: url(@(string.IsNullOrWhiteSpace(Model.sender_avatar) ? "/avatars/1.png" : Model.sender_avatar))" data-toggle="tooltip" title="" class="tiny-thumbnail js-picture-agent-@(Model.sender_id)" data-original-title="@(Model.sender_name)"></div>
+                            </div>
+                        </div>
+                        <div class="wz-ticket-tags wz-flex-card">
+                            @if (!string.IsNullOrWhiteSpace(Model.tags))
+                            {
+                                foreach (var tag in Model.tags.Split(','))
+                                {
+                                    <span contenteditable="true" data-backup="@(tag)" class="btn btn-info wz-font-s-xs wz-font-w-reg">@(tag)<i class="icon-cross"></i></span>
+                                }
+
+                            }
+                            <span contenteditable="true" data-placeholder="Add tag" data-backup="" class="btn btn-default wz-ticket-add-tag wz-font-s-xs wz-font-w-reg"></span>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <a href="#" onclick="sendTemplate('support');" data-toggle="modal" class="btn btn-success btn-block wz-revenue">
+                            <b class="lg-send-support">Send Support Message</b>
+                        </a>
+                    </div>
+                    <div class="wz-separator"></div>
+                    <div class="wz-ticket-body">
+                        <div class="wz-ticket-starred">
+                            <p>
+                                <i class="icon-star"></i><span class="wz-font-s-sm wz-font-w-med wz-font-u-uppercase lg-starred-messages">Starred Messages</span>
+                            </p><div class="js-ticket-starred">
+                            </div>
+                            <p></p>
+                        </div>
+                        @if (false)
+                        {
+                            <div class="wz-separator"></div>
+                            <div class="wz-ticket-private">
+                                <p>
+                                    <i class="icon-pencil"></i><span class="wz-font-s-sm wz-font-w-med wz-font-u-uppercase lg-private-notes">Private notes</span>
+                                </p><div class="js-ticket-notes"></div>
+                                <p></p>
+                            </div>
+                            <div class="wz-separator"></div>
+                            <div class="wz-ticket-files">
+                                <p class="wz-files-title">
+                                    <i class="icon-image"></i><span class="wz-font-s-sm wz-font-w-med wz-font-u-uppercase lg-files">Files</span>
+                                </p>
+                                <div>
+                                </div>
+                            </div>
+                            <div class="wz-separator"></div>
+                            <div class="wz-ticket-locations">
+                                <p class="wz-locations-title">
+                                    <i class="icon-map"></i><span class="wz-font-s-sm wz-font-w-med wz-font-u-uppercase lg-locations">Locations</span>
+                                </p>
+                                <div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+                <script>
+var TICKET_ID = '@(Model.id)';
+var CUSTOMER_ID = '@(Model.customer_id)';
+var $ticketDescription = $('.wz-ticket-description-val');
+var $ticketTitle = $('.wz-ticket-title-val');
+var $ticketTags = $('.wz-ticket-tags span');
+var $ticketTagsDelete = $('.wz-ticket-tags span .icon-cross');
+var $readMoreCaption = $('.wz-read-more');
+var $starredMessages = $('.wz-ticket-starred .wz-starred-message');
+var $privateMessages = $('.wz-ticket-private .wz-private-message');
+var $readFullButton = $('.wz-ticket-read a');
+
+/**
+ * Checks if description is too long
+ */
+function showReadMoreCaption() {
+  if ($ticketDescription.prop('scrollHeight') > $ticketDescription.innerHeight()) {
+    $readMoreCaption.removeClass('hide');
+  } else {
+    $readMoreCaption.addClass('hide');
+  }
+};
+
+/**
+ * Loads starred messages
+ */
+function loadStarredMessages() {
+  var starredArr = [];
+  $starredMessages.each(function(index, element) {
+    starredArr.push(loadTargetMessage(index, element));
+  });
+  $.when.apply($, starredArr).then(sortStarredMessages);
+};
+
+/**
+ * Sets private messsages date format
+ */
+function loadPrivateMessages() {
+  $privateMessages.find('.wz-l-c-s-2 span').each(function(){
+    var dateMDYY = $(this).data('date').split('/');
+    var date = new Date(dateMDYY[2], dateMDYY[0], dateMDYY[1]);
+    $(this).text(formatShortDate(date));
+    });
+
+  $privateMessages.find('.js-message-text').each(function(){
+    linkifyElem($(this));
+  });
+};
+
+
+function getTags() {
+  var tags = "";
+  var $tags = $('.wz-ticket-tags span.btn-info');
+  $tags.each(function(index, element) {
+    tags += $(element).text();
+    if (index < $tags.length-1) {
+      tags += ',';
+    }
+  });
+  return tags;
+};
+
+/**
+ * Deletes a tag
+ */
+function deleteTag(e){
+  e.stopPropagation();
+  $(this).parent().remove();
+  cloud.editTicketTags(getTags(), TICKET_ID);
+}
+
+function saveTicketDescription($elem) {
+  if ($elem.length > 0 && typeof $elem.data('backup') == "string" ) {
+    var text = ($elem.hasClass('wz-ticket-title-val'))
+      ? $elem.text().slice(0, TICKET_TITLE_LIMIT) // Title update
+      : $elem.text().slice(0, TICKET_DESCRIPTION_LIMIT); // Description update
+
+    if (text != $elem.data('backup')) {
+      var ticketPromise = ($elem.hasClass('wz-ticket-title-val'))
+        ? cloud.setShortDescription(text, $elem.data('ticket'))  // Title update
+        : ticketPromise = cloud.setDescription(text, $elem.data('ticket')); // Description update
+
+      ticketPromise.done(function() {
+        $elem.data('backup', $elem.text());
+      });
+      ticketPromise.fail(function() {
+        $elem.text($elem.data('backup'));
+      });
+    }
+  }
+}
+
+function saveTicketTag($elem) {
+  if (($elem.length > 0 && typeof $elem.data('backup') == "string" && $.trim($elem.text()).length > 0)) {
+    if ($elem.text() != $elem.data('backup')) {
+      if ($elem.hasClass('wz-ticket-add-tag')) {
+        // Clone actual "Add tag" button
+        var $newAddTag = $elem.clone(true).text('');
+
+        var $deleteBtn = $('<i class="icon-cross">');
+
+        // Configures actual "Add tag" button as Tag
+        $elem
+          .removeClass("wz-ticket-add-tag btn-default")
+          .addClass("btn-info")
+          .attr('data-backup', $elem.text())
+          .append($deleteBtn);
+          // Creates delete button
+
+        $elem.parent().append($newAddTag);
+        $elem.find('.icon-cross').on("click",  deleteTag);
+        cloud.editTicketTags(getTags(), TICKET_ID);
+      } else {
+        $elem.data('backup', $elem.text());
+        cloud.editTicketTags(getTags(), TICKET_ID);
+      }
+    }
+  }
+
+}
+
+/**
+ * Document Onload
+ */
+                    $(function () {
+                        readFileLang(localStorage.getItem("lang"), "ticket_profile");
+
+
+  $('.js-ticket-status').on('click', function () {
+    cloud.setStatus($(this).data('status'), $(this).data('ticket'));
+  });
+
+
+  $ticketTitle.on("keyup", function() {
+    if ($(this).text().length > TICKET_TITLE_LIMIT) {
+      $(this).addClass('error');
+      var slicedText = $(this).text().slice(0, TICKET_TITLE_LIMIT);
+      $(this).text('')
+      document.execCommand('insertText', false,  slicedText)
+      setTimeout(function(){
+        $(this).removeClass('error');
+      }.bind(this), 500);
+    }
+  });
+
+  // Saves data when Intro pressed, cancels when ESC pressed
+  $ticketTitle.on("keydown", function(e) {
+    var key = e.keyCode || e.which;
+    if (key == 27) {
+      $(this).text($(this).data('backup'));
+      $(this).blur();
+    } else if (key == 13) {
+      e.preventDefault();
+      $(this).blur();
+    }
+  });
+
+  // Prevents paste
+  $ticketTitle.on("paste", preventDefault);
+
+  // On focusOut saves
+  $ticketTitle.on("focusout", function(e) {
+    e.preventDefault();
+    saveTicketDescription($(this));
+  });
+
+  /**
+   * Edit ticket description
+   */
+
+  // Slices text when limit reached
+  $ticketDescription.on("keyup", function() {
+    if ($(this).text().length > TICKET_DESCRIPTION_LIMIT) {
+      $(this).addClass('error');
+      var slicedText = $(this).text().slice(0, TICKET_DESCRIPTION_LIMIT);
+      $(this).text('')
+      document.execCommand('insertText', false,  slicedText)
+      setTimeout(function(){
+        $(this).removeClass('error');
+      }.bind(this), 500);
+    }
+  });
+
+  // Saves data when Intro pressed, cancels when ESC pressed
+  $ticketDescription.on("keydown", function(e) {
+    var key = e.keyCode || e.which;
+    if (key == 27) { // ESC key cancels
+      $(this).text($(this).data('backup'));
+      $(this).blur();
+    } else if (key == 13) { // Intro key saves data
+      e.preventDefault();
+      $(this).blur();
+    }
+  });
+
+  // Hides "Read more..." on focus
+  $ticketDescription.on("focus", function(e) {
+    $readMoreCaption.addClass('hide');
+  });
+
+  // Prevents paste
+  $ticketDescription.on("paste", preventPaste);
+
+  // On click focus
+  $ticketDescription.on("click", function() {
+    $ticketDescription.focus();
+  });
+
+  // On "Read more..." click
+  $readMoreCaption.on("click", function() {
+    $ticketDescription.trigger('click');
+  });
+
+  // On focusOut saves
+  $ticketDescription.on("focusout", function(e) {
+    e.preventDefault();
+    saveTicketDescription($(this));
+  });
+
+  /**
+   * Add/Edit/Delete tag
+   */
+
+  // Slices text when limit reached
+  $ticketTags.on("keyup", function() {
+    if ($(this).text().length > TICKET_TAG_LIMIT) {
+      $(this).addClass('error');
+      var slicedText = $(this).text().slice(0, TICKET_TAG_LIMIT);
+      $(this).text('')
+      document.execCommand('insertText', false,  slicedText)
+      setTimeout(function(){
+        $(this).removeClass('error');
+      }.bind(this), 500);
+    }
+  });
+
+  // Saves data when Intro pressed, cancels when ESC pressed
+  $ticketTags.on("keydown", function(e) {
+    var key = e.keyCode || e.which;
+    if (key == 27) { // ESC key cancels
+      $(this).text($(this).data('backup'));
+      if (!$(this).hasClass('wz-ticket-add-tag')) {
+        var $deleteBtn = $('<i class="icon-cross">');
+        $(this).append($deleteBtn);
+        $(this).find('.icon-cross').on("click",  deleteTag);
+      }
+      $(this).blur();
+    } else if (key == 13) { // Intro key saves data
+      e.preventDefault();
+      $(this).blur();
+    }
+  });
+
+  // Prevents paste
+  $ticketTags.on("paste", preventDefault);
+
+  // On focus removes cross icon
+  $ticketTags.on("click", function(e) {
+    e.stopPropagation();
+    $(this).find('.icon-cross').remove();
+  });
+
+  // On focus removes cross icon
+  $ticketTags.find('i').on("click", deleteTag);
+
+  // On focusOut saves
+  $ticketTags.on("focusout", function(e) {
+    e.preventDefault();
+    saveTicketTag($(this));
+  });
+
+  /**
+   * Read full conversation button
+   */
+  $readFullButton.on("click", function(e) {
+    cloud.goToMessage(CUSTOMER_ID, false, $(this).data("timestamp"));
+  });
+
+  loadPrivateMessages();
+  loadStarredMessages();
+  tooltips('#wz-col-sideright');
+  showReadMoreCaption();
+  newTicketViewTutorial();
+
+  // PERFECT SCROLL
+  $(siderightScrollSelector).perfectScrollbar({suppressScrollX: true, wheelPropagation: true});
+});
+                </script>
+            </div>
+        </div>
+        <footer></footer>
+        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+    </div>
+</div>

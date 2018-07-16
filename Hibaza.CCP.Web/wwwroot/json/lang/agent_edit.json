@@ -1,0 +1,102 @@
+﻿{
+  "en": {
+    "agents": {
+      "text": "Agents",
+      "type": "text"
+    },
+    "edit": {
+      "text": "Edit",
+      "type": "text"
+    },
+    "avatar": {
+      "text": "Avatar",
+      "type": "text"
+    },
+    "browse": {
+      "text": "Browse",
+      "type": "text"
+    },
+    "upload": {
+      "text": "Upload",
+      "type": "text"
+    },
+    "error-try-again": {
+      "text": "An error ocurred. Please, try again later or contact us.",
+      "type": "text"
+    },
+    "first-name": {
+      "text": "First name",
+      "type": "text"
+    },
+    "last-name": {
+      "text": "Last Name",
+      "type": "text"
+    },
+    "password": {
+      "text": "Password",
+      "type": "text"
+    },
+    "confirm-password": {
+      "text": "Confirm your password",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Cancel",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "agents": {
+      "text": "Tài khoản ủy quyền",
+      "type": "text"
+    },
+    "edit": {
+      "text": "Chỉnh sửa",
+      "type": "text"
+    },
+    "avatar": {
+      "text": "Ảnh đại diện",
+      "type": "text"
+    },
+    "browse": {
+      "text": "Chọn",
+      "type": "text"
+    },
+    "upload": {
+      "text": "Upload",
+      "type": "text"
+    },
+    "error-try-again": {
+      "text": "Đã xảy ra lỗi. Vui lòng thử lại sau hoặc liên hệ với chúng tôi.",
+      "type": "text"
+    },
+    "first-name": {
+      "text": "Tên chính",
+      "type": "text"
+    },
+    "last-name": {
+      "text": "Tên phụ",
+      "type": "text"
+    },
+    "password": {
+      "text": "Mật khẩu",
+      "type": "text"
+    },
+    "confirm-password": {
+      "text": "Xác nhận mật khẩu",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Thoát",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+  }
+}

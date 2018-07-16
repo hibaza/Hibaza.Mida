@@ -1,0 +1,92 @@
+﻿{
+  "rules": {
+    ".read": true,
+    ".write": true,
+       
+    "$business" : { 
+      "agents" : {
+      	".indexOn" : ["ext_id", "updated_time", "created_time", "username"]
+      },
+      "channels" : {
+      	".indexOn" : ["ext_id", "updated_time", "created_time", "username"]
+      },
+      "shortcuts" : {
+      	".indexOn" : ["created_time"]
+      },
+    "customers" : {
+      	".indexOn" : ["updated_time", "created_time", "timestamp", "channel_timestamp", "channel_agent_timestamp", "channel_agent_status_timestamp", "agent_status_timestamp", "channel_status_timestamp", "agent_timestamp", "status_timestamp"],
+      },        
+    "threads" : {
+       ".indexOn" : [ "updated_time", "created_time", "timestamp", "channel_timestamp", 
+                     "channel_agent_timestamp", "channel_agent_status_timestamp", 
+                     "agent_status_timestamp", "channel_status_timestamp", "agent_timestamp", 
+                     "status_timestamp", "channel_agent_flag_timestamp", "agent_flag_timestamp", 
+                     "channel_flag_timestamp", "flag_timestamp"]
+      },
+    "messages" : {
+      	".indexOn" : ["updated_time", "created_time", "timestamp"]
+      },        
+    "threads-messages" : {
+        "$uid" : {
+            "messages" : {
+                 ".indexOn" : ["timestamp", "created_time", "updated_time"]
+             }
+          }
+       }, 
+      "referrals" : {
+      	".indexOn" : ["created_time", "thread_id"]
+      },         
+      "notes" : {
+      	".indexOn" : ["created_time", "thread_id", "customer_id", "ticket_id", "agent_id"]
+      },         
+      "tickets" : {
+      	".indexOn" : ["created_time", "thread_id", "customer_id"]
+      },         
+    "conversations" : {
+      	".indexOn" : ["updated_time", "created_time"],
+      },        
+    "users-messages" : {
+        "$uid" : {
+          "messages": {
+            ".indexOn": [ "timestamp", "created_time", "updated_time" ]
+          }
+          }
+       }         
+    },
+    "customers" : {
+      	".indexOn" : ["updated_time", "created_time", "timestamp", "channel_timestamp", "channel_agent_timestamp", "channel_agent_status_timestamp", "agent_status_timestamp", "channel_status_timestamp", "agent_timestamp", "status_timestamp"],
+      },
+    "threads" : {
+      ".indexOn": [ "updated_time", "created_time", "timestamp", "channel_timestamp", "channel_agent_timestamp", "channel_agent_status_timestamp", "agent_status_timestamp", "channel_status_timestamp", "agent_timestamp", "status_timestamp", "channel_agent_flag_timestamp", "agent_flag_timestamp", "channel_flag_timestamp", "flag_timestamp" ],
+      },        
+    "threads-messages" : {
+        "$uid" : {
+            "messages" : {
+                 ".indexOn" : ["timestamp", "created_time", "updated_time"]
+             }
+          }
+       },
+    "conversations" : {
+      	".indexOn" : ["updated_time", "created_time"],
+      },        
+    "users-messages" : {
+        "$uid" : {
+          "messages": {
+            ".indexOn": [ "timestamp", "created_time", "updated_time" ]
+          }
+          }
+       },
+    "business" : {
+      	".indexOn" : ["updated_time", "created_time"]
+      },         
+    "channels" : {
+      	".indexOn" : ["created_time", "updated_time", "ext_id"],
+      },      
+    "agents" : {
+      ".indexOn": [ "ext_id", "updated_time", "created_time", "username" ]
+      },
+      "shortcuts" : {
+      	".indexOn" : ["created_time"]
+      }        
+   }
+}

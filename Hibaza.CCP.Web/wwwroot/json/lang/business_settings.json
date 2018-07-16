@@ -1,0 +1,134 @@
+﻿{
+  "en": {
+    "your-company-data": {
+      "text": "Your company data",
+      "type": "text"
+    },
+    "edit": {
+      "text": "Edit",
+      "type": "text"
+    },
+    "logo": {
+      "text": "Logo",
+      "type": "text"
+    },
+    "browse": {
+      "text": "Browse",
+      "type": "text"
+    },
+    "upload": {
+      "text": "Upload",
+      "type": "text"
+    },
+    "error-try-again": {
+      "text": "An error ocurred. Please, try again later or contact us.",
+      "type": "text"
+    },
+    "company-full-name": {
+      "text": "Company full name",
+      "type": "text"
+    },
+    "contact-phone": {
+      "text": "Contact phone",
+      "type": "text"
+    },
+    "contact-email": {
+      "text": "Contact email",
+      "type": "text"
+    },
+    "address": {
+      "text": "Address",
+      "type": "text"
+    },
+    "zip": {
+      "text": "ZIP",
+      "type": "text"
+    },
+    "city": {
+      "text": "City",
+      "type": "text"
+    },
+    "country": {
+      "text": "Country",
+      "type": "text"
+    },
+    "autoassign": {
+      "text": "Autoassign",
+      "type": "text"
+    },
+    "autocreate-tickets": {
+      "text": "Autocreate Tickets",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "your-company-data": {
+      "text": "Tên công ty",
+      "type": "text"
+    },
+    "edit": {
+      "text": "Sửa",
+      "type": "text"
+    },
+    "logo": {
+      "text": "Logo",
+      "type": "text"
+    },
+    "browse": {
+      "text": "Chọn",
+      "type": "text"
+    },
+    "upload": {
+      "text": "Upload",
+      "type": "text"
+    },
+    "error-try-again": {
+      "text": "Đã xảy ra lỗi. Vui lòng thử lại sau hoặc liên hệ với chúng tôi.",
+      "type": "text"
+    },
+    "company-full-name": {
+      "text": "Tên công ty",
+      "type": "text"
+    },
+    "contact-phone": {
+      "text": "Điện thoại",
+      "type": "text"
+    },
+    "contact-email": {
+      "text": "Email",
+      "type": "text"
+    },
+    "address": {
+      "text": "Địa chỉ",
+      "type": "text"
+    },
+    "zip": {
+      "text": "ZIP",
+      "type": "text"
+    },
+    "city": {
+      "text": "Thành phố",
+      "type": "text"
+    },
+    "country": {
+      "text": "Đất nước",
+      "type": "text"
+    },
+    "autoassign": {
+      "text": "Tự động phân tin",
+      "type": "text"
+    },
+    "autocreate-tickets": {
+      "text": "Tự động tạo Tickets",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+  }
+}

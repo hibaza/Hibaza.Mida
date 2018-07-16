@@ -1,0 +1,55 @@
+﻿@model Hibaza.CCP.Domain.Models.TicketModel
+@{
+    Layout = null;
+}
+<li id="statusDropdown" class="dropdown open">
+    <a href="#" data-toggle="dropdown" container="body" role="button" ariaria-haspopup="true" aria-expanded="false" class="dropdown-toggle wz-menu-icons wz-font-u-uppercase">
+    <i class="icon-none wz-status-@(Model.status)"></i>
+    <span class="js-ticket wz-font-w-bold wz-font-c-dark"><span class="caption">TICKET </span>
+        <span class="name">#@(Model.number)</span></span>
+    <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+
+        @for (var i = 0; i < 4; i++)
+        {
+            <li>
+                <a role="@(Model.status == i ? "button" : "")" href="#" data-status="@(i)" data-ticket="@(Model.id)" class="js-status-select @(Model.status == i ? "selected" : "")"><span class="wz-font-s-md wz-font-w-med"><i class="wz-circle"></i>@(Model.getStatusName(i))</span></a>
+            </li>
+        }
+
+    </ul>
+</li>
+<script>
+    $(function () {
+        tooltips();
+
+        $('.js-status-select').on('click', function () {
+            cloud.setStatus($(this).data('status'));
+            mixpanelEvents('changeTicketStatusTitle', STATUS[status]);
+        });
+
+        $('#statusDropdown').on('show.bs.dropdown', function () {
+            var $clonedMenu = $('#statusDropdown').find('.dropdown-menu').clone(true).addClass('js-dropdown-clone').css('display', 'block')
+            $('.wz-col-central').append($clonedMenu);
+        })
+        $('#statusDropdown').on('hide.bs.dropdown', function () {
+            $('.wz-col-central .dropdown-menu.js-dropdown-clone').remove();
+        })
+
+        // Checks if ticket description is like #00000
+        var ticketIdRegExp = new RegExp("^#[0-9]+$", 'g');
+        if (ticketIdRegExp.test($('.js-ticket .name').text())) {
+            $('.js-ticket .caption').removeClass('hide');
+        } else {
+            $('.js-ticket .caption').addClass('hide');
+        }
+
+        if ("@(string.IsNullOrWhiteSpace(Model.number) ? "None" : Model.number)" != "None") {
+            viewCurrentTicket.removeClass("hide");
+        } else {
+            viewCurrentTicket.addClass("hide");
+        }
+    })
+</script>
+
+

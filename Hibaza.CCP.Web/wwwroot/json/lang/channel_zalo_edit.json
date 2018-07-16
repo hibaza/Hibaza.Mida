@@ -1,0 +1,30 @@
+﻿{
+  "en": {
+    "channel-name": {
+      "text": "Channel's Name",
+      "type": "text"
+    },
+    "template-id-customer": {
+      "text": "Template ID send to customer",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "channel-name": {
+      "text": "Tên kênh zalo",
+      "type": "text"
+    },
+    "template-id-customer": {
+      "text": "Mẫu ID gửi tới khách hàng",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+  }
+}

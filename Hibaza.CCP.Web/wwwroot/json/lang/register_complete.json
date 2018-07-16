@@ -1,0 +1,22 @@
+﻿{
+  "en": {
+    "thank-regirstration": {
+      "text": "Thank for your regirstration<br /><br /> We will review and contact you shortly.",
+      "type": "text"
+    },
+    "let-go": {
+      "text": "Let's go!",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "thank-regirstration": {
+      "text": "Cảm bạn đã đăng ký<br /><br /> Chúng tôi sẽ sớm xem xét và liên hệ với bạn.",
+      "type": "text"
+    },
+    "let-go": {
+      "text": "Thoát nào!",
+      "type": "text"
+    }
+  }
+}

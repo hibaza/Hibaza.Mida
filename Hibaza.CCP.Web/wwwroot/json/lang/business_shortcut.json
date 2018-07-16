@@ -1,0 +1,70 @@
+﻿{
+  "en": {
+    "close": {
+      "text": "Close",
+      "type": "text"
+    },
+    "add-shortcut": {
+      "text": "Add a shortcut",
+      "type": "text"
+    },
+    "clients-predefined": {
+      "text": "Set up a shortcut to talk faster to your clients with a predefined answer to the common situations.",
+      "type": "text"
+    },
+    "said-your-clients": {
+      "text": "Text that will be said to your clients",
+      "type": "text"
+    },
+    "shortcut-activate": {
+      "text": "Shortcut that will activate it (one word)",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Cancel",
+      "type": "text"
+    },
+    "remove": {
+      "text": "Remove",
+      "type": "text"
+    },
+    "save-back": {
+      "text": "Save &amp; back",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "close": {
+      "text": "Đóng",
+      "type": "text"
+    },
+    "add-shortcut": {
+      "text": "Thêm phím tắt",
+      "type": "text"
+    },
+    "clients-predefined": {
+      "text": "Thiết lập một phím tắt để nói chuyện nhanh hơn với khách hàng của bạn với một câu trả lời được xác định trước cho các tình huống phổ biến.",
+      "type": "text"
+    },
+    "said-your-clients": {
+      "text": "Văn bản sẽ được gửi cho khách hàng của bạn",
+      "type": "text"
+    },
+    "shortcut-activate": {
+      "text": "Phím tắt sẽ mở nó (một từ)",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Thoát",
+      "type": "text"
+    },
+    "remove": {
+      "text": "Xóa",
+      "type": "text"
+    },
+    "save-back": {
+      "text": "Lưu &amp; quay lại",
+      "type": "text"
+    }
+  }
+}

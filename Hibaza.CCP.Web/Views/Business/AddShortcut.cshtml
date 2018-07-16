@@ -1,0 +1,127 @@
+﻿@model Hibaza.CCP.Web.Models.ShortCutAddEdit
+@{
+    Layout = null;
+}
+
+    <div class="modal-dialog modal-sm lg-business_shortcut">
+        <div class="modal-content">
+            <!-- Modal Header-->
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+                </button>
+                <h4 id="myModalLabel" class="modal-title lg-add-shortcut">
+                    Add a shortcut
+                </h4>
+            </div>
+
+            <!-- Modal Body-->
+            <div class="modal-body">
+                <div role="alert" class="alert alert-warning alert dismissible fade in">
+                    <button type="button" data-dismiss="alert" aria-label="Close" class="close">
+                        <i class="icon-cross"></i>
+                    </button><span class="lg-clients-predefined">Set up a shortcut to talk faster to your clients with a predefined answer to the common situations.</span>
+                </div>
+                <form id="response-form" role="form" class="form-horizontal" name="shortcut">
+                    <div class="form-group">
+                        <label for="" class="control-label col-sm-3 lg-said-your-clients">
+                            Text that will be said to your clients
+                        </label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" cols="40" id="id_shortcut_name" name="shortcut_name" rows="10" required="">@(Model.edit ? Model.data.name : "")</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="" class="control-label col-sm-3 lg-shortcut-activate">
+                            Shortcut that will activate it (one word)
+                        </label>
+                        <div class="col-sm-9">
+                            <div class="input-group wz-input-group-white">
+                                <div class="input-group-addon">/</div><input class="form-control" id="id_shortcut" name="shortcut" value="@(Model.edit ? Model.data.shortcut : "")" type="text" required=""/>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Modal Footer-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-toggle="modal" data-target="#wz-modal-shortcuts" class="btn btn-default lg-cancel">
+                    Cancel
+                </button>
+                @if (Model.edit){
+                <button type="button" onclick="cloud.removeShortcut('@(Model.data.id)');" class="btn btn-warning lg-remove">
+                    Remove
+                </button>
+                }
+                <button id="submit-shortcut" type="button" class="btn btn-info lg-save-back">
+                    Save &amp; back
+                </button>
+            </div>
+        </div>
+    </div>
+<script>
+    readFileLang(localStorage.getItem("lang"), "business_shortcut");
+    $("#response-form").on('submit', function(e){
+        e.preventDefault();
+        $("#submit-shortcut").trigger('click');
+    });
+
+
+    $("#submit-shortcut").on('click', function (e) {
+
+    var shortcut_id = "@(Model.edit ? Model.data.id : "")";
+    mixpanelEvents('addShortcut');
+
+    url = shortcut_id == "" ? cloud.getURLs().brands.data.add_shortcut : cloud.getURLs().brands.data.update_shortcut + shortcut_id;
+    $.ajax({
+    url: url,
+    type: "POST",
+    data: JSON.stringify({ 'name': $('#id_shortcut_name').val(), 'business_id': businessID, 'shortcut': $('#id_shortcut').val(), 'created_by': $(".js-agent-input").val()}),
+    contentType: 'application/json',
+    dataType: 'json',
+    success: function (data) {
+        if (!data.ok && data.page) { modalAddShortcut.html(data.page); }
+        else {
+            modalAddShortcut.modal('hide');
+            cloud.getShortcuts();
+            modalShortcuts.modal('show');
+            new NotificationPlugin('Saved', 'Shortcut saved', 'icon-check', null, null, defNotificationTimer);
+        }
+    }
+});
+
+});
+</script>
+
+
+@*<script>
+
+
+
+$("#response-form").on('submit', function(e){
+  e.preventDefault();
+  $("#submit-shortcut").trigger('click');
+});
+
+$("#submit-shortcut").on('click', function(e){
+  e.preventDefault();
+
+    var shortcut_id = "@(Model.edit ? Model.data.id : "")";
+    mixpanelEvents('addShortcut');
+
+    url = shortcut_id == "" ? cloud.getURLs().brands.data.add_shortcut + businessID : cloud.getURLs().brands.data.update_shortcut + businessID + '/' + shortcut_id;
+    cloud.sendForm(document.getElementById("response-form"), url, function (data) {
+    if(data.page) modalAddShortcut.html(data.page);
+    else{
+      modalAddShortcut.modal('hide');
+      cloud.getShortcuts();
+      modalShortcuts.modal('show');
+      new NotificationPlugin ('Saved', 'Shortcut saved', 'icon-check', null, null, defNotificationTimer);
+    }
+  });
+});
+    </script>*@
+  

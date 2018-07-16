@@ -1,0 +1,191 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Facebook To Hibaza</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="meta desc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=0" />
+    <link id="favicon" rel="icon" type="image/png" href="/partners/square/hibaza.png" />
+    <link rel="stylesheet" type="text/css" href="/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/js/api.js"></script>
+    <script src="~/js/config.js"></script>
+    <script type="text/javascript" src="~/js/base64js.min.js"></script>
+    <script type="text/javascript" src="~/js/lang.js"></script>
+</head>
+<body class="wz-overflow" style="background-color:#F5F5F5">
+    <form class="lg-channel_facebook_edit" id="channels-facebook-form-auth" style="margin:50px">
+        <input class="form-control" id="id_token" name="token" type="hidden" value="">
+        <input class="form-control" id="id_page_id" name="page_id" type="hidden" value="">
+        <input class="form-control" id="id_name" name="page_name" type="hidden" value="">
+        <div class="col-xs-12">
+            <div class="row form-group">
+                <h4 class="info-message" style="color:#8c8c8c"></h4>
+            </div>
+        </div>
+        <div class="col-xs-12">
+
+            <div class="row form-group">
+                <label class="control-label lg-channel-select">
+                    Chọn kênh
+                </label>
+                <select id="pagesList" class="form-control pages-list"></select>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="row form-group">
+                <label class="control-label lg-channel-name-change">
+                    Thay tên
+                </label>
+                <input class="form-control" id="id_name_s" name="page_name_s" type="text" value="">
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="row form-group">
+                <div class="btn btn-cancel lg-cancel" onclick="returnMain()">Quay lại</div>
+                <div class="btn btn-save lg-save submit" onclick="submitChannel()">Cập nhật</div>
+            </div>
+        </div>
+    </form>
+
+    <script>
+        
+        function getParameterFromUrl(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            else {
+                return decodeURI(results[1]) || 0;
+            }
+        }
+
+        function getParameterFromUrl01(start, end) {
+            var uri = window.location.href;
+
+            var str = uri.substring(uri.indexOf(start), uri.length);
+            str = str.replace(start, "");
+            var sp = str.split(end);
+            var result = sp[0].replace("%3D", "=");
+            return result;
+        }
+
+        var access_token = "";
+        var fbToken;
+       
+        $(document).ready(function () {
+            try {
+                readFileLang(localStorage.getItem("lang"), "channel_facebook_edit");
+                access_token = getParameterFromUrl01("access_token=", "&");
+                var fbTokenObj = getParameterFromUrl01("state=", "&");
+                if (fbTokenObj != null && fbTokenObj != undefined) {
+
+                    fbToken = JSON.parse(Base64Decode(fbTokenObj));
+                    //if (fbToken.PageId != null && fbToken.PageId != undefined && fbToken.PageId != "") {
+                    //    var array = [{ name: fbToken.PageName, id: fbToken.PageId }];
+                    //    bidingToCombobox(array);
+                    //}
+                    //else
+                        showPages();
+                }
+
+                $('select').on('change', function (e) {
+                    $(".info-message").html('');
+                });
+            }
+            catch (e) { console.log(e); }
+
+        });
+        function submitChannel() {
+            var uri = fbToken.baseUrls_Api + "brands/channels/create/facebook/" + fbToken.BusinessId;
+            var page_id = $(".pages-list option:selected").val();
+            var page_name = $("#id_name_s").val() != null && $("#id_name_s").val() != undefined && $("#id_name_s").val() != "" ?
+                $("#id_name_s").val() : $(".pages-list option:selected").text();
+           // console.log($(".pages-list option:selected"));
+            //console.log($(".pages-list option:selected").attr("access_token"));
+
+            //var para = "page_id=" + $(".pages-list option:selected").val() + "&page_name=" + page_name + "&token=" + access_token;
+            //$("#id_page_id").val($(".pages-list option:selected").val());
+
+             $("#id_name").val(page_name),
+                 $("#id_token").val($(".pages-list option:selected").attr("access_token")),
+            $("#id_page_id").val(page_id),
+
+            //console.log(para);
+            ExecuteServicePostForm("channels-facebook-form-auth", uri, "submitChannel_result");
+           
+        }
+        function submitChannel_result(data) {
+            if (data != null && data != undefined) {
+                $(".info-message").html(localStorage.getItem("lang") == "vi" ? 'Cập nhật thành công' :"Apply success");
+            }
+            else {
+                $(".info-message").html(localStorage.getItem("lang") == "vi" ?'Lỗi cập nhật':"Error");
+            }
+
+        }
+        function returnMain() {
+            window.location.href = fbToken.BaseUrls_Web;
+        }
+
+        function showPages() {
+            try {
+                var uri = "https://graph.facebook.com/v2.10/me/accounts/?type=pages&limit=100&fields=access_token,name,id&access_token=" + access_token;
+                $.get(uri, function (o) {
+                    bidingToCombobox(o.data);
+                })
+            } catch (ex) { console.log(ex); }
+
+        }
+
+        function bidingToCombobox(pages) {
+            $(".pages-list").removeData();
+            // pages = response.data;
+            if (pages) {
+                for (i = 0; i < pages.length; i++) {
+                    $("<option>", {
+                        value: pages[i].id,
+                        text: pages[i].name,
+                        access_token: pages[i].access_token
+                    }).appendTo($(".pages-list"));
+                }
+            } else {
+                return false;
+            }
+
+            /* PAGE LIST COMBOBOX METHOD */
+            //$.each(options, function (index) {
+            //    $("<option>", {
+            //        value: index,
+            //        text: options[index]
+            //    }).appendTo($(".pages-list"));
+            //});
+
+            //$(".pages-list" ).combobox({
+            //         appendToElem: $(".autocomplete-pages-list")
+            //});
+
+            // Default input is previous facebook page selected
+            //var facebookChannelId = (fbtoken.ChannelId == '') ? undefined : fbtoken.ChannelId;
+            //var fb_page_id_index = options_id.indexOf(fbtoken.PageId);
+            //if (facebookChannelId && fb_page_id_index > -1) {
+            //    var facebookChannelName = options[fb_page_id_index];
+            //    $(".pages-list").val(fb_page_id_index);
+            //    $(".pages-list-container .custom-combobox-input").val(facebookChannelName);
+            //}
+            //else {
+            //    //if (options.length > 0) $("#id_name").val(options[0]);
+            //}
+
+        }
+
+    </script>
+</body>
+</html>
+
+
+

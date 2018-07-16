@@ -1,0 +1,96 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hibaza - Zalo</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="meta desc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=0" />
+    <link id="favicon" rel="icon" type="image/png" href="/partners/square/hibaza.png" />
+    <link rel="stylesheet" type="text/css" href="/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/js/api.js"></script>
+    <script src="~/js/config.js"></script>
+
+</head>
+<body class="wz-overflow">
+    <form id="channels-zalo-form" style="margin:65px">
+        <div class="form-group wz-container col-xs-12">           
+            <h4 class="info-message" style="color:whitesmoke"></h4>
+        </div>
+    </form>
+
+
+    <script>
+
+        function getParameterFromUrl(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results == null) {
+                return null;
+            }
+            else {
+                return decodeURI(results[1]) || 0;
+            }
+        }
+        
+
+        $(document).ready(function () {
+            try {
+
+                var codeZalo = getParameterFromUrl("code");
+                //var type = getParameterFromUrl("type");
+                console.log(codeZalo);
+                if (codeZalo != null && codeZalo != undefined && codeZalo != ""){
+                    setCookie("codeZalo", codeZalo, 1000);
+                    $.get("/channels/UpsertPersonalZalo/", function (o) {
+                        $(".info-message").html(o.msg);
+                    });
+                }
+
+
+            }
+            catch (e) { console.log(e); }
+
+        });
+
+        
+
+
+                //$(document).ready(function () {
+                //    try {
+                //        var code = getParameterFromUrl("code");
+                //        var uid = getParameterFromUrl("uid");
+                //        //var type = getParameterFromUrl("type");
+
+                //        console.log(code);
+                //        console.log(uid);
+
+                //        if (code != null && code != undefined && code != "" && uid != null && uid != undefined && uid != "") {
+                //            //  var uri = zaloLink + "access_token?app_id=3352356839282792087&app_secret=R07oMRXL4YNE16sVXjUy&code=" + code;
+                //            setCookie("zaloCode", code, 60 * 60);
+
+                //            $.get("/zalos/token/", function (o) {
+                //                console.log(o);
+                //                $(".info-message").html(o.msg);
+
+                //            });
+                //            // localStorage.removeItem("id_zalo_phone");
+                //            // localStorage.removeItem("id_zalo_name");
+
+                //        }
+
+
+                //    }
+                //    catch (e) { console.log(e); }
+
+                //});
+
+    </script>
+</body>
+</html>
+
+
+

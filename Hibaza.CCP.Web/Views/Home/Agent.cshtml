@@ -1,0 +1,164 @@
+﻿@{
+    Layout = null;
+}
+    <a href="#" data-toggle="tooltip" title="" data-placement="right" data-container="body" class="btn btn-filter js-hide-sideright" data-original-title="Hide detail"><span class="pull-left"><i class="icon-arrow-right"></i></span></a>
+<div class="lg-agent">
+    <header style="background-image: url(https://media.helloumi.com/avatars/default/1.png)">
+        <div class="wz-gradient"></div><a href="#wz-col-sideright" class="js-close-wz-column pull-right visible-xs"><i class="icon-arrow-left wz-icon-md wz-font-c-white"></i></a>
+
+        <div id="client-status" class="wz-font-u-uppercase hide">
+            <div class="dropdown">
+                <a href="#" role="button" ariaria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-round btn-info btn-xs"><i class="assigned"></i><span class="status"></span><span class="caret"></span></a>
+            </div>
+            <div class="wz-search-popup">
+                <div class="js-assign-title wz-cursor-hand">
+                    <span class="lg-assign-to">Assign to:</span><i class="icon-search"></i>
+                </div>
+                <div class="js-assign-search">
+                    <input type="text" placeholder="Type and search..."><i class="icon-cross wz-cursor-hand"></i>
+                </div>
+                <ul><li data-key="1664"><i class="Online"></i><span>Human MM</span></li></ul>
+                <div class="js-unassign-footer wz-cursor-hand" style="display: none;">
+                    <span class="lg-unassign">Unassign</span><i class="icon-pe-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+        <div class="wz-main-info text-center">
+            <h6 class="wz-font-u-uppercase lg-agent">
+                Agent
+            </h6>
+            <h3 class="wz-font-u-uppercase js-client-name marquee">
+                Human MM
+            </h3>
+            <ul class="list-inline">
+                <li>
+                    <span data-toggle="tooltip" title="" data-placement="bottom" data-container="body" class="badge wz-badge-success" data-original-title="Completed Tickets">1</span>
+                </li>
+                <li>
+                    <span data-toggle="tooltip" title="" data-placement="bottom" data-container="body" class="badge wz-badge-error" data-original-title="Denied tickets">1</span>
+                </li>
+                <li>
+                    <span data-toggle="tooltip" title="" data-placement="bottom" data-container="body" class="badge wz-badge-info" data-original-title="Opened tickets">199</span>
+                </li>
+            </ul>
+        </div>
+        <script>
+$(function(){
+
+  tooltips();
+
+});
+        </script>
+    </header>
+
+    <div>
+        <ul role="tablist" class="nav nav-tabs">
+            <li role="presentation" class="active">
+                <a href="#wz-tab-activity" aria-controls="wz-tab-activity" role="tab" data-toggle="tab" data-view="activity" class="js-agent-view">
+                    <p class="wz-font-s-sm wz-font-w-med lg-activity">
+                        Activity
+                    </p>
+                </a>
+            </li>
+            <li role="presentation" class="">
+                <a href="#wz-tab-info" aria-controls="wz-tab-info" role="tab" data-toggle="tab" data-view="info" class="js-agent-view">
+                    <p class="wz-font-s-sm wz-font-w-med">
+                        Info
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="wz-central js-perfect-scroll ps-container ps-theme-default" data-ps-id="6bd7ca7f-45c7-557d-f54a-a1558296559d">
+
+        <div>
+            <div class="tab-content">
+                <div id="wz-tab-activity" role="tabpanel" class="tab-pane fade in active">
+                    <div class="wz-data-group">
+                        <div class="wz-data-title lg-chats-assigned">
+                            <p>Chats assigned</p>
+                        </div>
+                        <div class="wz-data-content">
+                            <p>198 chats</p>
+                        </div>
+                    </div>
+                    <div class="wz-data-group">
+                        <div class="wz-data-title">
+                            <p class="lg-average-first-response-time">Average First Response Time</p>
+                        </div>
+                        <div class="wz-data-content">
+                            <p>102 seconds</p>
+                        </div>
+                    </div>
+                    <div class="wz-data-group">
+                        <div class="wz-data-title">
+                            <p class="lg-average-response-time">Average Response Time</p>
+                        </div>
+                        <div class="wz-data-content">
+                            <p>111 seconds</p>
+                        </div>
+                    </div>
+                    <div class="wz-data-group">
+                        <div class="wz-data-title">
+                            <p class="lg-tickets-opened">Tickets Opened</p>
+                        </div>
+                        <div class="wz-data-content">
+                            <p>199 tickets</p>
+                        </div>
+                    </div>
+                    <div class="wz-data-group">
+                        <div class="wz-data-title">
+                            <p class="lg-tickets-completed">Tickets Completed</p>
+                        </div>
+                        <div class="wz-data-content">
+                            <p>1 tickets</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="wz-tab-info" role="tabpanel" class="tab-pane fade">
+                    <div class="wz-data-group">
+                        <div class="wz-data-title">
+                            <p class="name">Name</p>
+                        </div>
+                        <div class="wz-data-content">
+                            <p>Human MM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+// On document load
+            $(function () {
+                readFileLang(localStorage.getItem("lang"), "agent");
+  $('.js-agent-view').on('click', function(e){
+    viewAgentOption = $(this).data('view');
+  });
+
+  // Selects last tag
+  if (viewSamuraiOption != "info") {
+    $('.js-agent-view[data-view=' + viewSamuraiOption + ']').trigger('click');
+  }
+
+  tooltips('#wz-col-sideright');
+});
+        </script>
+        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+    </div>
+    </div>
+    <script>
+/**
+* Document onload
+*/
+$(function() {
+  // This buttons are shown when viewing sideright column from reports modal
+  $('.js-hide-sideright').on("click", function(e){
+    e.preventDefault();
+    hideSideright();
+  });
+  // $('.js-close-sideright').on("click", function(e){
+  //   e.preventDefault();
+  //   reportsModal.modal('hide');
+  // });
+});
+    </script>

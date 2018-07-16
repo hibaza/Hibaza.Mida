@@ -1,0 +1,230 @@
+﻿{
+  "en": {
+    "dashboard": {
+      "text": "Dashboard",
+      "type": "text"
+    },
+    "customers": {
+      "text": "Customers",
+      "type": "text"
+    },
+    "tickets": {
+      "text": "Tickets",
+      "type": "text"
+    },
+    "billing": {
+      "text": "Billing",
+      "type": "text"
+    },
+    "agents": {
+      "text": "Agents",
+      "type": "text"
+    },
+    "export": {
+      "text": "Export",
+      "type": "text"
+    },
+    "refresh": {
+      "text": "Refresh",
+      "type": "text"
+    },
+    "apply": {
+      "text": "Apply",
+      "type": "text"
+    },
+    "today": {
+      "text": "Today",
+      "type": "text"
+    },
+    "current-week": {
+      "text": "Current week",
+      "type": "text"
+    },
+    "current-month": {
+      "text": "Current month",
+      "type": "text"
+    },
+    "current-year": {
+      "text": "Current year",
+      "type": "text"
+    },
+    "pick-range": {
+      "text": "Pick a range...",
+      "type": "text"
+    },
+    "details": {
+      "text": "Details",
+      "type": "text"
+    },
+    "something-wrong": {
+      "text": "Oops! Something went wrong.",
+      "type": "text"
+    },
+    "again-persists": {
+      "text": "Please try again or if the error persists please contact us.",
+      "type": "text"
+    },
+    "fields-table": {
+      "text": "Fields in table",
+      "type": "text"
+    },
+    "no-matches-found": {
+      "text": "No matches found, human.",
+      "type": "text"
+    },
+    "another-filter": {
+      "text": "Select another filter or",
+      "type": "text"
+    },
+    "clear-all": {
+      "text": "clear them all.",
+      "type": "text"
+    },
+    "by-month": {
+      "text": "By month",
+      "type": "text"
+    },
+    "by-day": {
+      "text": "By day",
+      "type": "text"
+    },
+    "by-week": {
+      "text": "By week",
+      "type": "text"
+    },
+    "total": {
+      "text": "Total",
+      "type": "text"
+    },
+    "maximum-number-12": {
+      "text": "Sorry, the maximum number of items is 12.",
+      "type": "text"
+    },
+    "check-all": {
+      "text": "Check all",
+      "type": "text"
+    },
+    "uncheck-all": {
+      "text": "Uncheck all",
+      "type": "text"
+    },
+    "restore-defaults": {
+      "text": "Restore defaults",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "dashboard": {
+      "text": "Bảng điều khiển",
+      "type": "text"
+    },
+    "customers": {
+      "text": "Khách hàng",
+      "type": "text"
+    },
+    "tickets": {
+      "text": "Sự vụ",
+      "type": "text"
+    },
+    "billing": {
+      "text": "Thanh toán",
+      "type": "text"
+    },
+    "agents": {
+      "text": "Tài khoản ủy quyền",
+      "type": "text"
+    },
+    "export": {
+      "text": "Xuất",
+      "type": "text"
+    },
+    "refresh": {
+      "text": "Làm mới",
+      "type": "text"
+    },
+    "apply": {
+      "text": "Thực hiện",
+      "type": "text"
+    },
+    "today": {
+      "text": "Hôm nay",
+      "type": "text"
+    },
+    "current-week": {
+      "text": "Tuần này",
+      "type": "text"
+    },
+    "current-month": {
+      "text": "Tháng này",
+      "type": "text"
+    },
+    "current-year": {
+      "text": "Năm này",
+      "type": "text"
+    },
+    "pick-range": {
+      "text": "Chọn một dải...",
+      "type": "text"
+    },
+    "details": {
+      "text": "Chi tiết",
+      "type": "text"
+    },
+    "something-wrong": {
+      "text": "Rất tiếc! Đã xảy ra sự cố.",
+      "type": "text"
+    },
+    "again-persists": {
+      "text": "Vui lòng thử lại hoặc nếu lỗi vẫn tiếp diễn, vui lòng liên hệ với chúng tôi.",
+      "type": "text"
+    },
+    "fields-table": {
+      "text": "Các trường trong bảng",
+      "type": "text"
+    },
+    "no-matches-found": {
+      "text": "Không tìm thấy giá trị phù hợp",
+      "type": "text"
+    },
+    "another-filter": {
+      "text": "Chọn lại điều kiện khác hoặc",
+      "type": "text"
+    },
+    "clear-all": {
+      "text": "xóa tất cả.",
+      "type": "text"
+    },
+    "by-month": {
+      "text": "Theo tháng",
+      "type": "text"
+    },
+    "by-day": {
+      "text": "Theo ngày",
+      "type": "text"
+    },
+    "by-week": {
+      "text": "Theo tuần",
+      "type": "text"
+    },
+    "total": {
+      "text": "Tổng",
+      "type": "text"
+    },
+    "maximum-number-12": {
+      "text": "Rất tiếc, số mục tối đa là 12.",
+      "type": "text"
+    },
+    "check-all": {
+      "text": "Xóa tất cả",
+      "type": "text"
+    },
+    "uncheck-all": {
+      "text": "Không chọn tất cả",
+      "type": "text"
+    },
+    "restore-defaults": {
+      "text": "Trở lại mặc định",
+      "type": "text"
+    }
+  }
+}

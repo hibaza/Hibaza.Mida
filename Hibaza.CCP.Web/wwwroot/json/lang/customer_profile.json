@@ -1,0 +1,198 @@
+﻿{
+  "en": {
+    "info": {
+      "text": "Info",
+      "type": "text"
+    },
+    "cart": {
+      "text": "Cart",
+      "type": "text"
+    },
+    "shop": {
+      "text": "Shop",
+      "type": "text"
+    },
+    "message": {
+      "text": "Message",
+      "type": "text"
+    },
+    "note": {
+      "text": "Note",
+      "type": "text"
+    },
+    "assign-to": {
+      "text": "Assign to:",
+      "type": "text"
+    },
+    "unassign": {
+      "text": "Unassign",
+      "type": "text"
+    },
+    "customer-0-tickets": {
+      "text": "Customer, 0 tickets",
+      "type": "text"
+    },
+    "since": {
+      "text": "Since",
+      "type": "text"
+    },
+    "mobile": {
+      "text": "Mobile",
+      "type": "text"
+    },
+    "edit-customer-info": {
+      "text": "Edit customer info",
+      "type": "text"
+    },
+    "send-delivery-confirmation": {
+      "text": "Send Delivery Confirmation",
+      "type": "text"
+    },
+    "add-ticket": {
+      "text": "Add a ticket",
+      "type": "text"
+    },
+    "add-note": {
+      "text": "Add a note",
+      "type": "text"
+    },
+    "setup-alarm": {
+      "text": "Setup alarm",
+      "type": "text"
+    },
+    "to-cart": {
+      "text": "To Cart",
+      "type": "text"
+    },
+    "preview": {
+      "text": "Preview",
+      "type": "text"
+    },
+    "purchase-history": {
+      "text": "Purchase history",
+      "type": "text"
+    },
+    "view-attachment": {
+      "text": "[VIEW THE ATTACHMENT]",
+      "type": "text"
+    },
+    "no-messages-comments": {
+      "text": "No messages or comments yet",
+      "type": "text"
+    },
+    "jump-note": {
+      "text": "Jump to note",
+      "type": "text"
+    },
+    "no-notes": {
+      "text": "No notes yet",
+      "type": "text"
+    },
+    "add-alarm": {
+      "text": "Add alarm",
+      "type": "text"
+    },
+    "ticket": {
+      "text": "Ticket",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "info": {
+      "text": "Info",
+      "type": "text"
+    },
+    "cart": {
+      "text": "Giỏ hàng",
+      "type": "text"
+    },
+    "shop": {
+      "text": "Cửa hàng",
+      "type": "text"
+    },
+    "message": {
+      "text": "Tin nhắn",
+      "type": "text"
+    },
+    "note": {
+      "text": "Ghi chú",
+      "type": "text"
+    },
+    "assign-to": {
+      "text": "Phân tin tới:",
+      "type": "text"
+    },
+    "unassign": {
+      "text": "Chưa phân tin",
+      "type": "text"
+    },
+    "customer-0-tickets": {
+      "text": "Khách hàng 0 có sự vụ",
+      "type": "text"
+    },
+    "since": {
+      "text": "Bắt đầu chát",
+      "type": "text"
+    },
+    "mobile": {
+      "text": "Điện thoại",
+      "type": "text"
+    },
+    "edit-customer-info": {
+      "text": "Chỉnh sửa thông tin KH",
+      "type": "text"
+    },
+    "send-delivery-confirmation": {
+      "text": "Gửi xác nhận đơn hàng",
+      "type": "text"
+    },
+    "add-ticket": {
+      "text": "Thêm sự vụ",
+      "type": "text"
+    },
+    "add-note": {
+      "text": "Thêm ghi chú",
+      "type": "text"
+    },
+    "setup-alarm": {
+      "text": "Cài đặt cảnh báo",
+      "type": "text"
+    },
+    "to-cart": {
+      "text": "Tới giỏ hàng",
+      "type": "text"
+    },
+    "preview": {
+      "text": "Xem",
+      "type": "text"
+    },
+    "purchase-history": {
+      "text": "Lịch sử đơn hàng",
+      "type": "text"
+    },
+    "view-attachment": {
+      "text": "Xem file đính kèm",
+      "type": "text"
+    },
+    "no-messages-comments": {
+      "text": "Không có tin nhắn nào",
+      "type": "text"
+    },
+    "jump-note": {
+      "text": "Tới ghi chú",
+      "type": "text"
+    },
+    "no-notes": {
+      "text": "Không có ghi chú",
+      "type": "text"
+    },
+    "add-alarm": {
+      "text": "Thêm cảnh báo",
+      "type": "text"
+    },
+    "ticket": {
+      "text": "Sự vụ",
+      "type": "text"
+    }
+  }
+}

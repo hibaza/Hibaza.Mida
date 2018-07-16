@@ -1,0 +1,581 @@
+﻿@model Hibaza.CCP.Domain.Models.CustomerProfileModel
+@{
+    Layout = null;
+}
+<div class="lg-customer_profile">
+    <a href="#" data-toggle="tooltip" title="" data-placement="right" data-container="body" class="btn btn-filter js-hide-sideright" data-original-title="Hide detail">
+        <span class="pull-left"><i class="icon-arrow-right"></i></span>
+    </a>
+
+    <a href="#wz-col-sideright" class="js-close-wz-column pull-right visible-xs">
+        <i class="icon-arrow-left wz-icon-md"></i>
+    </a>
+    <div>
+        <ul role="tablist" class="nav nav-tabs">
+            <li role="presentation" class="active">
+                <a href="#wz-tab-datos" aria-controls="wz-tab-datos" role="tab" data-toggle="tab" data-view="info" class="js-client-view">
+                    <p class="wz-font-s-sm wz-font-w-med lg-info">
+                        Info
+                    </p>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#wz-tab-bot" aria-controls="wz-tab-bot" role="tab" data-toggle="tab" data-view="bot" class="js-client-view">
+                    <p class="wz-font-s-sm wz-font-w-med">
+                        Bot
+                    </p>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#wz-tab-cart" aria-controls="wz-tab-cart" role="tab" data-toggle="tab" data-view="cart" class="js-client-view">
+                    <p class="wz-font-s-sm wz-font-w-med lg-cart">
+                        Cart
+                    </p>
+                </a>
+            </li>
+
+            <li role="presentation" class="hidden">
+                <a href="#wz-tab-products" aria-controls="wz-tab-products" role="tab" data-toggle="tab" data-view="products" class="js-client-view">
+                    <p class="wz-font-s-sm wz-font-w-med lg-shop">
+                        Shop
+                    </p>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#wz-tab-messages" aria-controls="wz-tab-messages" role="tab" data-toggle="tab" data-view="messages" class="js-client-view">
+                    <p class="wz-font-s-sm wz-font-w-med lg-message">
+                        Message
+                    </p>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#wz-tab-pedidos" aria-controls="wz-tab-pedidos" role="tab" data-toggle="tab" data-view="tickets" class="js-client-view">
+                    <p class="wz-font-s-sm wz-font-w-med lg-ticket">
+                        Ticket
+                    </p>
+                </a>
+            </li>
+            <li role="presentation" class="hidden">
+                <a href="#wz-tab-notas" aria-controls="wz-tab-notas" role="tab" data-toggle="tab" data-view="notes" class="js-client-view">
+                    <p class="wz-font-s-sm wz-font-w-med lg-note">
+                        Note
+                    </p>
+                </a>
+            </li>
+
+            <li role="presentation">
+                <a href="#wz-tab-starred" aria-controls="wz-tab-starred" role="tab" data-toggle="tab" data-view="starred" class="js-client-view">
+                    <span class="wz-nav-starred"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="wz-central js-perfect-scroll ps-container ps-theme-default" data-ps-id="">
+
+        <div>
+            <div class="tab-content">
+                <div id="wz-tab-datos" role="tabpanel" class="tab-pane fade in active" gender="@(Model.sex)">
+
+                    <header style="background-image: url(@(string.IsNullOrWhiteSpace(Model.avatar) ? "/avatars/customer.png" : Model.avatar)">
+                        <a href="@(Model.profile_ext_url)" target="_blank">
+                            <div class="wz-gradient"></div>
+
+                            <div id="client-status" class="wz-font-u-uppercase">
+                                <div class="dropdown">
+                                    <a href="#" role="button" ariaria-haspopup="true" aria-expanded="false" class="dropdown-toggle btn btn-round btn-info btn-xs">
+                                        <i class="unassigned"></i>
+                                        <span class="status"></span><span class="caret"></span>
+                                    </a>
+                                </div>
+                                <div class="wz-search-popup">
+                                    <div class="js-assign-title wz-cursor-hand">
+                                        <span class="assign-to">Assign to:</span><i class="icon-search"></i>
+                                    </div>
+                                    <div class="js-assign-search">
+                                        <input type="text" placeholder="Type and search...">
+                                        <i class="icon-cross wz-cursor-hand"></i>
+                                    </div>
+                                    <ul></ul>
+                                    <div class="js-unassign-footer wz-cursor-hand">
+                                        <span class="lg-unassign">Unassign</span>
+                                        <i class="icon-pe-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wz-main-info text-center">
+                                <h6 class="wz-font-u-uppercase hidden lg-customer-0-tickets">
+                                    Customer, 0 tickets
+                                </h6>
+                                <h3 class="wz-font-u-uppercase js-client-name marquee">
+                                    @(Model.name)
+                                </h3>
+                                <ul class="list-inline hidden">
+                                    <li>
+                                        <span data-toggle="tooltip" title="" data-placement="bottom" data-container="body" class="badge wz-badge-success" data-original-title="Completed Tickets">0</span>
+                                    </li>
+                                    <li>
+                                        <span data-toggle="tooltip" title="" data-placement="bottom" data-container="body" class="badge wz-badge-error" data-original-title="Denied tickets">0</span>
+                                    </li>
+                                    <li>
+                                        <span data-toggle="tooltip" title="" data-placement="bottom" data-container="body" class="badge wz-badge-info" data-original-title="Opened tickets">0</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                        <script>
+                            $(function () {
+
+                                tooltips();
+                                $('.js-switch-client').on("click", function (e) {
+                                    e.preventDefault();
+                                    viewProfileClient();
+                                });
+                                $('.js-switch-ticket').on("click", function (e) {
+                                    e.preventDefault();
+                                    viewProfileTicket();
+                                    mixpanelEvents("viewTicketsList");
+                                });
+
+                                setAssignationListeners('#client-status');
+                            });
+                        </script>
+                    </header>
+
+                    <div class="wz-data-group">
+                        <div class="wz-data-title">
+                            <p class="lg-since">Since</p>
+                        </div>
+                        <div class="wz-data-content" style="display:inline-block">
+
+                            <p>
+                                @(Model.last_contacted_since) @(Model.sex) W:@(Model.weight) H:@(Model.height)
+                            </p>
+                        </div>
+                    </div>
+                    @if (!string.IsNullOrWhiteSpace(Model.phone))
+                    {
+                        <div class="wz-data-group">
+                            <div class="wz-data-title">
+                                <p class="lg-mobile">Mobile</p>
+                            </div>
+                            <div class="wz-data-content phoneinfo" phone="@(Model.phone)">
+                                <p>
+                                    @foreach (var item in Model.phone_list)
+                                    {
+                                        <a style="margin-right:5px" href="http://admin.baza.vn/order/searchbymobileonly/?n=3650&key=@(item)" target="_blank">
+                                            @(item)
+                                        </a>
+                                        <img src="~/images/icon-zalo.png" style="width: 17px; height: 19px; margin-right: 33px; cursor: pointer;" title="Kết bạn" onclick="zaloSendIntereste(@(item))">
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.referrals != null)
+                    {
+                        @foreach (var item in Model.referrals.Where(r => r.type == "product").OrderByDescending(r => r.id).Take(3))
+                        {
+                            <div class="wz-data-group">
+                                <div class="wz-data-title">
+                                    <a href="@(item.product_url)" target="_blank">@(item.product_sku)</a>
+                                </div>
+                                <div class="wz-data-content">
+                                    <p>
+                                        @(item.created_time)
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                    <div class="footer">
+                        <a href="#" data-toggle="modal" data-target="#wz-modal-edit-user" onclick="cloud.getEditProfileForm('@(Model.id)');" class="btn btn-info btn-block wz-margin-b-10 lg-edit-customer-info">Edit customer info</a>
+                        <a href="#" onclick="sendTemplate('update');" data-toggle="modal" class="btn btn-success btn-block wz-margin-b-10 lg-send-delivery-confirmation">
+                            Send Delivery Confirmation
+                        </a>
+                        <div class="panel panel-default">
+                            <p>
+                                <a href="#wz-modal-add-ticket" data-toggle="modal" class="js-ticket-add" onclick="cloud.getTicketForm(currentChat);">
+                                    <span class="btn btn-success"><i class="icon-paper"></i></span>
+                                    <b class="lg-add-ticket">Add a ticket</b>
+                                </a>
+                                <a href="#wz-modal-add-note" data-toggle="modal" onclick="cloud.getSendCustomerNote();">
+                                    <span class="btn btn-info">
+                                        <i class="icon-paper"></i>
+                                    </span>
+                                    <b class="lg-add-note">Add a note</b>
+                                </a>
+                                @if (false)
+                                {
+                                    <a href="#wz-modal-add-alert" data-toggle="modal" class="js-alert-add hidden">
+                                        <span class="btn btn-success"><i class="icon-bell"></i></span>
+                                        <b class="lg-setup-alarm">Setup alarm</b>
+                                    </a>
+                                }
+                                <a href="#" class="js-block-customer">
+                                    <span class="btn btn-warning">
+                                        <i class="icon-cross"></i>
+                                    </span>
+                                    <b>@(Model.blocked ? "UnBlock" : "Block")</b>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div id="wz-tab-bot" role="tabpanel" class="tab-pane fade">
+                    <div class="war-bot-content">
+                        <section class="panel war-bot" style="height:100% !important">
+                            <div class="col-lg-12 bot-search-header" style="margin-bottom: 64px;">
+                                <div class="form-inline" style="padding-top:5px">
+                                    <input type="text" class="form-control txtSearchAi  biginput" value="" author_key="" onfocus="this.select()" onkeypress="return searchEventAi(event,this);" placeholder="Search..." style="width:93%" name="currency" id="autocomplete">
+                                    <div class="checkbox">
+                                        <label><input title="If checked is using default search else session search" type="checkbox" class="defaultSearch"></label>
+                                    </div>
+                                    @*<div href="" onclick="editSearchBot();" class="js-status btn btn-info" style="float:right ; width:45px">Edit</div>*@
+                                    <div class="js-chat-message-text lableSessionAi" title="" style="color: #787878; height: 20px;"></div>
+                                    <div class="js-chat-message-text lableQuestionAi" title="" style="color: #787878; height: 20px;"></div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-12 bot-body-search" style="overflow-y: auto; overflow-x:hidden;">
+                                <div id="suggestAi">
+                                </div>
+
+                            </div>
+
+
+                        </section>
+                    </div>
+                    <div class="col-lg-12 bot-footer-search">
+                        <div>
+                            <a class="btn btn-warning btnToCart" style="float:right" onclick="sendToCart()">
+                                <i class="fa fa-plus"></i><span class="lg-to-cart">To Cart</span>
+                            </a>
+                        </div>
+                        <div>
+                            <a class="btn btn-warning btnPreviews" style="float:right; margin-right:5px" onclick="sendChatBotAi()">
+                                <i class="fa fa-plus"></i><span class="lg-preview">Preview</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="wz-tab-cart" role="tabpanel" class="tab-pane fade">
+                    <div class="war-cart-body">
+                        <section class="panel war-cart" style="height:100% !important ; overflow-y:auto !important">
+
+                            <h2 class="lg-purchase-history">Lịch sử mua hàng</h2>
+                            <div class="col-lg-12 cart-body">
+                            </div>
+                            <div class="col-lg-12 order-body" style="margin-top:10px">
+                            </div>
+
+                        </section>
+                    </div>
+                    <div class="col-lg-12" style="position: initial; margin-left: 5px; margin-bottom:0px">
+                        <a class="btn btn-warning" style="float:left" onclick="orderPrivew()">
+                            <i class="fa fa-plus"></i><span class="lg-preview">Preview</span>
+                        </a>
+                    </div>
+                </div>
+                <div id="wz-tab-products" role="tabpanel" class="tab-pane fade">
+
+                </div>
+
+                <div id="wz-tab-messages" role="tabpanel" class="tab-pane fade">
+                    <div class="thread-profile" style="margin-bottom:10px; background-color:#fff"></div>
+
+                    @foreach (var item in Model.last_messages)
+                    {
+                        <div data-message-key="@(item.id)" class="wz-data-group wz-last-message" data-timestamp="@(item.timestamp)">
+                            <div class="wz-flex-card">
+                                <p class="wz-message-header">
+                                    <span class="wz-message-author wz-font-s-xs wz-font-w-bold wz-font-u-uppercase">@(item.sender_name)</span>
+                                    <span class="wz-font-s-xs wz-font-w-med wz-font-c-light-gray-4 wz-l-c-s-2">
+                                        <a href="@(item.permalink)" class="wz-message-date" target="_blank">
+                                            @(item.created_time)
+                                        </a>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="wz-flex-card">
+
+                                <div data-toggle="tooltip" title="" class="wz-flex-card-item wz-message-avatar wz-l-c-f" data-original-title="@(item.sender_name)">
+                                    <div class="js-picture" style="background-image: url('@(item.sender_avatar)');"></div>
+                                    <div class="js-initials hidden">
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="wz-flex-card-item">
+                                    <p class="wz-message-text wz-font-s-sm wz-l-c-s-1">
+                                        <span class="js-message-text wz-font-w-reg">
+                                            <span class="clearfix">@(item.message)</span>
+                                            @if (!string.IsNullOrWhiteSpace(item.url))
+                                            {
+                                                <a href="#" onclick="openImageUrl('@(item.url)')" class="lg-view-attachment">
+                                                    [VIEW THE ATTACHMENT]
+                                                </a>
+                                            }
+                                        </span>
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.last_messages.Count() == 0)
+                    {
+                        <div class="wz-no-data">
+                            <span class="lg-no-messages-comments">No messages or comments yet</span>
+                        </div>
+                    }
+                </div>
+
+                <div id="wz-tab-pedidos" role="tabpanel" class="tab-pane fade">
+                    @foreach (var item in Model.tickets)
+                    {
+                        <a data-ticket="@(item.id)" class="wz-data-group js-ticket-view">
+                            <div class="wz-flex-card">
+                                <div class="wz-flex-card-item wz-ticket-status wz-status-@(item.status)">
+                                    <i class="icon-none"></i>
+                                </div>
+                                <div class="wz-flex-card-item wz-ticket-data">
+                                    <p class="wz-font-s-sm wz-font-w-bold wz-font-u-uppercase">
+                                        <span class="wz-ticket-title">#@(item.number)</span>
+                                        <span class="wz-ticket-date wz-font-s-xs">@(item.created_time)</span>
+                                    </p>
+                                    <p class="wz-font-s-md wz-font-w-med wz-ticket-description">
+                                        <span class="wz-ticket-description">@(item.short_description)</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="wz-flex-card">
+                            </div>
+                        </a>
+                    }
+                    <div class="footer">
+                        <a href="#wz-modal-add-ticket" onclick="cloud.getTicketForm(currentChat);" data-toggle="modal" class="btn btn-success btn-block wz-revenue">
+                            <b class="lg-add-ticket">Add ticket</b>
+                            <span class="pull-right">
+                                <i class="icon-arrow-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div id="wz-tab-starred" role="tabpanel" class="tab-pane">
+                    <div id="wz-tab-notas" role="tabpanel" class="tab-pane fade">
+                        @foreach (var item in Model.notes)
+                        {
+                            <div data-message-key="@(item.id)" class="wz-data-group wz-note-message">
+                                <div class="wz-flex-card">
+                                    <p class="wz-note-header">
+                                        <span class="wz-note-author wz-font-s-xs wz-font-w-bold wz-font-u-uppercase">@(item.sender_name)</span>
+                                        <span class="wz-note-date wz-font-s-xs wz-font-w-med wz-font-c-light-gray-4 wz-l-c-s-2">
+                                            @item.created_time
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="wz-flex-card">
+                                    <div data-toggle="tooltip" title="" class="wz-flex-card-item wz-note-avatar wz-l-c-f" data-original-title="@(item.sender_name)" aria-describedby="tooltip@(item.id)">
+                                        <div style="background-image: url('@(item.sender_avatar)')" class="js-picture"></div>
+                                        <div class="js-initials hidden">
+                                            <p></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="wz-flex-card-item">
+                                        <p class="wz-note-text wz-font-s-sm wz-l-c-s-1">
+                                            <span class="js-message-text wz-font-w-reg">@(item.text)</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="wz-flex-card hide">
+                                    <span class="wz-note-jump btn btn-info wz-font-s-xs wz-font-w-reg wz-font-u-uppercase lg-jump-note">Jump to note</span>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.notes.Count() < 0)
+                        {
+                            <div class="wz-no-data">
+                                <span class="lg-no-notes">No notes yet</span>
+                            </div>
+                        }
+
+                    </div>
+
+                    @foreach (var item in Model.starred_messages)
+                    {
+                        <div data-message-key="@(item.id)" class="wz-data-group wz-starred-message" data-timestamp="@(item.timestamp)">
+                            <div class="wz-flex-card">
+                                <p class="wz-starred-header">
+                                    <span class="wz-starred-author wz-font-s-xs wz-font-w-bold wz-font-u-uppercase">@(item.sender_name)</span>
+                                    <span class="wz-font-s-xs wz-font-w-med wz-font-c-light-gray-4 wz-l-c-s-2">
+                                        <a href="@(item.permalink)" class="wz-starred-date" target="_blank">
+                                            @item.created_time
+                                        </a>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="wz-flex-card">
+                                <div data-toggle="tooltip" title="" class="wz-flex-card-item wz-starred-avatar wz-l-c-f" data-original-title="@(item.sender_name)">
+                                    <div class="js-picture" style="background-image: url('@(item.sender_avatar)');"></div>
+                                    <div class="js-initials hidden">
+                                        <p></p>
+                                    </div>
+                                </div>
+                                <div class="wz-flex-card-item">
+                                    <p class="wz-starred-text wz-font-s-sm wz-l-c-s-1">
+                                        <span class="js-message-text wz-font-w-reg">
+                                            <span class="clearfix">@(item.message)</span>
+                                            @if (!string.IsNullOrWhiteSpace(item.url))
+                                            {
+                                                <a href="#" onclick="openImageUrl('@(item.url)')" class="lg-view-attachment">
+                                                    [VIEW THE ATTACHMENT]
+                                                </a>
+                                            }
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.starred_messages.Count() + Model.starred_messages.Count() == 0)
+                    {
+                        <div class="wz-no-data">
+                            <span class="lg-no-notes">No notes yet</span>
+                        </div>
+                    }
+
+                    <div class="footer">
+                        <a href="#wz-modal-add-note" data-toggle="modal" onclick="cloud.getSendCustomerNote();" class="btn btn-info btn-block wz-revenue">
+                            <b class="lg-add-note">Add note</b><span class="pull-right"><i class="icon-arrow-right"></i></span>
+                        </a>
+                        <a href="#wz-modal-add-alert" data-toggle="modal" class="btn btn-warning btn-block wz-revenue js-alert-add hidden">
+                            <b class="lg-add-alarm">Add alarm</b><span class="pull-right"><i class="icon-arrow-right"></i></span>
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <script>
+        readFileLang(localStorage.getItem("lang"), "customer_profile");
+
+        var CUSTOMER_ID = '@(Model.id)';
+        var $customerPrivateMessages = $("#wz-tab-notas .wz-note-message");
+        var $customerStarredMessages = $("#wz-tab-starred .wz-starred-message");
+        var $customerLastMessages = $("#wz-tab-messages .wz-last-message");
+
+
+        function loadCustomerPrivateMessages() {
+            $customerPrivateMessages.each(loadTargetMessage);
+        }
+
+        function loadCustomerStarredMessages() {
+            $customerStarredMessages.each(loadTargetMessage);
+        }
+
+        function loadCustomerLastMessages() {
+            $customerLastMessages.each(loadTargetMessage);
+        }
+
+
+        $(function () {
+            $('.js-ticket-view').on('click', function (e) {
+                e.preventDefault();
+                var ticket = $(this).data("ticket");
+                cloud.getTicketProfile(ticket);
+                viewProfileTicket(ticket);
+                mixpanelEvents("viewTicket");
+            });
+            $('.js-alert-add').on('click', function (e) {
+                e.preventDefault();
+                cloud.setAlert();
+            });
+            $('.js-block-customer').on('click', function (e) {
+                e.preventDefault();
+                if (role === 'admin') {
+                    CONTACTS[currentChat].block();
+                }
+            });
+            $('a[href="#wz-tab-notas"]').on('shown.bs.tab', function (e) {
+                mixpanelEvents('viewClientNotes')
+            })
+            $('.js-client-view').on('click', function (e) {
+                viewClientOption = $(this).data('view');
+            });
+
+            // Selects last tag
+            if (viewClientOption != "info") {
+                $('.js-client-view[data-view=' + viewClientOption + ']').trigger('click');
+            }
+
+            if (viewTicketSelected) {
+                //$('.js-ticket-view[data-ticket=' + viewTicketSelected + ']').trigger('click');
+            }
+            // Sort tickets: Last ticket is shown first
+            sortTicketsInverse();
+
+            //loadCustomerStarredMessages();
+            //loadCustomerLastMessages();
+            tooltips();
+        });
+
+        function zaloSendIntereste(phone) {
+            console.log("ssssss");
+            console.log(baseUrls_Api + "brands/zalos/SendIntereste/" + businessID + "/" + phone);
+            $.post(baseUrls_Api + "brands/zalos/SendIntereste/" + businessID + "/" + phone, function (data) { });
+        }
+        </script>
+        <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;">
+            <div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+        </div>
+        <div class="ps-scrollbar-y-rail" style="top: 0px; right: 0px;">
+            <div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+        </div>
+    </div>
+    <footer>
+        @foreach (var item in Model.notes.Where(n => n.featured).Take(1))
+        {
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="pull-left">
+                        <p class="wz-font-w-med wz-font-s-xs wz-font-u-uppercase wz-font-c-light-gray-4">
+                            @(item.sender_name)<span class="wz-font-c-dark">&nbsp;@(item.created_time)</span>
+                        </p>
+                    </div>
+                    <div class="pull-right">
+                        <i class="icon-star"></i>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <p class="wz-font-w-med wz-font-s-sm">
+                        @(item.text)
+                    </p>
+                </div>
+            </div>
+        }
+    </footer>
+</div>
+<script>
+    /**
+    * Document onload
+    */
+    $(function () {
+        // This buttons are shown when viewing sideright column from reports modal
+        $('.js-hide-sideright').on("click", function (e) {
+            e.preventDefault();
+            hideSideright();
+        });
+
+        // PERFECT SCROLL
+        $(siderightScrollSelector).perfectScrollbar({ suppressScrollX: true, wheelPropagation: true });
+    });
+</script>

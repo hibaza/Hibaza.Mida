@@ -1,0 +1,231 @@
+﻿@model Hibaza.CCP.Domain.Models.CustomerContactInfoModel
+@{
+    Layout = null;
+}
+
+
+<div class="modal-dialog lg-customer_edit">
+    <div class="modal-content">
+        <!-- Modal Header-->
+        <div class="modal-header">
+            <button type="button" data-dismiss="modal" class="close">
+                <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+            </button>
+            <h4 id="myModalLabel" class="modal-title">
+                * @(Model.name)
+            </h4>
+        </div>
+
+        <!-- Modal Body-->
+        <div class="modal-body">
+            <form id="edit-customer-form" role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label for="id_name" class="control-label col-sm-3 lg-nick-name">Nick Name</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_name" name="name" type="text" value="@(Model.name)" required="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_real_name" class="control-label col-sm-3 lg-real-name">Real Name</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_real_name" name="real_name" type="text" value="@(Model.real_name)" required="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_sex" class="control-label col-sm-3 lg-sex">Sex</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="id_sex" name="sex">
+                            @if ((Model.sex) == "")
+                            {
+                                <option value="" selected class="lg-no-sexual">No sexual</option>}
+                            else
+                            {
+                                <option value="" class="lg-no-sexual">No sexual</option>}
+                            @if ((Model.sex) == "male")
+                            {
+                                <option value="male" selected class="lg-male">Male</option>}
+                            else
+                            {
+                                <option value="male" class="lg-male">Male</option>}
+                            @if ((Model.sex) == "female")
+                            {
+                                <option value="female" selected class="lg-female">Female</option>}
+                            else
+                            {
+                                <option value="female" class="lg-female">Female</option>}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_phone" class="control-label col-sm-3 lg-phone-number">Phone Number</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_phone" name="phone" type="text" value="@(Model.phone)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_age" class="control-label col-sm-3 lg-age">Age</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_age" name="age" type="text" value="@(Model.age)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_weight" class="control-label col-sm-3 lg-weight">Weight (Kg)</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_weight" name="weight" type="text" value="@(Model.weight)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_height" class="control-label col-sm-3 lg-height">Height (Cm)</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_height" name="height" type="text" value="@(Model.height)">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_email" class="control-label col-sm-3">Email</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_email" name="email" type="text" value="@(Model.email)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_birthdate" class="control-label col-sm-3 lg-birthdate">Birthdate</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_birthdate" name="birthdate" type="text" value="@(Model.birthdate)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_city" class="control-label col-sm-3 lg-town">Town</label>
+                    <div class="col-sm-9">
+                        <select id="id_city" name="city" value="@(Model.city)" class="form-control">
+                            <option selected="selected" value="" class="select-town">Select Town</option>
+                            <option value="ha-noi">Hà Nội</option>
+                            <option value="tp-ho-chi-minh">Hồ Chí Minh</option>
+                            <option value="da-nang">Đà Nẵng</option>
+                            <option value="hai-phong">Hải Phòng</option>
+                            <option value="quang-ninh">Quảng Ninh</option>
+                            <option value="binh-duong">Bình Dương</option>
+                            <option value="dong-nai">Đồng Nai</option>
+                            <option value="an-giang">An Giang</option>
+                            <option value="ba-ria-vung-tau">Bà Rịa Vũng Tàu</option>
+                            <option value="bac-giang">Bắc Giang</option>
+                            <option value="bac-kan">Bắc Kạn</option>
+                            <option value="bac-lieu">Bạc Liêu</option>
+                            <option value="bac-ninh">Bắc Ninh</option>
+                            <option value="ben-tre">Bến Tre</option>
+                            <option value="binh-dinh">Bình Định</option>
+                            <option value="binh-phuoc">Bình Phước</option>
+                            <option value="binh-thuan">Bình Thuận</option>
+                            <option value="ca-mau">Cà Mau</option>
+                            <option value="can-tho">Cần Thơ</option>
+                            <option value="cao-bang">Cao Bằng</option>
+                            <option value="dak-lak">Đắk Lắk</option>
+                            <option value="dak-nong">Đắk Nông</option>
+                            <option value="dien-bien">Điện Biên</option>
+                            <option value="dong-thap">Đồng Tháp</option>
+                            <option value="gia-lai">Gia Lai</option>
+                            <option value="ha-giang">Hà Giang</option>
+                            <option value="ha-nam">Hà Nam</option>
+                            <option value="ha-tinh">Hà Tĩnh</option>
+                            <option value="hai-duong">Hải Dương</option>
+                            <option value="hau-giang">Hậu Giang</option>
+                            <option value="hoa-binh">Hòa Bình</option>
+                            <option value="hung-yen">Hưng Yên</option>
+                            <option value="khanh-hoa">Khánh Hòa</option>
+                            <option value="kien-giang">Kiên Giang</option>
+                            <option value="kon-tum">Kon Tum</option>
+                            <option value="lai-chau">Lai Châu</option>
+                            <option value="lam-dong">Lâm Đồng</option>
+                            <option value="lang-son">Lạng Sơn</option>
+                            <option value="lao-cai">Lào Cai</option>
+                            <option value="long-an">Long An</option>
+                            <option value="nam-dinh">Nam Định</option>
+                            <option value="nghe-an">Nghệ An</option>
+                            <option value="ninh-binh">Ninh Bình</option>
+                            <option value="ninh-thuan">Ninh Thuận</option>
+                            <option value="phu-tho">Phú Thọ</option>
+                            <option value="phu-yen">Phú Yên</option>
+                            <option value="quang-binh">Quảng Bình</option>
+                            <option value="quang-nam">Quảng Nam</option>
+                            <option value="quang-ngai">Quảng Ngãi</option>
+                            <option value="quang-tri">Quảng Trị</option>
+                            <option value="soc-trang">Sóc Trăng</option>
+                            <option value="son-la">Sơn La</option>
+                            <option value="tay-ninh">Tây Ninh</option>
+                            <option value="thai-binh">Thái Bình</option>
+                            <option value="thai-nguyen">Thái Nguyên</option>
+                            <option value="thanh-hoa">Thanh Hóa</option>
+                            <option value="thua-thien-hue">Thừa Thiên Huế</option>
+                            <option value="tien-giang">Tiền Giang</option>
+                            <option value="tra-vinh">Trà Vinh</option>
+                            <option value="tuyen-quang">Tuyên Quang</option>
+                            <option value="vinh-long">Vĩnh Long</option>
+                            <option value="vinh-phuc">Vĩnh Phúc</option>
+                            <option value="yen-bai">Yên Bái</option>
+                            <option value="NA">Khác</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_address" class="control-label col-sm-3 lg-address">Address</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_address" name="address" type="text" value="@(Model.address)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_postal_code" class="control-label col-sm-3">ZIP</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_postal_code" name="zipcode" type="text" value="@(Model.zipcode)">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_blocked" class="control-label col-sm-3 lg-customer-blocked">Customer blocked</label>
+                    <div class="col-sm-9">
+                        <input id="id_blocked" name="blocked" type="checkbox" @(Model.blocked ? "checked" : "")>
+                    </div>
+                </div>
+                <div onclick="cloud.clearChatConfirmOpen()" class="wz-clear-chat-btn btn btn-pink">
+                    <span class="wz-font-u-uppercase wz-font-s-sm wz-font-w-bold wz-font-c-white"><i style="position: relative; top: 1px; margin-right: 10px;" class="icon-trash"></i><span class="lg-remove-all-messages">Remove all of his/her messages</span></span>
+                </div>
+                <div class="wz-clear-chat-confirm hide fade in">
+                    <h5 class="wz-font-c-light-violet wz-font-u-uppercase wz-font-w-med wz-font-s-sm lg-sure-remove-all">
+                        Are you sure? This will remove all the messages from/to this customer and can't be undone.
+                    </h5>
+                    <div href="#" onclick="cloud.clearChatConfirmClose();" class="btn btn-info">
+                        <span class="wz-font-c-white lg-no">No</span>
+                    </div>
+                    <div href="#" onclick="cloud.clearChat('@(Model.id)')" class="btn btn-pink">
+                        <span class="wz-font-c-white lg-yes">Yes</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Modal Footer-->
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-default lg-cancel">
+                Cancel
+            </button>
+            <button id="js-customer-save" type="button" class="btn btn-info lg-save">
+                Save
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    
+    readFileLang(localStorage.getItem("lang"), "customer_edit");
+    // Set datepicker widget on birthdate input
+    $('#id_birthdate').datepicker({
+        dateFormat: "dd-mm-yy"
+    });
+
+    $("#js-customer-save").on('click', function (e) {
+        e.preventDefault();
+        cloud.sendForm(document.getElementById("edit-customer-form"), cloud.getURLs().customers.edit + businessID + '/@(Model.id)', function (data) {       
+            if (!data.ok) $("#wz-modal-edit-user").html(data.view);
+            else {
+                firebaseService.setMainChat(currentChat);
+                $("#wz-modal-edit-user").modal('hide');
+            }
+        });
+    });
+</script>

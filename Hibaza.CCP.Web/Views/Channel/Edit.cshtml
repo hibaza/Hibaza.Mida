@@ -1,0 +1,354 @@
+﻿@model Hibaza.CCP.Web.Models.ChannelAddEdit
+@{
+    ViewBag.Title = "Add-Edit facebook channel";
+    Layout = null;
+}
+
+<div id="pages-list-used" class="hidden">
+    @foreach (var row in Model.Channels)
+    {
+        <div class="hidden" data-channel-id="@(row.id)" data-page-id="@(row.ext_id)"></div>
+    }
+</div>
+
+
+<form id="channels-facebook-form" class="lg-channel_edit">
+    <input class="form-control" id="id_token" name="token" type="hidden" value="@(Model.Token)">
+    <input class="form-control" id="id_page_id" name="page_id" type="hidden" value="@(Model.PageId)">
+
+    <div class="form-group-title">
+        <h3>
+            <a href="#" data-target="#channels-main" data-targethide="#channels-edit" class="js-show-edit lg-channels">Channels</a>&gt; @(Model.PageName)<i class="icon-facebook"></i>
+        </h3>
+    </div>
+    <div class="form-group wz-container col-xs-12">
+        <div class="wz-instructions">
+            <h4 class="lg-instructions">Instructions</h4>
+            <ul class="wz-steps">
+                <li>
+                    <i class="icon-facebook"></i>
+                    <div>
+                        <strong class="log-into-facebook">1. Log into Facebook </strong>
+                        <p class="js-login-message lg-integrate-page">
+                            In ticket to integrate your FB Page, you need to log into Facebook. Please ensure your browser is not blocking pop-ups, otherwise click the Facebook Log In button.
+                        </p>
+
+                    </div>
+                </li>
+                <li>
+                    <i class="icon-paper"></i>
+                    <div>
+                        <strong class="lg-select-facebook-page">2. Select a Facebook page</strong>
+                        <p class="lg-logged-facebook">Once logged in Facebook, we can retrieve the Facebook Pages related to your account. Select one from the dropdown.</p>
+                    </div>
+                </li>
+                <li>
+                    <i class="icon-share"></i>
+                    <div>
+                        <strong class="lg-share-facebook-page">3. Share your Facebook page</strong>
+                        <p class="lg-submitted-share-page">Once submitted, share your Facebook page with your customers to start talking!</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="row pages-list-container col-xs-9">
+            <label class="control-label fb-pages-label lg-first-log-into-facebook">
+                First, click here to log into Facebook
+            </label>
+            <select id="pagesList" class="form-control pages-list hidden"></select>
+            <div class="autocomplete-pages-list"></div>
+            <div class="fb-login">
+                <div  class="btn btn-save "><a href="#" target="_blank" class="js-login-button" style="padding: 10px 0 10px 0;color: whitesmoke;">Login facebook</a></div>
+                @*<div href="#" target="_blank" class="fb-login-button js-login-button" data-size="medium"></div>*@
+            </div>
+            @*<div class="fb-login">
+            <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
+        </div>*@
+            @*<div class="fb-login-0" style="float:right">
+                <a href="#" target="_blank" class="js-login-button">Login</a>
+            </div>*@
+        </div>
+        <div class="row">
+            <div class="btn btn-white-pink wz-advanced-switch fb-advanced-switch hidden">
+                <span class="lg-advanced-options">Advanced options</span><span class="caret"></span>
+            </div>
+        </div>
+        <div class="row wz-advanced col-xs-9 hide">
+            <label class="control-label lg-channel-name">
+                Channel's Name
+            </label>
+            <input class="form-control" id="id_name" name="page_name" type="text" value="@(Model.PageName)" required="">
+
+
+        </div>
+        <div class="row hidden">
+            <label class="control-label lg-send-messenger-code">
+                'Send to Messenger' button code
+            </label>
+            <div>
+                <textarea rows="15" readonly="readonly" placeholder="<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+        appId: '@(Model.AppId)',
+      xfbml: true,
+      version: 'v2.10'
+    });
+  };
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = ''//connect.facebook.net/en_US/sdk.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+</script>
+
+<div class='fb-send-to-messenger' messenger_app_id='@(Model.AppId)' page_id='@(Model.PageId)' data-ref='PASS_THROUGH_PARAM' color='blue' size='standard'></div>" class="js-send-to-messenger-snippet wz-cursor-hand form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group hidden">
+            <div id="channels-return" class="btn btn-cancel lg-cancel">Cancel</div>
+            <div id="channels-facebook-submit" class="btn btn-save lg-save" disabled="disabled">Save</div>
+        </div>
+    </div>
+</form>
+<script>
+   
+settingsUI('#channels-facebook-form');
+pages = [];
+
+// On cancel adding channel, show tutorial
+if (tutorialActive) {
+  $('#channels-return').click(function() {
+    //- $topBarChats.trigger('click');
+    welcomeModal.modal('show');
+  });
+} else {
+  $('#channels-return').click(function() {
+    $('#channels-main').removeClass('hide');
+    $('#channels-edit').addClass('hide');
+  });
+}
+
+$("#channels-facebook-submit").on("click", function(e){
+  $('#channels-facebook-form').submit();
+});
+
+/**
+* onClick listener for Advanded options switch
+*/
+$('.wz-advanced-switch').on('click', function(){
+  $('.wz-advanced').toggleClass('hide');
+  $('.wz-advanced-switch .caret').toggleClass('up');
+});
+
+/**
+* onClick listener for Save Facebook Channel button
+*/
+$("#channels-facebook-form").on("submit", function(e){
+  e.preventDefault();
+  var page_selected = $(".pages-list option:selected").text();
+  var page_i = pages.indexOf($.grep(pages, function(e){ return e.name == page_selected; })[0]);
+  if (page_i > -1) {
+    $('#channels-facebook-submit').attr('disabled', true);
+    $("#id_page_id").val(pages[page_i].id);
+    $("#id_token").val(pages[page_i].access_token);
+    var facebookChannelId = ('@(Model.ChannelId)' == '') ? undefined : '@(Model.ChannelId)';
+    var pages_used = [],
+        pages_used_channels = [];
+        $('#pages-list-used div').each(function () {
+          pages_used.push($(this).attr('data-page-id').toString());
+          pages_used_channels.push($(this).attr('data-channel-id').toString());
+      });
+
+        /**
+         * Conditions to be checked before submitting:
+         *
+         * 	- 'Add' button pressed
+         * 			and page not being used by other channel  - SUCCESS
+         * 			and page being used by other channel      - FAIL
+         *  - 'Edit' button pressed
+         *  		and page not being used by other channel  - SUCCESS
+         *  		and page being used
+         *  			by this channel                         - SUCCESS
+         *  			by other channel                        - FAIL
+         */
+        var used_index = pages_used.indexOf($("#id_page_id").val().toString());
+        if (facebookChannelId) {
+            if (used_index > -1) {
+                saveChannelFacebook(facebookChannelId, page_i, '@(Model.BusinessId)');
+            } else {
+                new NotificationPlugin('An error ocurred','Selected Facebook page is being used by other channel.', 'icon-cross', null, null, longNotificationTimer);
+        $('#channels-facebook-submit').attr('disabled', false);
+            }
+        } else {
+            if(used_index < 0) {
+                saveChannelFacebook(facebookChannelId, page_i, '@(Model.BusinessId)');
+            } else {
+                if (pages_used_channels[used_index] == facebookChannelId) {
+                    saveChannelFacebook(facebookChannelId, page_i, '@(Model.BusinessId)');
+                } else {
+                    new NotificationPlugin('An error ocurred','Selected Facebook page is being used by other channel.', 'icon-cross', null, null, longNotificationTimer);
+          $('#channels-facebook-submit').attr('disabled', false);
+                }
+            }
+        }
+    } else if (page_selected.length > 0) {
+    new NotificationPlugin('An error ocurred','No Facebook page found with this name: '+page_selected, 'icon-cross', null, null, longNotificationTimer);
+  } else {
+    new NotificationPlugin('An error ocurred','No Facebook page selected.', 'icon-cross', null, null, longNotificationTimer);
+  }
+});
+
+/**
+ * onChange listener - Save button enabled again when option changes
+ */
+$(".pages-list-container input.custom-combobox-input").on('input', function(){
+    $("#channels-facebook-submit").attr("disabled", false);
+});
+
+
+function statusChangeCallback(response) {
+    //console.log(response.status);
+    if (response.status === 'connected') {
+        var uid = response.authResponse.userID;
+        var accessToken = response.authResponse.accessToken;
+
+        var url = cloud.getURLs().agents.data.save_token + myID;
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: JSON.stringify({ 'uid': uid, 'token': accessToken }),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+            }
+        });
+
+    showPages();
+  } else if (response.status === 'not_authorized') {
+    new NotificationPlugin('An error ocurred','Please log into this app.', 'icon-cross');
+  }
+
+}
+
+/**
+* On document ready loads Facebook SDK
+*/
+$(document).ready(function() {
+    readFileLang(localStorage.getItem("lang"), "channel_edit");
+    console.log("kkkkkk");
+        var fbtoken = {
+        ChannelId:"@(Model.ChannelId)", PageId: "@(Model.PageId)", PageName:"@(Model.PageName)",
+        BusinessId: "@(Model.BusinessId)", AppId: "@(Model.AppId)", baseUrls_Api: baseUrls_Api, BaseUrls_Web: BaseUrls_Web
+    };
+    console.log(fbtoken);
+    let objJsonStr = Base64Encode(JSON.stringify(fbtoken));
+    
+    // var fbtoken = "ChannelId=@(Model.ChannelId)&PageId=@(Model.PageId)&PageName=@(Model.PageName)&BusinessId=@(Model.BusinessId)&AppId=@(Model.AppId)&baseUrls_Api="+baseUrls_Api+"&BaseUrls_Web="+BaseUrls_Web;
+    
+    var url = "https://www.facebook.com/v3.0/dialog/oauth?client_id=@(Model.AppId)&redirect_uri=" + BaseUrls_Web 
+        + "FBAuth&response_type=token&scope=public_profile,email,read_page_mailboxes,pages_messaging,pages_show_list,manage_pages,publish_pages" +
+        "&state=" + objJsonStr;
+    
+    
+    //if (fbtoken.PageId == null && fbtoken.PageId == undefined && fbtoken.PageId == "")    
+    $(".js-login-button").attr("href", url);
+    //$(".js-login-button").click();
+    
+    
+    //data: [
+    //    {
+    //        name: "Quần áo túi thời trang đồng hồ",
+    //        id: "289750241507275"
+    //    }
+    //]
+   // localStorage.setItem("fbtoken", JSON.stringify(fbtoken));
+
+  //$('#channels-facebook-submit').attr('disabled',  true);
+  @*$.ajaxSetup({ cache: true });
+  $.getScript('//connect.facebook.net/en_US/sdk.js')
+    .done(function( script, textStatus ) {
+      // If OK try to initialize Facebook
+      try {
+        FB.init({
+            appId: '@(Model.AppId)',
+          xfbml: true,
+          version: 'v2.10'
+        });
+          FB.login(statusChangeCallback, { auth_type: 'https', scope: 'public_profile,email,read_page_mailboxes,pages_messaging,pages_show_list,manage_pages,publish_pages' });
+      } catch(e) {
+        console.log('[Facebook SDK] Error: ' + e.message);
+        $('.js-login-message').text('In ticket to integrate your FB Page, you need to log into Facebook. Please ensure your browser is not blocking any Facebook domain or pop-ups from \'s site.');
+      }
+    })
+    .fail(function( jqxhr, settings, exception ) {
+      // If KO shows a notification
+      new NotificationPlugin('An error ocurred','Can\'t load Facebook SDK. Please ensure your browser is not blocking Facebook domains.', 'icon-cross', null, null, longNotificationTimer);
+        });*@
+
+
+
+});
+
+/**
+* showPages - Shows Facebook's pages combo
+*/
+function showPages() {
+    FB.api('/me/accounts/?type=pages&limit=' + limitPages, function (response) {
+    // Shows page list and hides FB-login button
+        $(".form-control.pages-list").removeClass('@(string.IsNullOrWhiteSpace(Model.PageId) ? "hidden" : "")');
+
+       // $("#pagesList").removeClass("hidden");
+    $('.fb-login').addClass("hidden");
+    $('.fb-advanced-switch').removeClass("hidden");
+    $('#channels-facebook-submit').attr('disabled', false);
+    $('.fb-pages-label').text("Select the Facebook page you want to integrate to receive messages here");
+
+
+         var options = [], options_id = [];
+         pages = response.data;
+         if (pages) {
+             for (i = 0; i < response.data.length; i++) {
+                 options.push(response.data[i].name);
+                 options_id.push(response.data[i].id);
+             }
+         } else {
+             new NotificationPlugin('An error ocurred','No Facebook pages found. ', 'icon-cross', null, null, defNotificationTimer);
+             return false;
+         }
+
+    /* PAGE LIST COMBOBOX METHOD */
+    $.each(options, function(index) {
+      $("<option>", {
+                 value: index,
+        text: options[index]
+      }).appendTo($(".pages-list"));
+         });
+
+    //$(".pages-list" ).combobox({
+    //         appendToElem: $(".autocomplete-pages-list")
+    //});
+
+         // Default input is previous facebook page selected
+         var facebookChannelId = ('@(Model.ChannelId)' == '') ? undefined : '@(Model.ChannelId)';
+         var fb_page_id_index = options_id.indexOf('@(Model.PageId)');
+         if(facebookChannelId && fb_page_id_index > -1) {
+             var facebookChannelName = options[fb_page_id_index];
+      $(".pages-list").val(fb_page_id_index);
+      $(".pages-list-container .custom-combobox-input").val(facebookChannelName);
+         }
+         else {
+             //if (options.length > 0) $("#id_name").val(options[0]);
+         }
+     });
+
+  /**
+  * onClick  webchat snippet
+  */
+  $('.js-send-to-messenger-snippet').on('click', { shareValue: $('.js-send-to-messenger-snippet').prop('placeholder'), shareValueHide: true, valueType:  "Send to Messenger snippet" }, copyToClipboard);
+}
+</script>
+
+

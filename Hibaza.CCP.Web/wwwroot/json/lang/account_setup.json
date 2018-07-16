@@ -1,0 +1,86 @@
+﻿{
+  "en": {
+    "welcome-human": {
+      "text": "Welcome, human.<br /><br /> My name is Zami and I'm going<br />to set up your account.",
+      "type": "text"
+    },
+    "let-go": {
+      "text": "Let's go!",
+      "type": "text"
+    },
+    "who-you-are": {
+      "text": "First, I need to know<br />who you are.",
+      "type": "text"
+    },
+    "first-name": {
+      "text": "Your first name",
+      "type": "text"
+    },
+    "last-name": {
+      "text": "Your last name",
+      "type": "text"
+    },
+    "next": {
+      "text": "Next",
+      "type": "text"
+    },
+    "invite-team-members": {
+      "text": "Invite your team members",
+      "type": "text"
+    },
+    "emails-separated": {
+      "text": "Emails separated by comas",
+      "type": "text"
+    },
+    "add-later": {
+      "text": "*You can add it later",
+      "type": "text"
+    },
+    "finish": {
+      "text": "Finish",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "welcome-human": {
+      "text": "Chào mừng,<br /> <br /> Tên tôi là Zami, tôi sẽ thiết lập tài khoản của bạn.",
+      "type": "text"
+    },
+    "let-go": {
+      "text": "Bắt đầu!",
+      "type": "text"
+    },
+    "who-you-are": {
+      "text": "Đầu tiên, tôi cần biết bạn là ai",
+      "type": "text"
+    },
+    "first-name": {
+      "text": "Tên của bạn",
+      "type": "text"
+    },
+    "last-name": {
+      "text": "Tên phụ",
+      "type": "text"
+    },
+    "next": {
+      "text": "Tiếp",
+      "type": "text"
+    },
+    "invite-team-members": {
+      "text": "Mời các thành viên trong nhóm của bạn",
+      "type": "text"
+    },
+    "emails-separated": {
+      "text": "Email được phân tách bằng dấu phẩy",
+      "type": "text"
+    },
+    "add-later": {
+      "text": "*Bạn có thể thêm nó sau",
+      "type": "text"
+    },
+    "finish": {
+      "text": "Hoàn thành",
+      "type": "text"
+    }
+  }
+}

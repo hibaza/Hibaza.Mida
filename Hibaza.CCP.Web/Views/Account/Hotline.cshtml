@@ -1,0 +1,98 @@
+﻿@model Hibaza.CCP.Domain.Models.PhoneAccounts
+@{
+    ViewBag.Title = "Edit hotline";
+    Layout = null;
+}
+<form enctype="multipart/form-data" class="form-white-bg lg-hotline">
+    <div class="form-group-title">
+        <h3>Hotline</h3>
+    </div>
+    <div class="form-group wz-container col-sm-12 col-md-10 col-lg-8">
+        <div class="row">
+
+            <label class="control-label lg-outgoing-enable">
+                Outgoing enable
+            </label>
+
+            <input type="checkbox" value="@(Model.outgoing_enable)" @(Model.outgoing_enable ? "checked" : "") class="outgoing_enable_cb">
+            <input type="text" value="@(Model.outgoing_enable)" name="outgoing_enable" class="hidden outgoing_enable">
+
+            <label class="control-label lg-outgoing-display-name">
+                Outgoing display name
+            </label>
+            <select class="form-control outgoing_display_name" name="outgoing_display_name">
+
+                @foreach (var phone in Model.phone_account_not_using)
+                {
+                    if (phone.Key == Model.phone_account_id)
+                    {
+                        <option selected value="@(phone.Key)">@(phone.Value)</option>
+                    }
+                    else
+                    {
+                        <option value="@(phone.Key)">@(phone.Value)</option>
+                    }
+                }
+                <option value="" class="lg-not-select">Not Select</option>
+            </select>
+
+            @*<input class="form-control outgoing_display_name" name="outgoing_display_name" type="text" value="@(Model.outgoing_display_name)">*@
+
+            <label class="control-label lg-event-receive-enable hidden">
+                Event receive enable
+            </label>
+            <input type="checkbox" value="@(Model.incoming_enable)" @(Model.incoming_enable ? "checked" : "") class="incoming_enable_cb hidden">
+            <input type="text" value="@(Model.incoming_enable)" name="incoming_enable" class="hidden incoming_enable hidden">
+            <label class="control-label lg-event-receive-hotline hidden">
+                Event receive hotline
+            </label>
+            <input class="form-control incoming_extention hidden" name="incoming_extention" type="text" value="@(Model.incoming_extention)">
+
+            <div class="form-group">
+                <div onclick="updatePhoneConfig(this)" class="btn btn-save lg-save">Save</div>
+            </div>
+        </div>
+    </div>
+
+    <input type="text" value="@(Model.phone_account_id)" name="phone_account_id" class="hidden phone_account_id">
+</form>
+
+<script>
+    readFileLang(localStorage.getItem("lang"), "hotline"); 
+    function updatePhoneConfig() {
+        try {
+            var phone_account = $('.outgoing_display_name').find(":selected").val();
+            var para = myID + "/" + phone_account;
+            ExecuteServiceSyns(baseUrls_ApiHotline + "api/Agents/combineAgentPhoneAccount/" + para + "/?access_token=" + accessToken, "GET",
+                "", true);
+
+            if (phone_account != null && phone_account != undefined && phone_account != "") {
+                para = phone_account + "/" +
+                    $(".outgoing_enable_cb").is(":checked") + "/" +
+                    $('.outgoing_display_name').find(":selected").text() + "/" +
+                    $(".incoming_enable_cb").is(":checked") + "/" +
+                    $(".incoming_extention").val();
+
+                ExecuteServiceSyns(baseUrls_ApiHotline + "api/PhoneAccounts/UpdateEnablePhoneAccount/" + para + "/?access_token=" + accessToken, "POST",
+                    "updatePhoneConfig_result", true);
+            }
+        } catch (e) { console.log(e); }
+    }
+
+    function updatePhoneConfig_result(list) {
+        try {
+            var data = JSON.parse(list);
+            if (data != null && data != undefined && (data.IsModifiedCountAvailable || data.MatchedCount > 0 || data.ModifiedCount > 0))
+                new NotificationPlugin("Ok", "Save ok", "icon-bell");
+            else
+                new NotificationPlugin("Error", "Save error", "icon-bell");
+
+        } catch (e) { console.log(e); }
+    }
+
+
+/**
+* Document onload
+*/
+
+</script>

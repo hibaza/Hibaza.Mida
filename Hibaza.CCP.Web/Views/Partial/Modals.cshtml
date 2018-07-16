@@ -1,0 +1,1374 @@
+﻿@{
+    Layout = null;
+}
+<!-- Modal-->
+<div id="wz-modal-add-ticket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-add-note" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-add-alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-ticket" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade"></div><!-- Modal-->
+<div id="wz-modal-edit-user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+<div id="wz-modal-payment-generator" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div>
+
+<div class="lg-partial_modals">
+    <!-- Modal-->
+    <div id="wz-modal-upload-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade">
+        <div class="modal-dialog modal-sm">
+
+            <div class="modal-content">
+                <input id="input-modal-message-tag" type="hidden" value="sale" />
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close cancel" onclick="cancelSendAi()">
+                        <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+                    </button>
+                    <h4 id="myModalLabel" class="modal-title lg-send-images">
+                        Send images
+                    </h4>
+                </div>
+
+                <!-- Modal Body-->
+                <div class="modal-body">
+                    <div style="margin:5px 0 5px 0">
+                        <select class="form-control select-format-send hidden" onclick="selectFormatSend(this)">
+                            <option value="multiimagesonetext">Multiple Images - One Text</option>
+                            <option value="multiimagesmiltitext">Multiple Images - Multiple Text</option>
+                            <option value="quickreply">Quick Reply</option>
+                            <option value="onetext">One Text</option>
+                        </select>
+                    </div>
+
+                    <div id="js-gallery-image-upload" class="row wz-margin-t-20 wz-margin-b-20" style="min-height:140px; padding-top:20px; border-color:white; border-style:dotted; border-width:1px; margin: 10px 0">
+                    </div>
+                    <div id="js-preview-more">
+                    </div>
+
+                    <div id="js-gallery-error-upload" class="col-sm-12 hide">
+                        <ul class="errorlist">
+                            <li class="lg-6-images-allowed">
+                                Error! Only 6 images allowed in a message.
+                            </li>
+                        </ul>
+                    </div>
+                    <form class="form-horizontal js-form-image-upload" style="text-align:center">
+                        <label class="control-label col-sm-4 hidden lg-drag-drop-images" style="text-align:center">DRAG and DROP images URLs from WEB</label>
+                        <label class="control-label col-sm-3 hidden lg-or" style="text-align:center">or</label>
+
+                        <button type="button" class="btn btn-info js-open-shop lg-drag-from-bot" onclick="$(document).find('.js-client-view[data-view=bot]').trigger('click');">
+                            DRAG FROM BOT
+                        </button>
+                        <button type="button" class="btn btn-info js-open-shop lg-drag-from-shop" onclick="$(document).find('.js-client-view[data-view=products]').trigger('click');">
+                            DRAG FROM SHOP
+                        </button>
+                        <button type="button" class="btn btn-info js-open-image-gallery hidden lg-drag-from-web">
+                            DRAG FROM WEB
+                        </button>
+                        <button type="button" class="btn btn-info js-form-image-upload lg-upload-images" onclick="inputImage.click()">
+                            UPLOAD IMAGES
+                        </button>
+                        @*<div class="form-group textCommon">
+                                <label class="control-label col-sm-3">Add a title [Max 80 characters]</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control js-image-caption-text" />
+                                </div>
+                            </div>*@
+                    </form>
+                </div>
+                <!-- Modal Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default js-reset-image lg-cancel" onclick="cancelSendAi()">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-info js-submit-apply hidden lg-apply" onclick="orderApply()">
+                        Apply
+                    </button>
+                    <button type="button" class="btn btn-info js-submit-save-shop hidden lg-save-to-shop" onclick="orderSaveToShop()">
+                        Save to shop
+                    </button>
+                    <button type="button" class="btn btn-info js-submit-image lg-send-to-chat">
+                        Send to chat
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            function loadImageToDropableZone(channel_type, channel_format, data) {
+                try {
+                    $("#js-preview-more").empty();
+                    $(".js-submit-save-shop").addClass("hidden");
+                    $(".js-submit-apply").addClass("hidden");
+                    if (channel_format == null || channel_format == undefined || channel_format == "image-text" || channel_format == "image") {
+                        $("#js-gallery-image-upload").show();
+                        if (data != null && data != undefined)
+                            $.each(data.elements, function (key, val) {
+
+                                var gallery = $("#js-gallery-image-upload .js-drop-image");
+                                var count = 0;
+                                if (gallery == null || gallery == undefined)
+                                    count = 0;
+                                else
+                                    count = gallery.length;
+
+                                if (val.image_url.indexOf(";base64,") > 0)
+                                    inputImage.parent().append('<input accept="image/*" multiple="multiple" value="' + val.image_url + '" name="' + key + '" type="file">');
+
+                                imgSendUrls[count] = addOrUpdateUrlParam(addOrUpdateUrlParam(val.image_url, 'width', '400'), 'height', '');
+                                $("<div>", {
+                                    "class": "col-xs-4"
+                                }).append($("<a class='thumbnail js-drop-image' href='#' value='" + val.image_url + "' style='background-image: url(" + val.image_url
+                                    + ")'><span class='js-thumbnail-close js-drop-image-close' data-index='" + count
+                                    + "' href='#'>×</span></a>" +
+                                    "<textarea type='text' class='form-control textWithImage' style='overflow:hidden' rows='3'>" + val.title
+                                    + "</textarea>")).appendTo("#js-gallery-image-upload");
+                                $(".js-drop-image").off("click"), $(".js-drop-image-close").on("click", function () {
+                                    var t = $(this).data("index"),
+                                        e = $(this).parent().parent();
+                                    imgSendUrls[t] = "", e.remove();
+                                });
+                                //if (val.image_url == null || val.image_url == undefined || val.image_url == "") {
+                                //    channel_format = "image-text";
+                                //    $(".js-channel-format-chat").val(channel_format);
+                                //}
+                            });
+                        // confirm
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Confirm</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-confirm-text" value="' +
+                            (data == null || data.confirm == null || data.confirm == undefined || data.confirm == "" ? "Chọn" : data.confirm) + '"/>' +
+                            '</div>' +
+                            '</div>');
+                    }
+
+                    if (channel_format == "text") {
+                        $("#js-preview-more").append('<div class="form-group  col-sm-12">' +
+                            '<label class="control-label col-sm-3" >Title</label>' +
+                            '<div class="col-sm-9">' +
+                            '<textarea type="text" class="form-control js-image-caption-text" value="' + data.message + '">' + data.message + ' </textarea>' +
+                            '</div>' +
+                            '</div>');
+                        $("#js-gallery-image-upload").empty();
+                        $("#js-gallery-image-upload").hide();
+                    }
+
+                    if (channel_format == "orderview" || channel_format == "incart" || channel_format == "orderconfirm") {
+                        $(".js-submit-save-shop").removeClass("hidden");
+                        $(".js-submit-apply").removeClass("hidden");
+                        //if (channel_format == "incart") {
+                        //    $(".js-submit-save-shop").removeClass("hidden");
+                        //    $(".js-submit-image").addClass("hidden");
+                        //}
+                        //else {
+                        //    $(".js-submit-save-shop").addClass("hidden");
+                        //    $(".js-submit-image").removeClass("hidden");
+                        //}
+
+                        $("#js-gallery-image-upload").show();
+                        //var OrderNumber = "";
+                        //var TotalMoney = 0;
+                        $.each(data.elements, function (key, val) {
+                            $.each(val.products, function (k, v) {
+                                $("<div>", {
+                                    "class": "col-xs-4"
+                                }).append($("<a class='thumbnail js-drop-image' value='" + v.product_photo_url +
+                                    "' item ='" + JSON.stringify(val) + "'" +
+
+                                    "href= '#' style= 'background-image: url(" + v.product_photo_url
+                                    + ")'><span class='js-thumbnail-close js-drop-image-close' data-index='" + key
+                                    + "' href='#'>×</span></a>" +
+                                    "<input type='text' class='form-control js-receipt-product_id hidden' value='" + v.product_id + "'/>" +
+                                    "<input type='text' class='form-control js-receipt-productname' value='" + v.product_name + "'/>" +
+                                    "<input type='text' class='form-control js-receipt-productattribute' value='" + v.product_attribute + "'/>" +
+                                    "<input type='text' class='form-control js-receipt-productsku' value='" + v.product_sku + "'/>" +
+                                    "<img></img><input type='text' class='form-control js-receipt-quantity' value='" + v.quantity + "' onchange='changeQuantity(this)'/>" +
+                                    "<input type='text' class='form-control js-receipt-price' value='" + v.price + "'/>" +
+                                    "<input type='text' class='form-control js-receipt-total_money' value='" + v.total_money + "'/>"
+                                )).appendTo("#js-gallery-image-upload");
+                                $(".js-drop-image").off("click"), $(".js-drop-image-close").on("click", function () {
+                                    var t = $(this).data("index"),
+                                        e = $(this).parent().parent();
+                                    e.remove();
+                                });
+                            });
+
+                        });
+
+                        // add ten
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Fullname</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-fullname" value="' + data.elements[0].fullname + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        // add dien thoai
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Phone</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-phone" value="' + (data.elements[0].mobiphone == null ? "" : data.elements[0].mobiphone) + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        // add dia chi
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Address</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-address" value="' + (data.elements[0].address == null ? "" : data.elements[0].address) + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        //order_number
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Order number</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-order-number" value="' + data.elements[0].orderid + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        //Link
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Link chat</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-link" value="' + (data.elements[0].link == null || data.elements[0].link == undefined ? "" : data.elements[0].link) + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        //Message
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Message</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-message" value="' + data.elements[0].message + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        // status
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Status</label>' +
+                            '<div class="col-sm-9">' +
+                            '<select class="form-control js-receipt-status" >' +
+                            '<option value="30" ' + (data.elements[0].order_status_int == 30 ? "selected" : "") + '>Trong giỏ hàng</option>' +
+                            '<option value="0" ' + (data.elements[0].order_status_int == 0 ? "selected" : "") + '>Chờ xử lý</option>' +
+                            '<option value="20" ' + (data.elements[0].order_status_int == 20 ? "selected" : "") + '>Hủy</option>' +
+                            '</select>' +
+                            '</div>' +
+                            '</div>'
+                        );
+
+                        //Email
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Email</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-email" value="' + (data.elements[0].email == null ? "" : data.elements[0].email) + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        // add note
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Note</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-note" value="' + (data.elements[0].note == null ? "" : data.elements[0].note) + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+
+                        //Province
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Province</label>' +
+                            '<div class="col-sm-9">' +
+                            '<select class="form-control js-receipt-province" >' +
+                            '<option value="" ' + (data.elements[0].province == "" ? "selected" : "") + '>Select province</option>' +
+                            '<option value="ha-noi" ' + (data.elements[0].province == "ha-noi" ? "selected" : "") + '>Hà Nội</option>' +
+                            '<option value="tp-ho-chi-minh" ' + (data.elements[0].province == "tp-ho-chi-minh" ? "selected" : "") + '>Hồ Chí Minh</option>' +
+                            '<option value="da-nang" ' + (data.elements[0].province == "da-nang" ? "selected" : "") + '>Đà Nẵng</option>' +
+                            '<option value="hai-phong" ' + (data.elements[0].province == "hai-phong" ? "selected" : "") + '>Hải Phòng</option>' +
+                            '<option value="quang-ninh" ' + (data.elements[0].province == "quang-ninh" ? "selected" : "") + '>Quảng Ninh</option>' +
+                            '<option value="binh-duong" ' + (data.elements[0].province == "binh-duong" ? "selected" : "") + '>Bình Dương</option>' +
+                            '<option value="dong-nai" ' + (data.elements[0].province == "dong-nai" ? "selected" : "") + '>Đồng Nai</option>' +
+                            '<option value="an-giang" ' + (data.elements[0].province == "an-giang" ? "selected" : "") + '>An Giang</option>' +
+                            '<option value="ba-ria-vung-tau" ' + (data.elements[0].province == "ba-ria-vung-tau" ? "selected" : "") + '>Bà Rịa Vũng Tàu</option>' +
+                            '<option value="bac-giang" ' + (data.elements[0].province == "bac-giang" ? "selected" : "") + '>Bắc Giang</option>' +
+                            '<option value="bac-kan" ' + (data.elements[0].province == "bac-kan" ? "selected" : "") + '>Bắc Kạn</option>' +
+                            '<option value="bac-lieu" ' + (data.elements[0].province == "bac-lieu" ? "selected" : "") + '>Bạc Liêu</option>' +
+                            '<option value="bac-ninh" ' + (data.elements[0].province == "bac-ninh" ? "selected" : "") + '>Bắc Ninh</option>' +
+                            '<option value="ben-tre" ' + (data.elements[0].province == "ben-tre" ? "selected" : "") + '>Bến Tre</option>' +
+                            '<option value="binh-dinh" ' + (data.elements[0].province == "binh-dinh" ? "selected" : "") + '>Bình Định</option>' +
+                            '<option value="binh-phuoc" ' + (data.elements[0].province == "binh-phuoc" ? "selected" : "") + '>Bình Phước</option>' +
+                            '<option value="binh-thuan" ' + (data.elements[0].province == "binh-thuan" ? "selected" : "") + '>Bình Thuận</option>' +
+                            '<option value="ca-mau" ' + (data.elements[0].province == "ca-mau" ? "selected" : "") + '>Cà Mau</option>' +
+                            '<option value="can-tho" ' + (data.elements[0].province == "can-tho" ? "selected" : "") + '>Cần Thơ</option>' +
+                            '<option value="cao-bang" ' + (data.elements[0].province == "cao-bang" ? "selected" : "") + '>Cao Bằng</option>' +
+                            '<option value="dak-lak" ' + (data.elements[0].province == "dak-lak" ? "selected" : "") + '>Đắk Lắk</option>' +
+                            '<option value="dak-nong" ' + (data.elements[0].province == "dak-nong" ? "selected" : "") + '>Đắk Nông</option>' +
+                            '<option value="dien-bien" ' + (data.elements[0].province == "dien-bien" ? "selected" : "") + '>Điện Biên</option>' +
+                            '<option value="dong-thap" ' + (data.elements[0].province == "dong-thap" ? "selected" : "") + '>Đồng Tháp</option>' +
+                            '<option value="gia-lai" ' + (data.elements[0].province == "gia-lai" ? "selected" : "") + '>Gia Lai</option>' +
+                            '<option value="ha-giang" ' + (data.elements[0].province == "ha-giang" ? "selected" : "") + '>Hà Giang</option>' +
+                            '<option value="ha-nam" ' + (data.elements[0].province == "ha-nam" ? "selected" : "") + '>Hà Nam</option>' +
+                            '<option value="ha-tinh" ' + (data.elements[0].province == "ha-tinh" ? "selected" : "") + '>Hà Tĩnh</option>' +
+                            '<option value="hai-duong" ' + (data.elements[0].province == "hai-duong" ? "selected" : "") + '>Hải Dương</option>' +
+                            '<option value="hau-giang" ' + (data.elements[0].province == "hau-giang" ? "selected" : "") + '>Hậu Giang</option>' +
+                            '<option value="hoa-binh" ' + (data.elements[0].province == "hoa-binh" ? "selected" : "") + '>Hòa Bình</option>' +
+                            '<option value="hung-yen" ' + (data.elements[0].province == "hung-yen" ? "selected" : "") + '>Hưng Yên</option>' +
+                            '<option value="khanh-hoa" ' + (data.elements[0].province == "khanh-hoa" ? "selected" : "") + '>Khánh Hòa</option>' +
+                            '<option value="kien-giang" ' + (data.elements[0].province == "kien-giang" ? "selected" : "") + '>Kiên Giang</option>' +
+                            '<option value="kon-tum" ' + (data.elements[0].province == "kon-tum" ? "selected" : "") + '>Kon Tum</option>' +
+                            '<option value="lai-chau" ' + (data.elements[0].province == "lai-chau" ? "selected" : "") + '>Lai Châu</option>' +
+                            '<option value="lam-dong" ' + (data.elements[0].province == "lam-dong" ? "selected" : "") + '>Lâm Đồng</option>' +
+                            '<option value="lang-son" ' + (data.elements[0].province == "lang-son" ? "selected" : "") + '>Lạng Sơn</option>' +
+                            '<option value="lao-cai" ' + (data.elements[0].province == "lao-cai" ? "selected" : "") + '>Lào Cai</option>' +
+                            '<option value="long-an" ' + (data.elements[0].province == "long-an" ? "selected" : "") + '>Long An</option>' +
+                            '<option value="nam-dinh" ' + (data.elements[0].province == "nam-dinh" ? "selected" : "") + '>Nam Định</option>' +
+                            '<option value="nghe-an" ' + (data.elements[0].province == "nghe-an" ? "selected" : "") + '>Nghệ An</option>' +
+                            '<option value="ninh-binh" ' + (data.elements[0].province == "ninh-binh" ? "selected" : "") + '>Ninh Bình</option>' +
+                            '<option value="ninh-thuan" ' + (data.elements[0].province == "ninh-thuan" ? "selected" : "") + '>Ninh Thuận</option>' +
+                            '<option value="phu-tho" ' + (data.elements[0].province == "phu-tho" ? "selected" : "") + '>Phú Thọ</option>' +
+                            '<option value="phu-yen" ' + (data.elements[0].province == "phu-yen" ? "selected" : "") + '>Phú Yên</option>' +
+                            '<option value="quang-binh" ' + (data.elements[0].province == "quang-binh" ? "selected" : "") + '>Quảng Bình</option>' +
+                            '<option value="quang-nam" ' + (data.elements[0].province == "quang-nam" ? "selected" : "") + '>Quảng Nam</option>' +
+                            '<option value="quang-ngai" ' + (data.elements[0].province == "quang-ngai" ? "selected" : "") + '>Quảng Ngãi</option>' +
+                            '<option value="quang-tri" ' + (data.elements[0].province == "quang-tri" ? "selected" : "") + '>Quảng Trị</option>' +
+                            '<option value="soc-trang" ' + (data.elements[0].province == "soc-trang" ? "selected" : "") + '>Sóc Trăng</option>' +
+                            '<option value="son-la" ' + (data.elements[0].province == "son-la" ? "selected" : "") + '>Sơn La</option>' +
+                            '<option value="tay-ninh" ' + (data.elements[0].province == "tay-ninh" ? "selected" : "") + '>Tây Ninh</option>' +
+                            '<option value="thai-binh" ' + (data.elements[0].province == "thai-binh" ? "selected" : "") + '>Thái Bình</option>' +
+                            '<option value="thai-nguyen" ' + (data.elements[0].province == "thai-nguyen" ? "selected" : "") + '>Thái Nguyên</option>' +
+                            '<option value="thanh-hoa" ' + (data.elements[0].province == "thanh-hoa" ? "selected" : "") + '>Thanh Hóa</option>' +
+                            '<option value="thua-thien-hue" ' + (data.elements[0].province == "thua-thien-hue" ? "selected" : "") + '>Thừa Thiên Huế</option>' +
+                            '<option value="tien-giang" ' + (data.elements[0].province == "tien-giang" ? "selected" : "") + '>Tiền Giang</option>' +
+                            '<option value="tra-vinh" ' + (data.elements[0].province == "tra-vinh" ? "selected" : "") + '>Trà Vinh</option>' +
+                            '<option value="tuyen-quang" ' + (data.elements[0].province == "tuyen-quang" ? "selected" : "") + '>Tuyên Quang</option>' +
+                            '<option value="vinh-long" ' + (data.elements[0].province == "vinh-long" ? "selected" : "") + '>Vĩnh Long</option>' +
+                            '<option value="vinh-phuc" ' + (data.elements[0].province == "vinh-phuc" ? "selected" : "") + '>Vĩnh Phúc</option>' +
+                            '<option value="yen-bai" ' + (data.elements[0].province == "yen-bai" ? "selected" : "") + '>Yên Bái</option>' +
+                            '<option value="NA">Khác</option>' +
+                            '</select>' +
+                            '</div>' +
+                            '</div>');
+
+                        //SubTotalMoney
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">SubTotalMoney</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-subtotalmoney" value="' + data.elements[0].subtotal_money + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        // add DiscountValue
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Coupon Code</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-couponcode" value="' + (data.elements[0].coupon_code == null ? "" : data.elements[0].coupon_code) + '" />' +
+                            '</div>' +
+                            '</div>');
+
+                        // add DiscountValue
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Discount</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-discountvalue" value="' + data.elements[0].discount_value + '" onchange="changeQuantity(this)"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        // add ship
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Shipping cost</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-shipping-cost" value="' + data.elements[0].shipping_cost + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        // add sum
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Total cost</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-total-cost" value="' + data.elements[0].total_money + '"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        // confirm
+                        $("#js-preview-more").append('<div class="form-group col-sm-12">' +
+                            '<label class="control-label col-sm-3">Confirm</label>' +
+                            '<div class="col-sm-9">' +
+                            '<input type="text" class="form-control js-receipt-confirm" value="Xác nhận đơn hàng"/>' +
+                            '</div>' +
+                            '</div>');
+
+                        if (data.elements[0].order_status_int == 30) {
+                            $(".js-submit-save-shop").removeClass("hidden");
+                            $(".js-submit-apply").removeClass("hidden");
+                        }
+                        else {
+                            $(".js-submit-save-shop").addClass("hidden");
+                            $(".js-submit-apply").addClass("hidden");
+
+                        }
+                    }
+
+
+
+                } catch (e) { console.log(e); }
+            }
+
+
+            window.addEventListener("message", function (event) {
+                try {
+                    var pass_data = JSON.parse(event.data);
+                    if (pass_data.action == "update_source") {
+                        cloud.saveLastVisit(pass_data.source_url);
+                    }
+                    if (pass_data.action === "select_image") {
+                        $(".js-channel-format-chat").val("image-text");
+                        var data = { elements: [{ image_url: pass_data.image_url, title: "" }] };
+                        loadImageToDropableZone("facebook", "image-text", data);
+                        cloud.sendFiles(addOrUpdateUrlParam(addOrUpdateUrlParam(pass_data.image_url, 'width', '400'), 'height', ''), pass_data.source_url);
+                    }
+
+                } catch (e) {
+                }
+            });
+
+            window.addEventListener("dragover", function (e) {
+                e = e || event;
+                e.preventDefault();
+            }, false);
+            window.addEventListener("drop", function (e) {
+                e = e || event;
+                e.preventDefault();
+            }, false);
+            $('#js-gallery-image-upload')
+                .on('drop', function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    var url = e.originalEvent.dataTransfer.getData('url');
+                    $(".js-channel-format-chat").val("image-text");
+                    var data = { elements: [{ image_url: url, title: "" }] };
+                    loadImageToDropableZone("facebook", "image-text", data);
+                });
+        </script>
+    </div><!-- Modal-->
+    <div id="wz-modal-image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft wz-modal-right modal hidden">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Body-->
+                <div class="modal-body" style="overflow:hidden!important; padding:0px !important">
+                    @*<iframe id="iframeweb" src="http://baza.vn" style="width:100%; height:100%"></iframe>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="wz-modal-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div>
+
+    <!-- Modal open attachment-->
+    <div id="wz-modal-full-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close">
+                        <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+                    </button>
+                    <h4 class="modal-title js-attach-title"></h4>
+                </div>
+                <!-- Modal Body-->
+                <div class="modal-body">
+                </div>
+                <!-- Modal Footer-->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal-->
+    <div id="wz-modal-shortcuts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close">
+                        <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+                    </button>
+                    <h4 id="myModalLabel" class="modal-title lg-shortcuts">
+                        Shortcuts
+                    </h4>
+                </div>
+
+                <!-- Modal Body-->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12 filterContainer">
+                            <i class="icon-search wz-icon-sm"></i>
+                            <input id="filterShortcut" type="text" placeholder="Type and search..." />
+                        </div>
+                        <div class="col-xs-12 tableContainer">
+                            <div id="shortcuts-table"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Footer-->
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default lg-close">
+                        Close
+                    </button>
+                    <button type="button" data-target="#wz-modal-add-shortcut" data-toggle="modal" onClick="cloud.getShortcutForm('')" class="btn btn-info lg-add-shortcut">
+                        Add a shortcut
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div><!-- Modal-->
+    <div id="wz-modal-add-shortcut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade"></div><!-- Modal-->
+    <div id="wz-modal-responses" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade"></div><!-- Modal-->
+    <div id="wz-modal-edit-response" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade"></div><!-- Modal-->
+    <div id="wz-modal-ronin" data-mode="none" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-stack="true" class="wz-modal-full modal fade"></div>
+
+
+    <!-- Modal-->
+    @*<div id="wz-submodal-ronin" data-mode="none" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-stack="true" class="wz-modal-full modal fade">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="wz-ronin-other-fields panel panel-default col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 panel-body">
+                            <form id="js-ronin-field-form" role="form" class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="" class="control-label">
+                                        ¿Qué tipo de dato vas a pedir?<br />(Ejemplo: talla de camisa)
+                                    </label>
+                                    <input class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">
+                                        Formula la pregunta que el bot hará para pedir este dato.<br />Ejemplo: ¿Cuál es tu talla de camisa?
+                                    </label>
+                                    <input class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <a class="wz-font-c-white js-add-other-field"><span>+ </span><span class="wz-font-u-underline">Añade otra pregunta</span></a>
+                                </div>
+                                <button id="js-ronin-other-field-cancel" type="button" data-dismiss="modal" class="btn btn-default">
+                                    Cancel
+                                </button>
+                                <button id="js-ronin-other-field-submit" type="button" class="btn btn-primary">
+                                    Save
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <div id="wz-modal-bots-contact" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content modal-opaque">
+                <!-- Modal Body-->
+                <div class="modal-body full-height wz-margin-t-55">
+                    <!-- STEP 1-->
+                    <div class="js-bots-contact-1 row wz-margin-t-20">
+                        <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1">
+                            <div class="wz-panel text-center">
+                                <header>
+                                    <h1 class="wz-bot-avatar">
+                                        🤖
+                                    </h1>
+                                    <h4 class="wz-font-w-med wz-font-c-white lg-hey-human">
+                                        Hey, human!
+                                    </h4>
+                                </header>
+                                <section>
+                                    <h3 class="wz-font-w-med lg-temporarily-disabled-chatbot">
+                                        I'm afraid that we've temporarily disabled our chatbot section. We're working on it to put it back to work ASAP. But we can still help you out in the meantime.
+                                    </h3>
+                                    <h3 class="wz-font-w-med lg-tell-me-do-for-you">
+                                        Tell me, what can we do for you?
+                                    </h3>
+                                    <div class="wz-container-300">
+                                        <div class="btn-group-vertical">
+                                            <div data-step="2A" class="btn btn-default btn-sm wz-font-w-med wz-font-u-uppercase lg-manage-your-chatbots">
+                                                Manage your chatbots
+                                            </div>
+                                            <div data-step="2B" class="btn btn-pink btn-sm wz-font-w-med wz-font-u-uppercase wz-font-c-white lg-create-chatbot">
+                                                Create a chatbot
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2.A - MANAGE YOUR CHATBOTS-->
+                    <div class="js-bots-contact-2A row wz-margin-t-20 hide">
+                        <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1">
+                            <div class="wz-panel text-center">
+                                <header>
+                                    <h1 class="wz-bot-avatar">
+                                        🤖
+                                    </h1>
+                                </header>
+                                <section>
+                                    <h3 class="wz-font-w-med lg-chatbot-name-its-kind">
+                                        Great. Please, type below your chatbot name, its kind (register or auto-response) and what do you want us to do with it (e.g. change its script, turn it on/off...):
+                                    </h3>
+                                    <div class="form-group">
+                                        <textarea row="8" cols="40" class="textarea-2A form-control"></textarea>
+                                    </div>
+                                    <div class="wz-container-300">
+                                        <div class="btn-group-horizontal">
+                                            <div data-step="1" class="btn btn-default btn-sm wz-font-w-med wz-font-u-uppercase lg-back">
+                                                Back
+                                            </div>
+                                            <div data-step="3" data-cur-step="2A" class="js-next-step btn btn-pink btn-sm wz-font-w-med wz-font-u-uppercase wz-font-c-white disabled lg-next">
+                                                Next
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2.B - CREATE A CHATBOT-->
+                    <div class="js-bots-contact-2B row wz-margin-t-20 hide">
+                        <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1">
+                            <div class="wz-panel text-center">
+                                <header>
+                                    <h1 class="wz-bot-avatar">
+                                        🤖
+                                    </h1>
+                                    <h4 class="wz-font-w-med wz-font-c-white lg-new-chatbot">
+                                        A new chatbot, cool
+                                    </h4>
+                                </header>
+                                <section>
+                                    <h3 class="wz-font-w-med lg-involves-integration">
+                                        <span class="lg-describe-will-do">Briefly describe what your chatbot will do.</span><span class="wz-form-hint">If you want something more customized or that involves any kind of integration, tell us too and we'll send you a quote.</span>
+                                    </h3>
+
+                                    <div class="form-group">
+                                        <textarea row="8" cols="40" style="height:126px" placeholder="Example: my chatbot will attend my clients when they first send me a message and ask them questions about their personal data..." class="textarea-2B form-control"></textarea>
+                                    </div>
+                                    <div class="wz-container-300">
+                                        <div class="btn-group-horizontal">
+                                            <div data-step="1" class="btn btn-default btn-sm wz-font-w-med wz-font-u-uppercase lg-back">
+                                                Back
+                                            </div>
+                                            <div data-step="3" data-cur-step="2B" class="js-next-step btn btn-pink btn-sm wz-font-w-med wz-font-u-uppercase wz-font-c-white disabled lg-next">
+                                                Next
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 - BYE!-->
+                    <div class="js-bots-contact-3 row wz-margin-t-20 hide">
+                        <div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-1">
+                            <div class="wz-panel text-center">
+                                <header>
+                                    <h1 class="wz-bot-avatar">
+                                        🤖
+                                    </h1>
+                                </header>
+                                <section>
+                                    <h3 class="wz-font-w-med lg-possible-inform">
+                                        Awesome! We're done. A member of Hibaza 's team will get in touch with you as soon as possible to inform you about the next steps.
+                                    </h3>
+                                    <h3 class="wz-font-w-med lg-merry-christmas">
+                                        Merry Christmas!
+                                    </h3>
+                                    <div class="wz-container-300">
+                                        <div class="btn-group-horizontal">
+                                            <div data-step="" class="js-prev-step btn btn-default btn-sm wz-font-w-med wz-font-u-uppercase lg-back">
+                                                Back
+                                            </div>
+                                            <div id="js-bots-contact-submit" data-dismiss="modal" class="btn btn-pink btn-sm wz-font-w-med wz-font-u-uppercase wz-font-c-white">
+                                                OK
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal-->
+    <div id="wz-modal-clients" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close">
+                        <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+                    </button>
+                </div>
+                <div class="modal-menu">
+                    <h3 class="lg-settings">Settings</h3>
+                    <ul class="wz-crm-menu">
+                        <li data-menu="customers">
+                            <a href="#user-settings" class="active"><span class="lg-account">Account</span></a>
+                        </li>
+                        <li data-menu="payments" class="@(ViewBag.UserRole == "admin" ? "" : "hide" )">
+                            <a href="#channel-settings"><span class="lg-channels">Channels</span></a>
+                        </li>
+
+                        <li data-menu="hotline">
+                            <a href="#hotline-setting" class=""><span>Hotline</span></a>
+                        </li>
+                        <li data-menu="orders" class="@(ViewBag.UserRole == "admin" ? "" : "hide" )">
+                            <a href="#company-settings"><span class="lg-company">Company</span></a>
+                        </li>
+                        <li class="@(ViewBag.UserRole == "admin" ? "" : "hide" )">
+                            <a href="#agent-settings"><span class="lg-agents">Agents</span></a>
+                        </li>
+                        <li data-menu="download" class="@(ViewBag.UserRole == "admin" ? "" : "hide" )">
+                            <a href="#conversation-download"><span class="lg-conversation-download">Download</span></a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- Modal Body-->
+                <div class="modal-body">
+                    <div id="user-settings" class="block-show"></div>
+                    <div id="company-settings" class="hide"></div>
+                    <div id="channel-settings" class="js-settings-suscription-opt hide"></div>
+                    <div id="agent-settings" class="js-settings-suscription-opt hide"></div>
+                    <div id="hotline-setting" class="hide"></div>
+                    <div id="zalo-channel-settings" class="js-settings-suscription-opt-zalo hide"></div>
+                    <div id="conversation-download" class="hide"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal-->
+    <div id="wz-modal-pricing" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header-->
+                <!-- Modal Body-->
+                <div class="modal-body">
+                    <div class="banner">
+                        <div class="content text-center wz-margin-t-50">
+                            <h5 class="wz-font-c-white wz-font-w-med-wz-font-s-sm wz-margin-0 lg-trial-expired">Your trial has expired</h5>
+                            <h1 class="wz-font-c-white wz-margin-0 wz-font-u-uppercase wz-font-s-lg wz-font-w-bold lg-select-plan">Select a plan</h1>
+                            <div class="row wz-margin-t-50 wz-padding-b-16">
+                                <div class="col-sm-4 col-md-4 col-sm-offset-4">
+                                    <div class="panel panel-default panel-ronin">
+                                        <div class="panel-body">
+                                            <span class="badge"><i class="icon-share"></i></span>
+                                            <h5 class="wz-font-u-uppercase wz-font-c-violet-2 wz-margin-0 lg-ronin">Ronin</h5>
+                                            <h2 class="wz-font-c-violet-2 wz-margin-0 js-pricing-ronin-total">€39.90</h2>
+                                            <p class="wz-font-c-violet-2 wz-font-s-xs wz-font-w-med js-pricing-period-legend lg-month">/month</p>
+                                            <div class="wz-font-c-violet-2 wz-font-s-xs wz-font-w-meds">
+                                                <div class="wz-switch">
+                                                    <a href="#" data-period="M" class="wz-font-u-uppercase wz-font-s-xs js-pricing-switch wz-switch-active lg-monthly">Monthly</a><a href="#" data-period="A" class="wz-font-u-uppercase wz-font-s-xs js-pricing-switch wz-switch-inactive lg-annually">Annually</a>
+                                                </div>
+                                            </div>
+                                            <ul class="list-group">
+                                                <li class="list-group-item wz-font-c-violet-2">
+                                                    <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs ng-messenger-telegram">Helpdesk based on Facebook Messenger and Telegram</span>
+                                                </li>
+                                                <li class="list-group-item wz-font-c-violet-2 wz-font-s-xs">
+                                                    <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs lg-multi-agent">Multi-agent</span>
+                                                </li>
+                                                <li class="list-group-item wz-font-c-violet-2">
+                                                    <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs">Integrated CRM</span>
+                                                </li>
+                                                <li class="list-group-item wz-font-c-violet-2 wz-font-s-xs">
+                                                    <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs lg-billing-tools">Payment gateway in-chat and billing tools</span>
+                                                </li>
+                                                <li class="list-group-item wz-font-c-violet-2">
+                                                    <span class="wz-font-w-med wz-font-u-uppercase wz-font-s-xs lg-automated-dialogs">Automated dialogs (Bots)</span>
+                                                </li>
+                                                <!--li.list-group-item.wz-font-c-violet-2-->
+                                                <!--  span.wz-font-w-med.wz-font-u-uppercase.wz-font-s-xs-->
+                                                <!--    i.icon-facebook.wz-font-s-xs.wz-margin-r-5(title="Facebook")-->
+                                                <!--    i.icon-telegram.wz-font-s-xs.wz-margin-r-5(title="Telegram")-->
+                                                <!--    | 1x Facebook and Telegram Channels-->
+                                            </ul>
+                                            <div class="btn btn-danger btn-block js-pricing-select-plan lg-select-plan">Select Plan</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2 wz-margin-t-20">
+                                    <div class="row">
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-10 wz-font-c-violet">
+                                            <h3 class="lg-channels-included">Channels included</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                            <i class="icon-facebook wz-font-c-violet wz-font-s-lg"></i>
+                                        </div>
+                                        <div class="col-xs-9 wz-margin-t-5">
+                                            <p>
+                                                <strong class="wz-margin-r-10">1 x</strong><span class="lg-facebook-channel">Facebook Messenger Channel</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                            <i class="icon-telegram wz-font-c-violet wz-font-s-lg"></i>
+                                        </div>
+                                        <div class="col-xs-9 wz-margin-t-5">
+                                            <p>
+                                                <strong class="wz-margin-r-10">1 x</strong><span class="lg-telegram-channel">Telegram Channel</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                            <i class="icon-whatsapp wz-font-c-violet wz-font-s-lg"></i>
+                                        </div>
+                                        <div class="col-xs-9 wz-margin-t-5">
+                                            <p>
+                                                <strong class="wz-margin-r-10">1 x</strong><span class="lg-whatsapp-channel">WhatsApp Channel</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2 wz-margin-t-20 wz-margin-b-50">
+                                    <div class="row">
+                                        <div class="col-xs-2"></div>
+                                        <div class="col-xs-10 wz-font-c-violet">
+                                            <h3 class="lg-add-ons">Add-ons</h3>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                            <i class="icon-head wz-font-c-violet wz-font-s-lg"></i>
+                                        </div>
+                                        <div class="col-xs-9 wz-margin-t-5">
+                                            <p>
+                                                <strong class="wz-margin-r-10">+ 1 </strong> <span class="lg-agent">Agent (</span><span class="js-pricing-ronin-total lg-contact-us">contact us</span>)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                            <i class="icon-whatsapp wz-font-c-violet wz-font-s-lg"></i>
+                                        </div>
+                                        <div class="col-xs-9 wz-margin-t-5">
+                                            <p>
+                                                <strong class="wz-margin-r-10">+ 1 </strong><span class="lg-whatsapp-channel"> WhatsApp Channel</span>(<span class="js-pricing-whatsapp lg-contact-us">contact us</span>)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                            <i class="icon-facebook wz-font-c-violet wz-font-s-lg"></i>
+                                        </div>
+                                        <div class="col-xs-9 wz-margin-t-5">
+                                            <p>
+                                                <strong class="wz-margin-r-10">+ 1 </strong> <span class="lg-facebook-channel">Facebook Messenger Channel</span> (<span class="js-pricing-facebook lg-contact-us"> contact us</span>)
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-3 wz-font-a-right wz-margin-t-5 wz-padding-r-0">
+                                            <i class="icon-telegram wz-font-c-violet wz-font-s-lg"></i>
+                                        </div>
+                                        <div class="col-xs-9 wz-margin-t-5">
+                                            <p>
+                                                <strong class="wz-margin-r-10">+ 1 </strong> <span class="lg-telegram-channel">Telegram Channel</span> (<span class="js-pricing-telegram lg-contact-us">contact us</span>)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal-->
+    <div id="wz-modal-qrcode" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Header-->
+                <!--.modal-header-->
+                <!-- Modal Body-->
+                <div class="modal-body wz-margin-t-50">
+                    <div class="row wz-margin-t-50">
+                        <div class="panel col-sm-5 col-md-5 col-sm-offset-3 wz-margin-t-50 wz-gradient">
+                            <header>
+                                <button type="button" data-dismiss="modal" class="js-modal-qrcode-close close">
+                                    <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+                                </button>
+                            </header>
+                            <section class="text-center wz-padding-b-16">
+                                <div id="qrcode-container"></div>
+                            </section>
+                            <footer class="text-center">
+                                <div class="badge">
+                                    <i class="js-modal-qrcode-channel-icon icon-whatsapp wz-font-s-lg wz-font-w-bold"></i>
+                                </div>
+                                <h1 class="wz-font-c-violet-2 wz-font-s-lg wz-font-w-bold lg-qr-code-verification">
+                                    QR-Code Verification
+                                </h1>
+                                <h5 class="wz-font-c-violet-2">
+                                   <span class="lg-scan-code-your-phone"> Please, scan this code with your phone to verify your</span><span class="js-modal-qrcode-channel-name"></span><span class="lg-account"> account</span>.
+                                </h5>
+                                <div class="btn btn-danger btn-block wz-font-w-bold wz-font-u-uppercase js-modal-qrcode-close lg-done">Done</div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="wz-modal-qrcode-preload" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body wz-margin-t-50">
+                    <!-- PRELOADER-->
+                    <!-- =========-->
+                    <div class="js-qr-preloader row wz-margin-t-50">
+                        <div style="background-image: url(/images/gears.png)" class="panel col-sm-5 col-md-5 col-sm-offset-3 wz-margin-t-35">
+                            <header>
+                                <p class="wz-font-w-med text-center lg-creating-whatsapp-channel">
+                                    Creating your WhatsApp channel...
+                                </p>
+                            </header>
+                            <section>
+                                <ul>
+                                    <li>
+                                        <i>🔔 </i>
+                                        <p class="lg-take-1-minute">
+                                            It can take up to 1 minute
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <i>💻 </i>
+                                        <p class="lg-whatsapp-settings">
+                                            As we finish, you'll see a QR code you'll have to scan using your WhatsApp app from Settings > WhatsApp Web
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <i>🤓</i>
+                                        <p class="lg-send-email-ready">
+                                            We'll also send you an email once it's ready!
+                                        </p>
+                                    </li>
+                                </ul>
+                            </section>
+                            <footer class="text-center">
+                                <button class="btn btn-pink">
+                                    <div class="bar">
+                                        <div class="bar-progress">
+                                            <div style="background-image: url(/images/whatsapp.png)" class="wa-icon"></div>
+                                        </div>
+                                    </div>
+                                </button>
+                            </footer>
+                        </div>
+                    </div>
+                    <!-- QR CODE SUCCESS-->
+                    <!-- ===============-->
+                    <div class="js-qr-success row wz-margin-t-50 hide">
+                        <div class="panel success col-sm-5 col-md-5 col-sm-offset-3 wz-margin-t-35">
+                            <header class="success">
+                                <span>🎉</span>
+                                <p class="wz-font-w-med text-center lg-ready-set-go">
+                                    Ready, Set, GO!
+                                </p>
+                            </header>
+                            <section>
+                                <ul>
+                                    <li>
+                                        <i>🔔 </i>
+                                        <p class="lg-whatsapp-receive-platform">
+                                            First, ask someone to send you a WhatsApp and you'll receive it on the platform
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <i>💻 </i>
+                                        <p class="lg-share-customers-start">
+                                            You can also share your number among your customers and start taking the most out of Hibaza
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <i>🤓</i>
+                                        <p>
+                                            We'll also send you a WhatsApp to make sure everything is fine. Ask us anything!
+                                        </p>
+                                    </li>
+                                </ul>
+                            </section>
+                            <footer class="text-center">
+                                <button id="js-qr-finish" data-dismiss="modal" onclick="if(tutorialActive) { welcomeModal.modal('show'); }" class="btn btn-pink lg-ok-thanks">
+                                    Ok, thanks
+                                </button>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal-->
+    <div id="wz-modal-notification" data-mode="" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <!-- Modal Body-->
+                <div class="modal-body wz-margin-t-50">
+                    <div class="row wz-margin-t-50">
+                        <div class="panel col-sm-5 col-md-5 col-sm-offset-3 wz-margin-t-50">
+                            <header>
+                                <button type="button" data-dismiss="modal" class="close">
+                                    <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+                                </button>
+                            </header>
+                            <section class="text-center wz-padding-b-16">
+                                <i class="icon-sun js-modalnot-icon"></i>
+                            </section>
+                            <footer class="text-center">
+                                <h1 class="wz-font-c-violet-2 wz-font-s-lg wz-font-w-bold js-modalnot-title lg-hey">
+                                    Hey!
+                                </h1><span class="wz-separator"></span>
+                                <h5 class="wz-font-c-violet-2 js-modalnot-message lg-nice-see-you">
+                                    Nice to see you
+                                </h5>
+                                <div class="wz-margin-t-20 js-modalnot-buttons"></div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Modal-->
+    <div id="wz-modal-reports" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right modal fade"></div><!-- Modal-->
+    <div id="wz-modal-automations" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right wz-modal-sideright modal fade"></div>
+
+    <!-- Modal-->
+    <div id="wz-submodal-automations" data-mode="none" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-stack="true" class="wz-modal-full modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="wz-ronin-other-bots panel panel-default col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1 panel-body">
+                        <form id="js-other-bot-form" role="form" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="" class="control-label lg-funcionalidad-interesa">
+                                    Describe el tipo de funcionalidad que te interesa
+                                </label><textarea rows="4" class="form-control"></textarea>
+                            </div>
+                            <button id="js-ronin-other-field-cancel" type="button" data-dismiss="modal" class="btn btn-default lg-cancel">
+                                Cancel
+                            </button>
+                            <button id="js-ronin-other-field-submit" type="button" class="btn btn-primary lg-save">
+                                Save
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Modal-->
+    <div id="wz-modal-ronin-manager" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right wz-modal-sideright modal fade"></div><!-- Modal-->
+    <div id="wz-modal-clients" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-right modal fade"></div>
+
+    <div id="wz-modal-welcome" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" class="wz-welcome-new wz-modal-right modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="js-welcome-header panel panel-default panel-ronin wz-margin-t-50">
+                        <div class="panel-body">
+                            <p class="wz-font-c-violet wz-font-w-med js-welcome-subtitle not-added lg-need-add-channel">
+                                You need to add a channel<br />to start using Hibaza!
+                            </p>
+                            <p class="wz-font-c-violet wz-font-w-med js-welcome-subtitle added lg-write-message-first">
+                                To begin talking with your customers<br />they have to write you a message first!
+                            </p>
+                            <p class="added">
+                                <span class="btn btn-pink"><strong class="lg-tell-me-how">Tell me how</strong></span>
+                            </p>
+                            <p class="not-added">
+                                <img src="/images/customer-user-chat.png" alt="" />
+                            </p>
+                            <p class="wz-font-c-violet wz-font-w-med js-welcome-subfoot wz-margin-t-50 hide lg-integrate-first-channel">
+                                Please, contact the admin of this account to integrate your first channel.
+                            </p>
+                        </div>
+                        <div class="panel-footer js-welcome-panel">
+                            <div role="group" aria-label="..." class="btn-group">
+                                <div data-channeltype="whatsapp" class="btn btn-pink whatsapp hidden">
+                                    <div class="btn-head">
+                                        <i class="icon-whatsapp"></i>
+                                    </div>
+                                    <div class="btn-foot">
+                                        "whatsapp": {
+                                        <span class="lg-add-whatsapp">Add WhatsApp</span><span class="added"><span class="lg-whatsapp">Whatsapp</span><i class="js-channel-status icon-circle-check"></i></span>
+                                    </div>
+                                </div>
+                                <div data-channeltype="facebook" class="btn btn-pink facebook">
+                                    <div class="btn-head">
+                                        <i class="icon-facebook"></i>
+                                    </div>
+                                    <div class="btn-foot">
+                                        <span class="lg-add-messenger">Add Messenger</span><span class="added"><span class="lg-messenger">Messenger</span><i class="js-channel-status icon-circle-check"></i></span>
+                                    </div>
+                                </div>
+                                <div data-channeltype="telegram" class="btn btn-pink telegram hidden">
+                                    <div class="btn-head">
+                                        <i class="icon-telegram"></i>
+                                    </div>
+                                    <div class="btn-foot">
+                                        <span class="lg-add-telegram">Add Telegram</span><span class="added"><span class="lg-telegram">Telegram</span><i class="js-channel-status icon-circle-check"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wz-team hide">
+                                <p class="lg-work-team">Do you work on a team?</p>
+                                <div class="btn btn-gray js-invite-agent lg-invite-agents">
+                                    Invite other agents
+                                </div>
+                            </div>
+                            <div class="wz-how">
+                                <p>
+                                    <span class="lg-once-a">Once a </span><span data-toggle="tooltip" title="Facebook Messenger, WhatsApp or Telegram">channel</span> <span class="lg-wait-customers"> is added to your Hibaza account, <b>you must wait for your customers to message you </b>and then show up on the platform, so you can continue the conversation there.</span>
+                                </p>
+                                <p class="lg-write-message">
+                                    We suggest you to <b>push your customers to write you a message</b> by publishing your <span data-toggle="tooltip" title="Your Facebook Messenger URL, your WhatsApp number or your Telegram number/username" class="lg-contact-details">contact details</span> <span class="lg-on">on:</span>
+                                </p>
+                                <p>
+                                    <i><i>💻 </i><span class="lg-facebook-twitter">Your Facebook Page or Twitter.</span></i><br /><i><i>🌐 </i><span class="lg-your-website">Your website.</span></i><br /><i><i>📪 </i><span class="lg-your-newsletter">Your newsletter.</span></i><br /><i><i>🖊 </i><span class="lg-business-card">Your business card.</span></i>
+                                </p>
+                                <div class="js-disable-tutorial btn btn-save btn-block lg-ok-understand">Ok, I understand</div>
+                                <div class="js-share-facebook btn btn-gray btn-block">
+                                    <span class="lg-copy-facebook-url">Copy your Facebook Messenger URL</span><i class="icon-arrow-right"></i>
+                                </div>
+                                <div class="js-share-facebook-copied btn btn-gray btn-block hide">
+                                    <span></span><i class="icon-clipboard pull-right"></i>
+                                </div>
+                                <div class="js-share-whatsapp btn btn-gray btn-block">
+                                    <span class="lg-copy-whatsapp-number">Copy your WhatsApp Number</span><i class="icon-arrow-right"></i>
+                                </div>
+                                <div class="js-share-whatsapp-copied btn btn-gray btn-block hide">
+                                    <span></span><i class="icon-clipboard pull-right"></i>
+                                </div>
+                                <div class="js-share-telegram btn btn-gray btn-block">
+                                   <span class="lg-copy-telegram-number"> Copy your Telegram Number</span><i class="icon-arrow-right"></i>
+                                </div>
+                                <div class="js-share-telegram-copied btn btn-gray btn-block hide">
+                                    <span></span><i class="icon-clipboard pull-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="wz-modal-order" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="wz-modal-sideleft modal fade">
+        <div class="modal-dialog modal-sm">
+
+            <div class="modal-content">
+                <!-- Modal Header-->
+                <div class="modal-header">
+                    <button type="button" data-dismiss="modal" class="close cancel">
+                        <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+                    </button>
+                    <h4 id="myModalLabelOrder" class="modal-title lg-order">
+                       Order
+                    </h4>
+                </div>
+
+                <!-- Modal Body-->
+                <div class="modal-body modal-order-bot">
+                    <div class="col-lg-12 form-group">
+                        <label for="order-fullname" class="lg-fullname">Fullname</label>
+                        <input type="text" id="order-fullname" class="form-control" value="" placeholder="Ví dụ: Nguyễn Việt Nam">
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <label for="order-email">Email</label>
+                        <input type="text" id="order-email" class="form-control" value="" placeholder="Bỏ trống nếu không có">
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <label for="order-phone" class="lg-phone">Phone</label>
+                        <input type="text" id="order-phone" class="form-control" value="" placeholder="0987000000">
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <label for="order-address" class="lg-address">Address</label>
+                        <input type="text" id="order-address" class="form-control" value="" placeholder="Địa chỉ nhận hàng" />
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <label for="order-province" class="lg-province">Province</label>
+                        <select id="order-province" class="form-control">
+                            <option selected="selected" value="ha-noi">Hà Nội</option>
+                            <option value="tp-ho-chi-minh">Hồ Chí Minh</option>
+                            <option value="da-nang">Đà Nẵng</option>
+                            <option value="hai-phong">Hải Phòng</option>
+                            <option value="quang-ninh">Quảng Ninh</option>
+                            <option value="binh-duong">Bình Dương</option>
+                            <option value="dong-nai">Đồng Nai</option>
+                            <option value="an-giang">An Giang</option>
+                            <option value="ba-ria-vung-tau">Bà Rịa Vũng Tàu</option>
+                            <option value="bac-giang">Bắc Giang</option>
+                            <option value="bac-kan">Bắc Kạn</option>
+                            <option value="bac-lieu">Bạc Liêu</option>
+                            <option value="bac-ninh">Bắc Ninh</option>
+                            <option value="ben-tre">Bến Tre</option>
+                            <option value="binh-dinh">Bình Định</option>
+                            <option value="binh-phuoc">Bình Phước</option>
+                            <option value="binh-thuan">Bình Thuận</option>
+                            <option value="ca-mau">Cà Mau</option>
+                            <option value="can-tho">Cần Thơ</option>
+                            <option value="cao-bang">Cao Bằng</option>
+                            <option value="dak-lak">Đắk Lắk</option>
+                            <option value="dak-nong">Đắk Nông</option>
+                            <option value="dien-bien">Điện Biên</option>
+                            <option value="dong-thap">Đồng Tháp</option>
+                            <option value="gia-lai">Gia Lai</option>
+                            <option value="ha-giang">Hà Giang</option>
+                            <option value="ha-nam">Hà Nam</option>
+                            <option value="ha-tinh">Hà Tĩnh</option>
+                            <option value="hai-duong">Hải Dương</option>
+                            <option value="hau-giang">Hậu Giang</option>
+                            <option value="hoa-binh">Hòa Bình</option>
+                            <option value="hung-yen">Hưng Yên</option>
+                            <option value="khanh-hoa">Khánh Hòa</option>
+                            <option value="kien-giang">Kiên Giang</option>
+                            <option value="kon-tum">Kon Tum</option>
+                            <option value="lai-chau">Lai Châu</option>
+                            <option value="lam-dong">Lâm Đồng</option>
+                            <option value="lang-son">Lạng Sơn</option>
+                            <option value="lao-cai">Lào Cai</option>
+                            <option value="long-an">Long An</option>
+                            <option value="nam-dinh">Nam Định</option>
+                            <option value="nghe-an">Nghệ An</option>
+                            <option value="ninh-binh">Ninh Bình</option>
+                            <option value="ninh-thuan">Ninh Thuận</option>
+                            <option value="phu-tho">Phú Thọ</option>
+                            <option value="phu-yen">Phú Yên</option>
+                            <option value="quang-binh">Quảng Bình</option>
+                            <option value="quang-nam">Quảng Nam</option>
+                            <option value="quang-ngai">Quảng Ngãi</option>
+                            <option value="quang-tri">Quảng Trị</option>
+                            <option value="soc-trang">Sóc Trăng</option>
+                            <option value="son-la">Sơn La</option>
+                            <option value="tay-ninh">Tây Ninh</option>
+                            <option value="thai-binh">Thái Bình</option>
+                            <option value="thai-nguyen">Thái Nguyên</option>
+                            <option value="thanh-hoa">Thanh Hóa</option>
+                            <option value="thua-thien-hue">Thừa Thiên Huế</option>
+                            <option value="tien-giang">Tiền Giang</option>
+                            <option value="tra-vinh">Trà Vinh</option>
+                            <option value="tuyen-quang">Tuyên Quang</option>
+                            <option value="vinh-long">Vĩnh Long</option>
+                            <option value="vinh-phuc">Vĩnh Phúc</option>
+                            <option value="yen-bai">Yên Bái</option>
+                            <option value="NA">Khác</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <label for="order-note" class="lg-note">Ghi chú</label>
+                        <input type="text" id="order-note" class="form-control" value="" placeholder="màu sắc, cỡ, ngày nhận hàng...">
+                    </div>
+                    <div class="col-lg-12 form-group">
+                        <label for="order-comment-url" class="lg-comment-url">Comment Url</label>
+                        <input type="text" id="order-comment-url" class="form-control" value="" placeholder="">
+                    </div>
+                </div>
+                <!-- Modal Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default js-cancel-order lg-cancel">
+                        Cancel
+                    </button>
+                    <button type="button" class="btn btn-info lg-order" id="js-order-bot">
+                        Order
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            readFileLang(localStorage.getItem("lang"), "partial_modals");
+
+            $("#js-order-bot").click(function () {
+                var fullname = $("#order-fullname").val();
+                var email = $("#order-email").val();
+                var phone = $("#order-phone").val();
+                var address = $("#order-address").val();
+                var province = $("#order-province").val();
+                var note = $("#order-note").val();
+                var commenturl = $("#order-comment-url").val();
+
+                if (fullname == null || fullname == undefined || fullname == "")
+                    alert("Tên không được để trống");
+                if (phone == null || phone == undefined || phone == "")
+                    alert("Số điện thoại không được để trống");
+
+
+                jQuery.ajax({
+                    url: "http://m.baza.vn/Handler/OrderBz.ashx",
+                    dataType: "json",
+                    type: "POST",
+                    //data: JSON.stringify(source),
+                    data: {
+                        op: 'Order',
+                        orderId: "",
+                        logonId: "",
+                        vorderItems: "",
+                        fullname: fullname,
+                        mobiphone: phone,
+                        address: address,
+                        email: email,
+                        note: note,
+                        province: province,
+                        shippingCost: "0",
+                        discountValue: "0",
+                        totalMoney: "0",
+                        subTotalMoney: "0",
+                        orderNumber: "0",
+                        Imei: "",
+                        CouponCode: ""
+                    },
+                    beforeSend: function () {
+                    },
+                    success: function (data) {
+                        if (data.TypeMsg == 1) {
+
+                        }
+                        else {
+                            // alert(data.Msg);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        //alert('Lỗi kết nối. Vui lòng thử lại!');
+                        //alert(error.responseText);
+                    },
+                    complete: function () {
+                    }
+                });
+
+            });
+
+
+        </script>
+    </div>
+</div>

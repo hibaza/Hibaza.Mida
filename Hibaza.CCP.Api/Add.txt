@@ -1,0 +1,21 @@
+﻿public string extention { get; set; }
+        public string state { get; set; }
+        public string trunk { get; set; }
+        public bool incoming { get; set; }
+
+
+		channel 
+		public List phones { get; set; }
+
+		agent
+		public string phone_account_id { get; set; }
+        public string phone_status { get; set; }
+
+
+		businuss
+		public int phone_limit { get; set; } = 0;
+        public string phone_incoming { get; set; } = "";
+        public bool hibaza_using { get; set; } = true;
+		public string token_client { get; set; } = "";
+
+		bazavn88@gmail.com == > bazavn66@gmail.com

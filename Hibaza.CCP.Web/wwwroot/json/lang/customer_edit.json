@@ -1,0 +1,182 @@
+﻿{
+  "en": {
+    "close": {
+      "text": "Close",
+      "type": "text"
+    },
+    "nick-name": {
+      "text": "Nick Name",
+      "type": "text"
+    },
+    "real-name": {
+      "text": "Real Name",
+      "type": "text"
+    },
+    "no-sexual": {
+      "text": "No sexual",
+      "type": "text"
+    },
+    "sex": {
+      "text": "Sex",
+      "type": "text"
+    },
+    "male": {
+      "text": "Male",
+      "type": "text"
+    },
+    "female": {
+      "text": "Female",
+      "type": "text"
+    },
+    "phone-number": {
+      "text": "Phone Number",
+      "type": "text"
+    },
+    "age": {
+      "text": "Age",
+      "type": "text"
+    },
+    "weight": {
+      "text": "Weight (Kg)",
+      "type": "text"
+    },
+    "height": {
+      "text": "Height (Cm)",
+      "type": "text"
+    },
+    "birthdate": {
+      "text": "Birthdate",
+      "type": "text"
+    },
+    "town": {
+      "text": "Town",
+      "type": "text"
+    },
+    "select-town": {
+      "text": "Select Town",
+      "type": "text"
+    },
+    "address": {
+      "text": "Address",
+      "type": "text"
+    },
+    "customer-blocked": {
+      "text": "Customer blocked",
+      "type": "text"
+    },
+    "remove-all-messages": {
+      "text": "Remove all of his/her messages",
+      "type": "text"
+    },
+    "sure-remove-all": {
+      "text": "Are you sure? This will remove all the messages from/to this customer and can't be undone.",
+      "type": "text"
+    },
+    "no": {
+      "text": "No",
+      "type": "text"
+    },
+    "yes": {
+      "text": "Yes",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Cancel",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+    "vi": {
+    "close": {
+      "text": "Đóng",
+      "type": "text"
+    },
+    "nick-name": {
+      "text": "Tên nick",
+      "type": "text"
+    },
+    "real-name": {
+      "text": "Tên thật",
+      "type": "text"
+    },
+      "no-sexual": {
+        "text": "Chọn giới tính",
+        "type": "text"
+      },
+    "sex": {
+      "text": "Giới tính",
+      "type": "text"
+    },
+    "male": {
+      "text": "Nam",
+      "type": "text"
+    },
+    "female": {
+      "text": "Nữ",
+      "type": "text"
+    },
+    "phone-number": {
+      "text": "Điện thoại",
+      "type": "text"
+    },
+    "age": {
+      "text": "Tuổi",
+      "type": "text"
+    },
+    "weight": {
+      "text": "Cân nặng (Kg)",
+      "type": "text"
+    },
+    "height": {
+      "text": "Chiều cao (Cm)",
+      "type": "text"
+    },
+    "birthdate": {
+      "text": "Ngày sinh",
+      "type": "text"
+    },
+    "town": {
+      "text": "Khu vực",
+      "type": "text"
+    },
+    "select-town": {
+      "text": "Chọn khu vực",
+      "type": "text"
+    },
+    "address": {
+      "text": "Địa chỉ",
+      "type": "text"
+    },
+    "customer-blocked": {
+      "text": "Khóa khách hàng",
+      "type": "text"
+    },
+    "remove-all-messages": {
+      "text": "Làm mới",
+      "type": "text"
+    },
+    "sure-remove-all": {
+      "text": "Bạn chắc chắn muốn xóa tất cả thông tin khách hàng",
+      "type": "text"
+    },
+    "no": {
+      "text": "Không",
+      "type": "text"
+    },
+    "yes": {
+      "text": "Có",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Thoát",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+    }
+}

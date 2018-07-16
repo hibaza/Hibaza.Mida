@@ -1,0 +1,57 @@
+﻿@model Hibaza.CCP.Domain.Models.ThreadProfileModel
+@{
+    Layout = null;
+}
+@if (Model!= null && Model.post!=null)
+{
+    <div class="wz-data-group">
+        <div class="wz-flex-card">
+            <p class="wz-message-header">
+                <span class="wz-message-author wz-font-s-xs wz-font-w-bold wz-font-u-uppercase">
+                    <a href="@(Model.post.permalink_url)" target="_blank">
+                        @(Model.post.page_name)
+                    </a>
+                </span>
+
+                <span class="wz-font-s-xs wz-font-w-med wz-font-c-light-gray-4 wz-l-c-s-2">
+                    <a href="@(Model.post.link)" class="wz-message-date" target="_blank">
+                        @(Model.post.updated_time.ToString("dd/MM/yy"))
+                    </a>
+                </span>
+            </p>
+        </div>
+        <div class="wz-flex-card">
+            <div class="wz-flex-card-item">
+                <p class="wz-message-text wz-font-s-sm wz-l-c-s-1">
+                    <span class="js-message-text wz-font-w-reg" style="display:block; max-height:50px; overflow:hidden;">@(Model.post.message)</span>
+                </p>
+            </div>
+        </div>
+        <div class="wz-flex-card">
+
+            @if (Model.post.attachments != null && Model.post.attachments.Count() > 0)
+            {
+                foreach (var item in Model.post.attachments.Take(3))
+                {
+                    if (item.media != null && item.media.image != null && !string.IsNullOrWhiteSpace(item.media.image.src))
+                    {
+                <div class="wz-flex-card-item">
+                    <img src="@(item.media.image.src)" alt="" class="wz-margin-t-13" style="max-height:100px;" />
+                </div>
+                    }
+                }
+            }
+            else
+            {
+            @if (!string.IsNullOrWhiteSpace(Model.post.picture))
+            {
+                <div class="wz-flex-card-item">
+                    <img src="@(Model.post.picture)" alt="" class="wz-margin-t-13" style="max-width:300px" />
+                </div>
+            }
+            }
+        </div>
+    </div>
+}
+
+

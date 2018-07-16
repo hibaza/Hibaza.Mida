@@ -1,0 +1,159 @@
+﻿{
+  "en": {
+    "assign-to": {
+      "text": "Assign to:",
+      "type": "text"
+    },
+    "unassign": {
+      "text": "Unassign",
+      "type": "text"
+    },
+    "reply": {
+      "text": "Reply",
+      "type": "text"
+    },
+    "private-note": {
+      "text": "Private note by",
+      "type": "text"
+    },
+    "ticket-opened": {
+      "text": "A ticket has been opened for this conversation.",
+      "type": "text"
+    },
+    "view-ticket": {
+      "text": "View ticket",
+      "type": "text"
+    },
+    "what-want-do": {
+      "text": "What do you want to do?",
+      "type": "text"
+    },
+    "reopen-last-ticket": {
+      "text": "Reopen last ticket",
+      "type": "text"
+    },
+    "create-ticket": {
+      "text": "Create new ticket",
+      "type": "text"
+    },
+    "nothing": {
+      "text": "Nothing",
+      "type": "text"
+    },
+    "connection-active": {
+      "text": "Your connection is not active.",
+      "type": "text"
+    },
+    "trying-reconnect": {
+      "text": "Trying to reconnect with Hibaza...",
+      "type": "text"
+    },
+    "message-not-sent": {
+      "text": "Message not sent, would you like to",
+      "type": "text"
+    },
+    "resend": {
+      "text": "resend",
+      "type": "text"
+    },
+    "remove": {
+      "text": "remove",
+      "type": "text"
+    },
+    "are-you-sure": {
+      "text": "Are you sure?",
+      "type": "text"
+    },
+    "cannot-recovered": {
+      "text": "The message cannot be recovered",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Cancel",
+      "type": "text"
+    },
+    "delete": {
+      "text": "Delete",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "assign-to": {
+      "text": "Phân tin tới:",
+      "type": "text"
+    },
+    "unassign": {
+      "text": "Chưa phân tin",
+      "type": "text"
+    },
+    "reply": {
+      "text": "Phản hồi lại",
+      "type": "text"
+    },
+    "private-note": {
+      "text": "Ghi chú riêng của",
+      "type": "text"
+    },
+    "ticket-opened": {
+      "text": "Một sự vụ đã được tạo cho cuộc trò chuyện này.",
+      "type": "text"
+    },
+    "view-ticket": {
+      "text": "Xem sự vụ",
+      "type": "text"
+    },
+    "what-want-do": {
+      "text": "Bạn muốn làm gì?",
+      "type": "text"
+    },
+    "reopen-last-ticket": {
+      "text": "Mở lại sự vụ cuối cùng",
+      "type": "text"
+    },
+    "create-ticket": {
+      "text": "Tạo sự vụ mới",
+      "type": "text"
+    },
+    "nothing": {
+      "text": "Không có gì",
+      "type": "text"
+    },
+    "connection-active": {
+      "text": "Mất kết nối",
+      "type": "text"
+    },
+    "trying-reconnect": {
+      "text": "Đang cố gắng kết nối tới Hibaza ...",
+      "type": "text"
+    },
+    "message-not-sent": {
+      "text": "Tin nhắn chưa được gửi, bạn có muốn",
+      "type": "text"
+    },
+    "resend": {
+      "text": "gửi lại",
+      "type": "text"
+    },
+    "remove": {
+      "text": "loại bỏ",
+      "type": "text"
+    },
+    "are-you-sure": {
+      "text": "Bạn có chắc không?",
+      "type": "text"
+    },
+    "cannot-recovered": {
+      "text": "Không thể phục hồi tin nhắn",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Thoát",
+      "type": "text"
+    },
+    "delete": {
+      "text": "Xóa",
+      "type": "text"
+    }
+
+  }
+}

@@ -1,0 +1,30 @@
+﻿{
+  "en": {
+    "app-name": {
+      "text": "App Name",
+      "type": "text"
+    },
+    "template-id-customer": {
+      "text": "Template ID send to customer",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "app-name": {
+      "text": "App Name",
+      "type": "text"
+    },
+    "template-id-customer": {
+      "text": "Mẫu ID gửi tới khách hàng",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+  }
+}

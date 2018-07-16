@@ -1,0 +1,151 @@
+﻿gioi thieu oa http://ccomedia.com.vn/ky-thuat/zalo-official-account-trang-page-cua-zalo/
+
+https://testwebs.azurewebsites.net/ZaloAuth?uid=1867744962806588681&code=c-IOAbCYcG_dsvuOO4kTPBMuX4CyI8rQ-BxCO2CMi5pVxAHBN16YNAYieLL3RxroofwsOJT_vtVHwvj4AH6BKQheX4qcRu5m-vgDO4fhXtAKc_LORGwFSvV_cDC69h2ntVlJuMnXqCVzaSlEMZdkiEBlqvLaUDA5-u7UYXXfWwdpfeQQ3HRDrvY0uwy4IDc5-RZFZNj6s8g4gORx5NwAXAJNsi1qKVIvo9-Jd6CpqUMI-EUeL7-kakpshRTh6AAszjFTZ68QuUR7lE_sH5JNsiF1xTH-BiIKe8YUnpdfcjtlQ5tP5wzS--PlQznopsBPuS8KwbW2BrvOlz14ZnwUO1QTw6NYSOrl0eZUTOfPkqvwiD0-oYQuOJdLqp1UMIR_30GNI4xMBm
+
+https://openapi.zaloapp.com/oa/v1/getprofile?oaid=3017580706414181376&uid=84935316228&timestamp=1525773021533&mac=7381b956a9a8d8fc16576e44fa769d0d60dfcb46d98ea69bdb4c3b4c6f6992c3
+
+
+get profile from phone
+ long oaid = 1014541367050827072L;
+             ZaloOaInfo info = new ZaloOaInfo(oaid, "P6YTW5qGqq64w6yjtCkt");
+             ZaloOaClient oaClient = new ZaloOaClient(info);
+
+             long userId = 84979354170L; // user id or phone number;
+              var profile = oaClient.getProfile(userId);
+
+{
+  "errorCode": 1,
+  "errorMsg": "Success",
+  "data": {
+    "userGender": 1,
+    "userId": 2691206174905801178,
+    "userIdByApp": null,
+    "avatar": "http://s120.avatar.talk.zdn.vn/9/2/a/5/2/120/e5fd65d53e0541b7d79a49e284ea72aa.jpg",
+    "avatars": {
+      "240": "http://s240.avatar.talk.zdn.vn/9/2/a/5/2/240/e5fd65d53e0541b7d79a49e284ea72aa.jpg",
+      "120": "http://s120.avatar.talk.zdn.vn/9/2/a/5/2/120/e5fd65d53e0541b7d79a49e284ea72aa.jpg"
+    },
+    "displayName": "Quoc Cuong",
+    "birthDate": 465066000,
+    "sharedInfo": null,
+    "tagsAndNotesInfo": {
+      "tagNames": [],
+      "notes": []
+    }
+  }
+}
+
+
+send message
+
+var ret = oaClient.sendTextMessage(userIds, "Chào Cường nhé");
+{
+  "errorCode": 1,
+  "errorMsg": "Success",
+  "data": {
+    "msgId": "b82658df83a98ff7d6b8"
+  }
+}
+
+test webhook
+http://localhost:10088/brands/zalos/webhook?fromuid=4487068198470779&msgid=3a68af3f8ce3a0bdf9f2&event=sendmsg&message=ssssdw&oaid=43142181522506519&mac=0cf75bb7b9a570759c8824df9ef8bce5b179b608a354b28141abf01a615ba&timestamp=1513051023964
+
+https://fbwebhook.hibaza.com/brands/zalos/webhook?fromuid=4487068198470779&msgid=3a68af3f8ce3a0bdf9f2&event=sendmsg&message=ssssdw&oaid=43142181522506519&mac=0cf75bb7b9a570759c8824df9ef8bce5b179b608a354b28141abf01a615ba&timestamp=1513051023964
+
+zalo ?fromuid=2691206174905801178&phone=&appid=3352356839282792087&msgid=35649019470e4b50121f&event=sendmsg&pageid=1014541367050827072&message=Ttt&oaid=1014541367050827072&mac=ea06d5ce02108638f8e0caa6e71a3d4a13e3685266c602d690dc361b453a706b&timestamp=1525966334461
+
+
+zalo ?touid=2691206174905801178&msgid=1e91f84f1a5916074f48&event=os_send_msg&oaid=1014541367050827072&msginfo=%7B%22type%22%3A%22text%22%2C%22message%22%3A%22Ch%C3%A0o+C%C6%B0%E1%BB%9Dng+nh%C3%A9%22%7D&mac=073e60eff2a5dd559d4ae5fb78b76d2cf6231e300ed96cd52c6cb85dc04da89f&timestamp=1525967127849
+
+
+gioi han 
+Cung cấp API cho ứng dụng của bạn có thể hỗ trợ gửi tin nhắn mời sử dụng ứng dụng cho bạn bè của người dùng. Endpoint: /apprequests
+
+– Giới hạn truy xuất:
+
+    Mỗi người dùng được mời 20 bạn/ứng dụng/ngày.
+    Mỗi người dùng chỉ nhận 1 lời mời/ứng dụng/ngày. Và chỉ nhận lại lời mời từ một người bạn sau 14 ngày.
+    Người dùng chỉ nhận được lời mời nếu đã từng chơi hoặc nhấn vào cài đặt ứng dụng từ Zalo Game Center.
+
+
+	Gởi tin nhắn tới bạn của người dùng cùng sử dụng ứng dụng. 
+
+Endpoint: /me/message
+
+     Giới hạn truy xuất: mỗi người dùng chỉ gởi 20 tin nhắn/ứng dụng/ngày.
+
+
+	 //mai 84982745193L
+
+            var list = new List<long>();
+            long userId = 84979354170L;
+            list.Add(userId);
+
+            var tt = token["access_token"];
+            var ttt = (string)tt;
+            JObject sendAppRequest = appClient.sendAppRequest(ttt, list, "moi su dung");
+
+            //long oaid = 1014541367050827072L;
+            //ZaloOaInfo info = new ZaloOaInfo(oaid, "P6YTW5qGqq64w6yjtCkt");
+            //ZaloOaClient oaClient = new ZaloOaClient(info);
+
+            //long userId = 84979354170L; // user id or phone number;
+            //var profile = oaClient.getProfile(userId);
+            //var ttt = profile["errorCode"];
+
+            //var userIds = (long)profile["data"]["userId"];
+
+
+
+
+Mình đang cố gắng sử dụng API: gửi tin nhắn tới người quan tâm trong OA và nhận được mã lỗi "-201: uid is invalid"
+Các bước mình thực hiện như sau:
+Mình sử dụng API lấy thông tin người quan tâm đề lấy userId
+url: https://openapi.zaloapp.com/oa/v1/getprofile?oaid=3017580706414181376&uid=84935316228&timestamp=1525773021533&mac=7381b956a9a8d8fc16576e44fa769d0d60dfcb46d98ea69bdb4c3b4c6f6992c3 +Method: GET
+result: { "errorCode": 1, "errorMsg": "Success", "data": { "userGender": 1, "userId": 5314099839299520168, "userIdByApp": null, "avatar": "http://s120.avatar.talk.zdn.vn/7/6/c/2/4/120/5cd9c79e785f331a4b3a229a5efe3571.jpg", "avatars": { "120": "http://s120.avatar.talk.zdn.vn/7/6/c/2/4/120/5cd9c79e785f331a4b3a229a5efe3571.jpg", "240": "http://s240.avatar.talk.zdn.vn/7/6/c/2/4/240/5cd9c79e785f331a4b3a229a5efe3571.jpg" }, "displayName": "Thái Cơ", "birthDate": 649962000, "sharedInfo": null, "tagsAndNotesInfo": { "tagNames": [], "notes": [] } } }
+Sau đó mình dùng userId vừa nhận được để gửi tin nhắn tới người quan tâm:
+Url: https://openapi.zaloapp.com/oa/v1/sendmessage/text?oaid=3017580706414181376&data={'message':'test send text mess by zalo api','uid':5314099839299520168}&timestamp=1525773021533&mac=9e21551935125b2327f40e0366c9e6cc561f6c99326f4959280de625a55cd489
+Method: POST
+Result: { "errorCode": -201, "errorMsg": "uid is invalid" }
+Ai có kinh nghiệm giải thích giúp mình tại sao lại bị "uid is invalid" không ạ
+
+
+
+var profile = oaClient.getProfile(uid);
+{
+  "errorCode": 1,
+  "errorMsg": "Success",
+  "data": {
+    "userGender": 1,
+    "userId": 2691206174905801178,
+    "userIdByApp": 1867744962806588681,
+    "avatar": "http://s120.avatar.talk.zdn.vn/9/2/a/5/2/120/e5fd65d53e0541b7d79a49e284ea72aa.jpg",
+    "avatars": {
+      "240": "http://s240.avatar.talk.zdn.vn/9/2/a/5/2/240/e5fd65d53e0541b7d79a49e284ea72aa.jpg",
+      "120": "http://s120.avatar.talk.zdn.vn/9/2/a/5/2/120/e5fd65d53e0541b7d79a49e284ea72aa.jpg"
+    },
+    "displayName": "Quoc Cuong",
+    "birthDate": 465066000,
+    "sharedInfo": null,
+    "tagsAndNotesInfo": {
+      "tagNames": [],
+      "notes": []
+    }
+  }
+}
+
+os_send_msg
+
+{
+  "errorCode": -201,
+  "errorMsg": "uid is invalid"
+}
+
+
+
+
+
+
+
+
+

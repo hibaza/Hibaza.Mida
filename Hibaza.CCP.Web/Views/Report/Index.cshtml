@@ -1,0 +1,1270 @@
+﻿@model  Hibaza.CCP.Web.Models.ReportModel
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog modal-sm lg-report">
+    <div class="modal-content">
+        <!-- Modal Header-->
+        <!-- Modal Body-->
+        <div class="modal-body">
+            <div class="form-group-title">
+                <ul class="wz-crm-menu">
+                    <li data-menu="dashboard">
+                        <a href="#" class="active"><span class="lg-dashboard">Dashboard</span></a>
+                    </li>
+                    <li data-menu="customers">
+                        <a href="#"><span class="lg-customers">Customers</span></a>
+                    </li>
+                    <li data-menu="tickets">
+                        <a href="#" class=""><span class="lg-tickets">Tickets</span></a>
+                    </li>
+                    @if (false)
+                    {
+                        <li data-menu="paymentsn">
+                            <a href="#"><span class="lg-billing">Billing</span></a>
+                        </li>
+                    }
+                    <li data-menu="agents">
+                        <a href="#"><span class="lg-agents">Agents</span></a>
+                    </li>
+                </ul>
+                <div class="wz-spacer"></div>
+                <div class="wz-report-topbar">
+                    <div class="dropdown dropdown-export" style="display: none;">
+                        <a href="#" data-toggle="dropdown" role="button" ariaria-haspopup="true" aria-expanded="false" class="btn btn-filter dropdown-toggle"><i class="icon-download lg-export"></i>Export </a>
+                        <ul class="dropdown-menu dropdown-small">
+                            <li>
+                                <a href="#" data-type="csv" class="js-export"><span class="wz-font-s-md wz-font-w-med">CSV</span><i class="pull-right icon-file"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" data-toggle="dropdown" role="button" ariaria-haspopup="true" aria-expanded="false" class="js-reload-report btn btn-filter dropdown-toggle"><i class="icon-reload"></i><span class="lg-refresh">Refresh </span></a>
+                    </div>
+                    <div class="dropdown dropdown-date">
+                        <div href="#" data-toggle="dropdown" role="button" ariaria-haspopup="true" aria-expanded="false" class="btn btn-filter dropdown-toggle">
+                            <!--form.form-picker-->
+                            <div class="container-fluid form-picker">
+                                <label class="control-label">
+                                    <i class="icon-calendar"></i>
+                                </label><span class="js-filter-date-text">Jan 1st, 2017 - Feb 25th, 2017</span>
+                                <!--  | From-->
+                                <input type="text" size="14" readonly="readonly" class="form-control js-filter-date-selector-init">
+                                <input type="hidden" class="form-control js-filter-date-init" id="dp1488119452669" value="1483203600000">
+                                <!--label.control-label To -->
+                                <label class="control-label">-</label>
+                                <input type="text" size="14" readonly="readonly" class="form-control js-filter-date-selector-finish">
+                                <input type="hidden" class="form-control js-filter-date-finish" id="dp1488119452670" value="1488012503147">
+                                <div class="btn btn-info btn-pink js-save-range lg-apply">Apply</div>
+                                <label class="control-label">
+                                    <div class="caret"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li data-date="today" data-period="total" class="js-filter-date">
+                                <a href="#"><span class="wz-font-s-md wz-font-w-med lg-today">Today</span></a>
+                            </li>
+                            <li data-date="c_week" data-period="day" class="js-filter-date">
+                                <a href="#"><span class="wz-font-s-md wz-font-w-med lg-current-week">Current week</span></a>
+                            </li>
+                            <li data-date="c_month" data-period="week" class="js-filter-date">
+                                <a href="#"><span class="wz-font-s-md wz-font-w-med lg-current-month">Current month</span></a>
+                            </li>
+                            <li data-date="c_year" data-period="month" class="js-filter-date">
+                                <a href="#"><span class="wz-font-s-md wz-font-w-med lg-current-year">Current year</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="js-select-dates"><span class="wz-font-s-md wz-font-w-med lg-pick-range">Pick a range...</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="js-reports-table">
+                <div class="wz-container col-sm-12 dashboard">
+                </div>
+            </div>
+            <div class="js-form-container hide"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" class="js-template-reports-dashboard">
+    <div class="wz-container col-sm-12 dashboard">
+        <div class="wz-dashboard-summary"></div>
+        <div class="wz-dashboard-main"></div>
+    </div>
+</script>
+<script type="text/html" class="js-template-reports-summary">
+    <div id="dS-${id}" class="wz-chart">
+        <a data-details="${details}" onclick="dashboardManager.detailsClickHandler(this);" class="btn btn-default btn-pink js-dashboard-details lg-details">Details</a>
+        <div class="wz-chart-loader js-chart-loader">
+            <span class="badge loading">...</span>
+        </div>
+        <div class="wz-chart-title">
+            <h1>${total}${unit}</h1>
+            <div class="dropdown">
+                <a data-toggle="dropdown" container="body" role="button" ariaria-haspopup="true" aria-expanded="false" class="dropdown-toggle wz-font-u-uppercase">${title}</a>
+
+                <!-- (href="#",) de arriba-->
+            </div>
+        </div>
+        <div class="wz-chart-error">
+            <div class="empty-state">
+                <i class="icon-zami-07 zami-face"></i>
+                <h3 class="lg-something-wrong">Oops! Something went wrong.</h3>
+                <div class="message">
+                    <p class="lg-again-persists">Please try again or if the error persists please contact us.</p>
+                </div>
+            </div>
+        </div>
+        <canvas></canvas>
+    </div>
+</script>
+<script type="text/html" class="js-template-reports-main">
+    <div id="dS-${id}" class="wz-chart">
+        <a data-details="${details}" onclick="dashboardManager.detailsClickHandler(this);" class="btn btn-default btn-pink js-dashboard-details lg-details">Details</a>
+        <div class="wz-chart-loader">
+            <span class="badge loading">...</span>
+        </div>
+        <div class="wz-chart-title">
+            <h2>
+                <span>${title}</span>
+            </h2>
+        </div>
+        <div class="wz-chart-error">
+            <div class="empty-state">
+                <i class="icon-zami-07 zami-face"></i>
+                <h3 class="lg-something-wrong">Oops! Something went wrong.</h3>
+                <div class="message">
+                    <p class="lg-again-persists">Please try again or if the error persists please contact us.</p>
+                </div>
+            </div>
+        </div>
+        <canvas></canvas>
+        <div class="wz-main-avatars"></div>
+    </div>
+</script>
+<script type="text/html" class="js-template-reports-dropdown">
+    <li>
+        <a role="button" href="#" data-old="${old}" data-new="${id}" onclick="dashboardManager.dropdownClickHandler(this);"><span class="wz-font-s-md wz-font-w-med"><i class="wz-circle"></i>${name}</span></a>
+    </li>
+</script>
+
+<script type="text/html" class="js-template-reports-body">
+    <div class="wz-container col-sm-12 reports">
+        <div class="wz-chart-filters"></div>
+        <div class="wz-chart-error">
+            <div class="empty-state">
+                <i class="icon-zami-07 zami-face"></i>
+                <h3 class="lg-something-wrong">Oops! Something went wrong.</h3>
+                <div class="message">
+                    <p class="lg-again-persists">Please try again or if the error persists please contact us.</p>
+                </div>
+            </div>
+        </div>
+        <div class="wz-chart-container">
+            <canvas></canvas>
+        </div>
+        <div class="wz-report-header">
+            <div class="dropdown dropdown-fields">
+                <a href="#" data-toggle="dropdown" role="button" ariaria-haspopup="true" aria-expanded="false" class="btn btn-info btn-filter dropdown-toggle"><i class="icon-layout"></i><span class="lg-fields-table">Fields in table</span></a>
+                <ul class="dropdown-menu">
+                    <form class="form js-table-fields"></form>
+                </ul>
+            </div>
+            <div class="wz-report-loader">
+                <span class="badge loading">...</span>
+            </div>
+            <div class="wz-spacer"></div>
+            <div class="wz-report-search">
+                <a class="btn btn-gray js-report-search ${opened}">
+                    <i class="icon-search"></i><span></span>
+                    <input type="text" maxlength="25" value="${search}" /><i class="icon-cross"></i>
+                </a><a class="btn btn-info btn-pink js-search-apply hide lg-apply">Apply</a>
+            </div>
+        </div>
+        <div class="tableContainer">
+            <div class="wz-report-screen"></div>
+            <div class="wz-report-screen js-report-nodata">
+                <div class="empty-state">
+                    <i class="icon-zami-03 zami-face"></i>
+                    <h3 class="lg-no-matches-found">No matches found, human.</h3>
+                    <div class="message">
+                        <p>
+                           <span class="lg-another-filter"> Select another filter or</span>
+                            <a href="#" onclick="reportManager.reset(true)" class="lg-clear-all">clear them all.</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="wz-reports-table"></div>
+        </div>
+    </div>
+</script>
+<script type="text/html" class="js-template-reports-field">
+    <li>
+        <div class="form-group">
+            <label class="control-label">
+                <input type="checkbox" data-row="${id}" data-status="on" />${name}
+            </label>
+        </div>
+    </li>
+</script>
+
+<script type="text/html" class="js-template-reports-advanced-filter">
+    <li>
+        <div class="form-group">
+            <label data-key="${id}" onclick="$(this).toggleClass('selected');$('.js-filter-apply').fadeIn();" class="control-label js-filter-elem selected">
+                <div style="background-image: url(${avatar})" class="js-picture js-picture-${id}"></div>
+                <div class="js-initials hide js-initials-${id}">
+                    <p></p>
+                </div><span>${name}</span><i title="Remove" class="js-close icon-cross"></i>
+            </label>
+        </div>
+    </li>
+</script>
+<script type="text/html" class="js-template-reports-period-filter">
+    <span class="dropdown dropdown-period">
+        <a href="#" data-toggle="dropdown" role="button" ariaria-haspopup="true" aria-expanded="false" class="wz-font-u-uppercase dropdown-toggle">
+            <span class="lg-by-month">By month</span>
+            <div class="caret"></div>
+        </a>
+        <ul class="dropdown-menu">
+            <li>
+                <a href="#" data-type="line" data-period="day" class="js-period"><span class="wz-font-s-md wz-font-w-med">${label} <span class="lg-by-day">By day</span><i class="icon-stats-dots"></i></span></a>
+            </li>
+            <li>
+                <a href="#" data-type="line" data-period="week" class="js-period"><span class="wz-font-s-md wz-font-w-med">${label} <span class="lg-by-week">By week</span><i class="icon-stats-dots"></i></span></a>
+            </li>
+            <li>
+                <a href="#" data-type="line" data-period="month" class="selected js-period"><span class="wz-font-s-md wz-font-w-med">${label}<span class="lg-by-month"> By month</span><i class="icon-stats-dots"></i></span></a>
+            </li>
+            <li>
+                <a href="#" data-type="bar" data-period="total" class="js-period"><span class="wz-font-s-md wz-font-w-med">${label} <span class="lg-total">Total</span><i class="icon-stats-bars"></i></span></a>
+            </li>
+        </ul>
+        <div class="wz-chart-loader">
+            <div class="loading"></div>
+        </div>
+    </div>
+</script>
+<script type="text/html" class="js-template-reports-field-filter">
+    <div class="dropdown dropdown-filter">
+        <a href="#" data-toggle="dropdown" role="button" ariaria-haspopup="true" aria-expanded="false" class="wz-font-u-uppercase dropdown-toggle">
+            <span class="js-field"></span>
+            <div class="caret"></div>
+        </a>
+        <ul class="dropdown-menu">
+            <div class="wz-dropdown-search">
+                <a class="btn btn-gray wz-options-icon"><i class="icon-equalizer"></i></a>
+                <input type="text" placeholder="Search..." onclick="stopPropagation(event)" class="js-autocomplete" /><a class="btn btn-info btn-pink js-filter-apply"><i class="icon-check"></i><span class="lg-apply">Apply</span></a>
+            </div>
+            <div class="wz-error">
+                <i class="icon-zami-06"></i><span class="lg-maximum-number-12">Sorry, the maximum number of items is 12.</span>
+            </div>
+            <div class="wz-options">
+                <ul class="dropdown-menu dropdown-small">
+                    <li>
+                        <a href="#" class="js-check-all btn-default"><span class="wz-font-s-md wz-font-w-med"><span class="lg-check-all">Check all</span><i class="icon-square-check"></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#" class="js-uncheck-all btn-default"><span class="wz-font-s-md wz-font-w-med"> <span class="lg-uncheck-all">Uncheck all</span><i class="icon-square-cross"></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#" class="js-restore"><span class="wz-font-s-md wz-font-w-med "><span class="lg-restore-defaults">Restore defaults</span><i class="icon-reload"></i></span></a>
+                    </li>
+                    <li>
+                        <a href="#" class="js-clear-all"><span class="wz-font-s-md wz-font-w-med"><span class="lg-clear-all">Clear all</span><i class="icon-trash"></i></span></a>
+                    </li>
+                </ul>
+            </div>
+            <form class="form js-filter-values"></form>
+        </ul>
+        <div class="wz-chart-loader">
+            <div class="loading"></div>
+        </div>
+    </div>
+</script>
+<script type="text/html" class="js-template-reports-preloader">
+    <div class="wz-preloader">
+        <div class="wz-t-icon"></div>
+        <div class="wz-t-lines">
+            <p></p>
+            <p></p>
+        </div>
+    </div>
+</script>
+<script type="text/html" class="js-template-reports-error">
+    <div id="wz-reports-table" class="display">
+        <div class="empty-state">
+            <i class="icon-zami-07 zami-face"></i>
+            <h3 class="lg-something-wrong">Oops! Something went wrong.</h3>
+            <div class="message">
+                <p class="lg-again-persists">Please try again or if the error persists please contact us.</p>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script>
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // COLORS
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var COLORS = {
+        YELLOW: {
+            solid: 'rgba(254, 210, 82, 1)',
+            light: 'rgba(254, 210, 82, 0.2)',
+            medium: 'rgba(254, 210, 82, 0.5)'
+        },
+        GREEN: {
+            solid: 'rgba(121, 213, 148, 1)',
+            light: 'rgba(121, 213, 148, 0.2)',
+            medium: 'rgba(121, 213, 148, 0.5)'
+        },
+        PINK: {
+            solid: 'rgba(206, 75, 129, 1)',
+            light: 'rgba(206, 75, 129, 0.2)',
+            medium: 'rgba(206, 75, 129, 0.5)'
+        },
+        BLUE: {
+            solid: 'rgba(41, 51, 83, 1)',
+            light: 'rgba(41, 51, 83, 0.2)',
+            medium: 'rgba(41, 51, 83, 0.5)'
+        },
+        VIOLET: {
+            solid: 'rgba(72, 78, 152, 1)',
+            light: 'rgba(72, 78, 152, 0.2)',
+            medium: 'rgba(72, 78, 152, 0.5)'
+        },
+        GRIDLINE: 'rgba(141, 148, 224, 0.2)'
+    };
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // TABLE FORMATTERS
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var TABLE_FORMATTERS = {
+        customerAvatar: function (value, data, cell, row, options) {
+            var $container = $('<div>').addClass('js-customer-avatar');
+            if (value.indexOf('bot.png') == -1) {
+                $container.append(
+                    $('<div>').addClass('js-picture').css('background-image', 'url(/' + value + ')')
+                );
+            } else {
+                var $initials = $('<p>').text(getInitials(data.name));
+                $container.append(
+                    $('<div>').addClass('js-initials').addClass(getAvatarColor(data.id)).append($initials)
+                );
+            }
+            return $container;
+        },
+        customer: function (value, data, cell, row, options) {
+            var __customer_avatar = data.customer_avatar || data.ticket__customer__avatar
+            var __customer_name = data.customer_name || data.ticket__customer__name
+            return $container = $('<div>')
+                .addClass('js-customer-avatar')
+                .append(
+                $('<div>').addClass('js-picture').css('background-image', 'url(/' + __customer_avatar + ')')
+                )
+                .append(
+                $('<span>').text(__customer_name)
+                );
+        },
+        agentAvatar: function (value, data, cell, row, options) {
+            return $container = $('<div>')
+                .addClass('js-customer-avatar')
+                .append(
+                $('<div>').addClass('js-picture').css('background-image', 'url(/' + value + ')')
+                )
+        },
+        tags: function (value, data, cell, row, options) {
+            var $container = $('<div>').addClass('wz-flex-card wz-tags');
+            $.each(value, function (index, elem) {
+                $container.append(
+                    $('<span>').addClass('btn btn-info wz-font-s-xswz-font-w-reg').text(elem)
+                )
+            });
+            return $container;
+        },
+        agents: function (value, data, cell, row, options) {
+            var $container = $('<div>').addClass('wz-agents');
+            $.each(value, function (index, elem) {
+                if (AGENTS[elem]) {
+                    $container.append(
+                        $('<div data-toggle="tooltip" data-container="body" data-placement="top">')
+                            .addClass('js-picture js-picture-agent-' + elem)
+                            .attr('title', AGENTS[elem].name)
+                            .css('background-image', "url(/" + AGENTS[elem].avatar + ")")
+                    )
+                }
+            });
+            return $container;
+        },
+        statusAvatar: function (value, data, cell, row, options) {
+            return $container = $('<div data-toggle="tooltip" data-container="body" data-placement="top">')
+                .addClass('wz-ticket-status wz-status-' + data.status)
+                .attr('title', data.status_display)
+                .append($('<i class="icon-none">'));
+        },
+        ticket: function (value, data, cell, row, options) {
+            return $('<div>').addClass('js-ticket-avatar')
+                .append(
+                $('<div data-toggle="tooltip" data-container="body" data-placement="top">')
+                    .addClass('wz-ticket-status wz-status-' + data.ticket__status)
+                    .attr('title', data.ticket__status_display)
+                    .append($('<i class="icon-none">'))
+                )
+                .append(
+                $('<span>').text(data.ticket__short_description)
+                );
+        },
+        channel: function (value, data, cell, row, options) {
+            if (CHANNELS[value]) {
+                var $container = $('<div>').addClass('js-channel');
+                var $icon = $('<i>').addClass('wz-channel-icon icon-' + CHANNELS[value].type);
+                var $text = $('<span>').text(CHANNELS[value].name);
+                $container.append($icon).append($text);
+                return $container;
+            } else {
+                return $("<span class='removed'>").text("REMOVED CHANNEL");
+            }
+
+        },
+        shortDate: function (value, data, cell, row, options) {
+            return moment(value * 1000, 'x').format(DATE_FORMAT);
+        },
+        datetime: function (value, data, cell, row, options) {
+            if (value)
+                return moment(value * 1000, 'x').format(LONG_DATE_FORMAT);
+            else
+                return 'Inactive'
+        },
+        paymentDatetime: function (value, data, cell, row, options) {
+            if (value)
+                return moment(value * 1000, 'x').format(LONG_DATE_FORMAT);
+            else
+                return 'Unpaid'
+        }
+    }
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // CHARTS DEFAULT OPTIONS
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var CHART_DEFAULTS = {
+        'report': {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    gridLines: { display: true, color: COLORS.GRIDLINE, lineWidth: 2, zeroLineColor: COLORS.GRIDLINE, zeroLineWidth: 2 },
+                    ticks: {
+                        beginAtZero: true, maxRotation: 0,
+                        userCallback: function (label, index, labels) {
+                            // When the floored value is the same as the value we have a whole number
+                            if (label != 0 && Math.floor(label) === label) {
+                                return label;
+                            }
+                        },
+                    },
+                }],
+                xAxes: [{
+                    gridLines: { display: false, color: COLORS.GRIDLINE, lineWidth: 2, zeroLineColor: COLORS.GRIDLINE, zeroLineWidth: 2 },
+                    ticks: { beginAtZero: true, fontStyle: 'bold', autoSkip: false, autoSkipPadding: 20 } //,  maxRotation: 0, labelOffset: 10,  padding:20,autoSkip: false, autoSkipPadding: 20 }
+                    //Chart.defaults.global.tick.fontStyle = 'bold';labelOffset
+                }]
+            }
+        },
+        'summary': {
+            maintainAspectRatio: false,
+            responsive: true,
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    gridLines: { display: true, color: COLORS.GRIDLINE, drawBorder: false, lineWidth: 2, zeroLineColor: COLORS.GRIDLINE, zeroLineWidth: 2 },
+                    ticks: { beginAtZero: true, display: false, maxTicksLimit: 100 }
+                }],
+                xAxes: [{
+                    gridLines: { display: false },
+                    ticks: { beginAtZero: true, display: false }
+                }]
+            }
+        },
+        'main': {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    gridLines: { display: true, color: COLORS.GRIDLINE, drawBorder: false, lineWidth: 2, zeroLineColor: COLORS.GRIDLINE, zeroLineWidth: 2 },
+                    ticks: { beginAtZero: true, display: false, maxTicksLimit: 100 }
+                }],
+                xAxes: [{
+                    gridLines: { display: false },
+                    ticks: {
+                        beginAtZero: true, fontStyle: 'bold', autoSkip: false, autoSkipPadding: 20 //,  maxRotation: 0
+                    }
+                }]
+            }
+        }
+    };
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // DASHBOARD CHARTS
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var DASHBOARD = {
+        //
+        // CHATS
+        //
+        'db_chats': {
+            section: 'summary', type: 'line', unit: '', default: true, details: 'customers',
+            title: ("Customers Assigned").toUpperCase(),
+            datasets: [
+                {
+                    label: ("Customers").toUpperCase(),
+                    backgroundColor: COLORS.PINK.medium, borderColor: COLORS.PINK.solid,
+                    pointBorderColor: COLORS.VIOLET.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.PINK.solid, pointRadius: 6, pointHoverRadius: 9,
+                    borderWidth: 3, data: []
+                }
+            ],
+            options: CHART_DEFAULTS.summary
+        },
+        //
+        // MESSAGES RECEIVED
+        //
+        'db_messages': {
+            section: 'summary', type: 'line', unit: '', default: true, details: 'customers',
+            title: ("Messages Received").toUpperCase(),
+            datasets: [
+                {
+                    label: ("Inbox").toUpperCase(),
+                    backgroundColor: COLORS.GREEN.medium, borderColor: COLORS.GREEN.solid,
+                    pointBorderColor: COLORS.VIOLET.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.VIOLET.solid, pointRadius: 6, pointHoverRadius: 9,
+                    borderWidth: 3, data: []
+                },
+                {
+                    label: ("Comment").toUpperCase(),
+                    backgroundColor: COLORS.BLUE.medium, borderColor: COLORS.BLUE.solid,
+                    pointBorderColor: COLORS.YELLOW.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.YELLOW.solid, pointRadius: 6, pointHoverRadius: 9,
+                    borderWidth: 3, data: []
+                }
+            ],
+            options: CHART_DEFAULTS.summary
+        },
+        //
+        // MESSAGES SENT
+        //
+        'db_agent_messages': {
+            section: 'summary', type: 'line', unit: '', default: true, details: 'customers',
+            title: ("Messages SENT").toUpperCase(),
+            datasets: [
+                {
+                    label: ("Inbox").toUpperCase(),
+                    backgroundColor: COLORS.GREEN.medium, borderColor: COLORS.GREEN.solid,
+                    pointBorderColor: COLORS.VIOLET.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.VIOLET.solid, pointRadius: 6, pointHoverRadius: 9,
+                    borderWidth: 3, data: []
+                },
+                {
+                    label: ("Comment").toUpperCase(),
+                    backgroundColor: COLORS.BLUE.medium, borderColor: COLORS.BLUE.solid,
+                    pointBorderColor: COLORS.YELLOW.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.YELLOW.solid, pointRadius: 6, pointHoverRadius: 9,
+                    borderWidth: 3, data: []
+                }
+            ],
+            options: CHART_DEFAULTS.summary
+        },
+        //
+        // TICKET OPENED
+        //
+        'db_tickets': {
+            section: 'summary', type: 'line', unit: '', default: true, details: 'tickets',
+            title: ("Tickets Opened").toUpperCase(),
+            datasets: [
+                {
+                    label: ("Tickets Opened").toUpperCase(),
+                    backgroundColor: COLORS.GREEN.medium, borderColor: COLORS.GREEN.solid,
+                    pointBorderColor: COLORS.VIOLET.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.GREEN.solid, pointRadius: 6, pointHoverRadius: 9,
+                    borderWidth: 3, data: []
+                }
+            ],
+            options: CHART_DEFAULTS.summary
+        },
+        //
+        // TICKET OPENED
+        //
+        //'db_ticket_completed' : {
+        //  section: 'summary', type: 'line', unit: '', details: 'tickets',
+        //  title: ("Tickets Completed").toUpperCase(),
+        //  datasets: [
+        //      {
+        //          label: ("Tickets Completed").toUpperCase(),
+        //          backgroundColor: COLORS.BLUE.medium, borderColor: COLORS.BLUE.solid,
+        //          pointBorderColor: COLORS.VIOLET.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.BLUE.solid, pointRadius: 6, pointHoverRadius: 9,
+        //          borderWidth: 3, data: []
+        //      }
+        //  ],
+        //  options: CHART_DEFAULTS.summary
+        //},
+        //
+        // AVERAGE RESPONSE TIME
+        //
+        //'db_avg_response': {
+        //  section: 'summary', type: 'line', unit: '\'', default: true,
+        //  title: ("Average Response Time").toUpperCase(),
+        //  datasets: [
+        //      {
+        //          label: ("Average Response Time").toUpperCase(),
+        //          backgroundColor: COLORS.YELLOW.medium, borderColor: COLORS.YELLOW.solid,
+        //          pointBorderColor: COLORS.VIOLET.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.YELLOW.solid, pointRadius: 6, pointHoverRadius: 9,
+        //          borderWidth: 3, data: []
+        //      }
+        //  ],
+        //  options: CHART_DEFAULTS.summary
+        //},
+        //
+        // FIRST RESPONSE TIME
+        //
+        //'db_first_response': {
+        //  section: 'summary', type: 'line', unit: false, default: true, details: 'tickets', //unit: '\''
+        //  title: ("Average First Response Time").toUpperCase(),
+        //  datasets: [
+        //      {
+        //          label: ("Average First Response Time").toUpperCase(),
+        //          backgroundColor: COLORS.YELLOW.medium, borderColor: COLORS.YELLOW.solid,
+        //          pointBorderColor: COLORS.VIOLET.solid, pointBorderWidth: 3, pointBackgroundColor: COLORS.YELLOW.solid, pointRadius: 6, pointHoverRadius: 9,
+        //          borderWidth: 3, data: []
+        //      }
+        //  ],
+        //  options: CHART_DEFAULTS.summary
+        //},
+
+        //
+        // AGENTS COMPARISON
+        //
+
+        'db_agents': {
+            section: 'main', type: 'bar', default: true, details: 'agents',
+            title: ("Top ten agents").toUpperCase(),
+            datasets: [
+                {
+                    label: ("Customers").toUpperCase(),
+                    backgroundColor: COLORS.PINK.solid, borderColor: COLORS.PINK.solid,
+                    borderWidth: 3, data: []
+                },
+                {
+                    label: ("Conversations").toUpperCase(),
+                    backgroundColor: COLORS.GREEN.solid, borderColor: COLORS.GREEN.solid,
+                    borderWidth: 3, data: []
+                },
+                {
+                    label: ("Messages").toUpperCase(),
+                    backgroundColor: COLORS.YELLOW.solid, borderColor: COLORS.YELLOW.solid,
+                    borderWidth: 3, data: []
+                },
+                {
+                    label: ("Tickets").toUpperCase(),
+                    backgroundColor: COLORS.BLUE.solid, borderColor: COLORS.BLUE.solid,
+                    borderWidth: 3, data: []
+                }
+            ],
+            options: CHART_DEFAULTS.main
+        }
+
+    }
+
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    // REPORTS WITH CHART
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    var REPORTS = {
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // CUSTOMERS
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        'customers': {
+            charts: [
+                //
+                // CUSTOMERS LINE CHART
+                //
+                {
+                    id: 'default', type: 'line',
+                    datasets: [
+                        {
+                            label: ("Customers").toUpperCase(),
+                            backgroundColor: COLORS.YELLOW.light, borderColor: COLORS.YELLOW.solid,
+                            pointBackgroundColor: COLORS.YELLOW.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Inbox Received").toUpperCase(),
+                            backgroundColor: COLORS.GREEN.light, borderColor: COLORS.GREEN.solid,
+                            pointBackgroundColor: COLORS.GREEN.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Comments Received").toUpperCase(),
+                            backgroundColor: COLORS.PINK.light, borderColor: COLORS.PINK.solid,
+                            pointBackgroundColor: COLORS.PINK.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Inbox Sent").toUpperCase(),
+                            backgroundColor: COLORS.VIOLET.light, borderColor: COLORS.VIOLET.solid,
+                            pointBackgroundColor: COLORS.VIOLET.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Comments Sent").toUpperCase(),
+                            backgroundColor: COLORS.BLUE.light, borderColor: COLORS.BLUE.solid,
+                            pointBackgroundColor: COLORS.BLUE.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        }
+                    ],
+                    options: CHART_DEFAULTS.report
+                },
+                //
+                // CUSTOMERS BAR CHART
+                //
+                {
+                    id: 'total', type: 'bar',
+                    datasets: [
+                        {
+                            label: ("Customers").toUpperCase(),
+                            backgroundColor: COLORS.PINK.solid, borderColor: COLORS.PINK.solid,
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Inbox Received").toUpperCase(),
+                            backgroundColor: COLORS.YELLOW.solid, borderColor: COLORS.YELLOW.solid,
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Comments Received").toUpperCase(),
+                            backgroundColor: COLORS.GREEN.solid, borderColor: COLORS.GREEN.solid,
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Inbox Sent").toUpperCase(),
+                            backgroundColor: COLORS.VIOLET.solid, borderColor: COLORS.VIOLET.solid,
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Comments Sent").toUpperCase(),
+                            backgroundColor: COLORS.BLUE.solid, borderColor: COLORS.BLUE.solid,
+                            borderWidth: 3, data: []
+                        }
+                    ],
+                    options: CHART_DEFAULTS.report
+                }
+            ],
+            title: "Customers",
+            sortBy: 'date_registered',
+            columns: [
+                { title: "Avatar", tooltipHeader: "Avatar", field: "avatar", sortable: false, width: 50, formatter: TABLE_FORMATTERS.customerAvatar },
+                { title: "Name", field: "name", sortable: true },
+                { title: "Phone", field: "phone", sortable: true, visible: false },
+                { title: "Channel", field: "channel_id", sortable: true, formatter: TABLE_FORMATTERS.channel },
+                { title: "Email", field: "email", sortable: true, visible: false },
+                { title: "City", field: "city", sortable: true, visible: false },
+                { title: "Address", field: "address", sortable: true, visible: false },
+                { title: "Messsages", field: "messages", minWidth: 80, sortable: false },
+                { title: "Pending Tickets", field: "pending_tickets", minWidth: 80, sortable: false },
+                { title: "Completed Tickets", field: "completed_tickets", minWidth: 80, sortable: false },
+                { title: "Registration date", field: "date_registered", sortable: true, formatter: TABLE_FORMATTERS.datetime },
+            ],
+            filter: { // CHART FILTER
+                field: 'period',
+                label: ""
+            }
+
+        },
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // TICKETS
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        'tickets': {
+            charts: [
+                //
+                // TICKETS LINE CHART
+                //
+                {
+                    id: 'default', type: 'line',
+                    datasets: [
+                        {
+                            label: ("Total Tickets").toUpperCase(),
+                            backgroundColor: COLORS.YELLOW.light, borderColor: COLORS.YELLOW.solid,
+                            pointBackgroundColor: COLORS.YELLOW.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Completed").toUpperCase(),
+                            backgroundColor: COLORS.GREEN.light, borderColor: COLORS.GREEN.solid,
+                            pointBackgroundColor: COLORS.GREEN.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Rejected").toUpperCase(),
+                            backgroundColor: COLORS.PINK.light, borderColor: COLORS.PINK.solid,
+                            pointBackgroundColor: COLORS.PINK.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Pending").toUpperCase(),
+                            backgroundColor: COLORS.BLUE.light, borderColor: COLORS.BLUE.solid,
+                            pointBackgroundColor: COLORS.BLUE.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Attention").toUpperCase(),
+                            backgroundColor: COLORS.VIOLET.light, borderColor: COLORS.VIOLET.solid,
+                            pointBackgroundColor: COLORS.VIOLET.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        }
+
+                    ],
+                    options: CHART_DEFAULTS.report
+                },
+                //
+                // TICKETS BAR CHART
+                //
+                {
+                    id: 'total', type: 'bar',
+                    datasets: [
+                        {
+                            label: ("Total Tickets").toUpperCase(),
+                            backgroundColor: [COLORS.YELLOW.solid], borderColor: [COLORS.YELLOW.solid],
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Completed").toUpperCase(),
+                            backgroundColor: [COLORS.GREEN.solid], borderColor: [COLORS.GREEN.solid],
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Rejected").toUpperCase(),
+                            backgroundColor: [COLORS.PINK.solid], borderColor: [COLORS.PINK.solid],
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Pending").toUpperCase(),
+                            backgroundColor: [COLORS.BLUE.solid], borderColor: [COLORS.BLUE.solid],
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Attention").toUpperCase(),
+                            backgroundColor: [COLORS.VIOLET.solid], borderColor: [COLORS.VIOLET.solid],
+                            borderWidth: 3, data: []
+                        }
+                    ],
+                    options: CHART_DEFAULTS.report
+                }
+            ],
+            title: 'Tickets',
+            sortBy: 'created_at',
+            columns: [
+                { title: "Status", tooltipHeader: "Status", field: "status", sortable: false, width: 50, formatter: TABLE_FORMATTERS.statusAvatar },
+                { title: "Name", field: "short_description", sortable: true, visible: false },
+                { title: "Tags", field: "tags", sortable: true, formatter: TABLE_FORMATTERS.tags },
+                { title: "Customer", field: "customer_id", sortable: true, formatter: TABLE_FORMATTERS.customer },
+                { title: "Agent", field: "agents", sortable: false, formatter: TABLE_FORMATTERS.agents },
+                { title: "Channel", field: "channel_id", sortable: true, formatter: TABLE_FORMATTERS.channel },
+                { title: "Creation date", field: "created_at", sortable: true, formatter: TABLE_FORMATTERS.datetime },
+            ],
+            filter: { // CHART FILTER
+                field: 'period',
+                label: ""
+            }
+        },
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // AGENTS
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        'agents': {
+            charts: [
+                //
+                // AGENTS BAR CHART
+                //
+                {
+                    id: 'default', type: 'bar',
+                    datasets: [
+                        {
+                            label: ("Customers").toUpperCase(),
+                            backgroundColor: COLORS.PINK.solid, borderColor: COLORS.PINK.solid,
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Conversations").toUpperCase(),
+                            backgroundColor: COLORS.GREEN.solid, borderColor: COLORS.GREEN.solid,
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Messages").toUpperCase(),
+                            backgroundColor: COLORS.YELLOW.solid, borderColor: COLORS.YELLOW.solid,
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Tickets").toUpperCase(),
+                            backgroundColor: COLORS.BLUE.solid, borderColor: COLORS.BLUE.solid,
+                            borderWidth: 3, data: []
+                        }
+                    ],
+                    options: CHART_DEFAULTS.report
+                }
+            ],
+            title: "Agents",
+            columns: [
+                { title: "Avatar", tooltipHeader: "Avatar", field: "avatar", sortable: false, width: 50, formatter: TABLE_FORMATTERS.agentAvatar },
+                { title: "Name", field: "name", sortable: true },
+                { title: "Customers Assigned", field: "customers", minWidth: 80, sortable: false },
+                { title: "Total Conversations", field: "conversations", minWidth: 80, sortable: false },
+                { title: "Total Messages", field: "messages", minWidth: 80, sortable: false },
+                { title: "Created Tickets", field: "tickets", minWidth: 80, sortable: false },
+                { title: "Last active", field: "last_acted", sortable: true, formatter: TABLE_FORMATTERS.datetime },
+                { title: "Last seen", field: "last_login", sortable: true, formatter: TABLE_FORMATTERS.datetime }
+            ],
+            filter: { // CHART FILTER
+                field: 'agent',
+                label: "Top agents"
+            }
+        },
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        // TICKETS
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        'payments': {
+            charts: [
+                //
+                // PAYMENTS LINE CHART
+                //
+                {
+                    id: 'default', type: 'line',
+                    datasets: [
+                        {
+                            label: ("Paid").toUpperCase(),
+                            backgroundColor: COLORS.GREEN.light, borderColor: COLORS.GREEN.solid,
+                            pointBackgroundColor: COLORS.GREEN.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        },
+                        {
+                            label: ("Unpaid").toUpperCase(),
+                            backgroundColor: COLORS.PINK.light, borderColor: COLORS.PINK.solid,
+                            pointBackgroundColor: COLORS.PINK.solid, pointRadius: 3, pointHoverRadius: 4, spanGaps: false,
+                            fill: true, pointStyle: "circle", pointBorderWidth: "1", borderWidth: 2, data: []
+                        }
+                    ],
+                    options: CHART_DEFAULTS.report
+                },
+                //
+                // TICKETS BAR CHART
+                //
+                {
+                    id: 'total', type: 'bar',
+                    datasets: [
+                        {
+                            label: ("Paid").toUpperCase(),
+                            backgroundColor: [COLORS.GREEN.solid], borderColor: [COLORS.GREEN.solid],
+                            borderWidth: 3, data: []
+                        },
+                        {
+                            label: ("Unpaid").toUpperCase(),
+                            backgroundColor: [COLORS.PINK.solid], borderColor: [COLORS.PINK.solid],
+                            borderWidth: 3, data: []
+                        }
+                    ],
+                    options: CHART_DEFAULTS.report
+                }
+            ],
+            title: "Billing",
+            sortBy: 'date',
+            columns: [
+                { title: "Ticket", field: "ticket__short_description", sortable: true, formatter: TABLE_FORMATTERS.ticket },
+                { title: "Customer", field: "ticket__customer_id", sortable: true, formatter: TABLE_FORMATTERS.customer },
+                { title: "Total", field: "total", sortable: true, sorter: "number" },
+                { title: "Paid", field: "payed", sortable: true, formatter: "tickCross" },
+                { title: "Payment date", field: "date", sortable: true, formatter: TABLE_FORMATTERS.paymentDatetime },
+            ],
+            filter: { // CHART FILTER
+                field: 'period',
+                label: ""
+            }
+        },
+    }
+</script>
+<script>
+    readFileLang(localStorage.getItem("lang"), "report");
+function menuClickHandler(e){
+  e.preventDefault();
+  var reportsView = $(this).data("menu");
+  $('#wz-modal-reports .wz-crm-menu li .active').removeClass('active');
+  $(this).children('a').addClass("active");
+  reportManager.abortXHR();
+  dashboardManager.abortXHR();
+  if (reportsView == "dashboard") {
+    manager = dashboardManager;
+    $('#wz-modal-reports .dropdown-export').hide();
+    dashboardManager.load();
+  } else {
+    manager = reportManager;
+    $('#wz-modal-reports .dropdown-export').show();
+    reportManager.init(reportsView, REPORTS[reportsView]);
+  }
+
+  // MIXPANEL
+  switch (reportsView) {
+    case "dashboard":
+      mixpanelEvents('openReportsDashboard');
+      break;
+    case "customers":
+      mixpanelEvents('openReportsCustomers');
+      break;
+    case "tickets":
+      mixpanelEvents('openReportsTickets');
+      break;
+    case "agents":
+      mixpanelEvents('openReportsAgents');
+      break;
+  }
+}
+
+
+function setDateParams(params) {
+  reportManager.setParams(params);
+  dashboardManager.setParams(params);
+}
+
+
+function deleteDateParams(params) {
+  reportManager.deleteParams(params);
+  dashboardManager.deleteParams(params);
+}
+
+$(function() {
+  //
+  // MENU
+  //
+  $('#wz-modal-reports .wz-crm-menu li').on('click', menuClickHandler);
+
+  //
+  // INIT DATEPICKER
+  //
+  $('#wz-modal-reports .js-filter-date-selector-init')
+    .on('click', function (e) {
+        stopPropagation(e);
+      $('#wz-modal-reports .js-filter-date-init').datepicker("show");
+    });
+  $('#wz-modal-reports .js-filter-date-init')
+    .on('click', function (e) {stopPropagation(e); })
+    .datepicker({
+        dateFormat: "@Html.Raw("@")",
+      changeMonth: true,
+      changeYear: true,
+
+      onSelect: function (dateText, inst) {
+        $('#wz-modal-reports .js-filter-date-selector-init').val( moment(dateText, 'x').format(DATE_FORMAT) );
+      },
+      beforeShow: function (input, inst) {
+        // DATEPICKER POSITION
+        var $altField = $('#wz-modal-reports .js-filter-date-selector-init');
+        inst.dpDiv.css({marginTop:'35px', marginLeft: '-' + $altField.outerWidth() + 'px'});
+        // LIMITS
+        var finishDate = $('#wz-modal-reports .js-filter-date-finish').val();
+        if (finishDate) {
+          inst.settings.maxDate = moment(finishDate, 'x').toDate();
+        } else {
+          inst.settings.maxDate = new Date(); // Today
+        }
+      }
+    });
+
+  //
+  // FINISH DATEPICKER
+  //
+  $('#wz-modal-reports .js-filter-date-selector-finish')
+    .on('click', function(e){
+      stopPropagation(e);
+      $('#wz-modal-reports .js-filter-date-finish').datepicker("show");
+    });
+  $('#wz-modal-reports .js-filter-date-finish')
+    .on('click', stopPropagation)
+    .datepicker({
+        dateFormat: "@Html.Raw("@")",
+      changeMonth: true,
+      changeYear: true,
+      onSelect: function (dateText, inst) {
+        var m = moment(dateText, 'x');
+        $('#wz-modal-reports .js-filter-date-selector-finish').val( m.format(DATE_FORMAT) );
+        $('#wz-modal-reports .js-filter-date-finish').val( m.endOf('day').valueOf() )
+      },
+      beforeShow: function (input, inst) {
+        // DATEPICKER POSITION
+        var $altField = $('#wz-modal-reports .js-filter-date-selector-finish');
+        inst.dpDiv.css({marginTop: '40px', marginLeft: '-' + $altField.outerWidth() + 'px'});
+        // LIMITS
+        var initDate = $('#wz-modal-reports .js-filter-date-init').val();
+        if (initDate) {
+          inst.settings.minDate = moment(initDate, 'x').toDate();
+        } else {
+          delete inst.settings.minDate;
+        }
+      }
+    });
+
+  //
+  // PREDEFINED  RANGES
+  //
+  $('#wz-modal-reports .js-select-dates').on('click', function(){
+     $('#wz-modal-reports .dropdown-date .dropdown-toggle').addClass('pick');
+  });
+
+  //
+  // EXPORT
+  //
+  $('#wz-modal-reports .js-export').on('click', function(){
+    var $formContainer = $('#wz-modal-reports .js-form-container');
+    var $form = $('<form>')
+      .prop('action', reportManager.getExportURL() )
+      .prop('method', 'get')
+      .prop('target', '_blank')
+
+    $.each( reportManager.params, function(key, value){
+      $form.append(
+        $('<input type="hidden">').val( value ).prop('name', key)
+      )
+    });
+
+    $form.append(
+      $('<input type="hidden">').val( Math.random() ).prop('name', 'random')
+    )
+
+    $formContainer.empty();
+    $formContainer.append( $form );
+    $form.submit();
+  });
+
+  //
+  // PREDEFINED  RANGES
+  //
+  $('#wz-modal-reports .js-filter-date').on('click', function(){
+    var initDate = false, finishDate = false;
+    var range = $(this).data("date")
+    var period = $(this).data("period");
+    var filter = getDateRange(range);
+    setDateValues(filter);
+
+    localStorage.setItem('reportsDateRange', range);
+
+    setDateParams({
+      date: 'range',
+      init: filter.init,
+      finish: filter.finish
+    });
+
+    // ReportManager Period
+    var $dropdownPeriod = $('#wz-modal-reports .dropdown-period');
+    if ($dropdownPeriod.length > 0) {
+      if (period == 'total') {
+        deleteDateParams(['period']);
+        reportManager.chartId = 'total';
+      } else {
+        setDateParams({period: period});
+        reportManager.chartId = 'default';
+      }
+    }
+
+    manager.reset();
+
+    mixpanelEvents('applyReportsDateChange');
+  });
+
+  //
+  // SAVE DATE RANGE BUTTON
+  //
+  $('#wz-modal-reports .js-save-range').on('click', function(e){
+    stopPropagation(e);
+    var initTimestamp = $('#wz-modal-reports .js-filter-date-init').val();
+    var initText = moment(initTimestamp, ' x').format(DATE_FORMAT);
+    var finishTimestamp = $('#wz-modal-reports .js-filter-date-finish').val();
+    var finishText = moment(finishTimestamp, ' x').format(DATE_FORMAT);
+    $('#wz-modal-reports .js-filter-date-text').text(initText + " - " + finishText);
+
+    localStorage.setItem('reportsDateRange', initTimestamp + ',' + finishTimestamp);
+
+    setDateParams({
+      date: "range",
+      init: initTimestamp,
+      finish: finishTimestamp
+    });
+
+    $('#wz-modal-reports .dropdown-date .dropdown-toggle').removeClass('pick');
+
+    manager.reload();
+
+    mixpanelEvents('applyReportsDateChange');
+  });
+
+  //
+  // TRACK DATE  FILTER CLICK
+  //
+  $('#wz-modal-reports .dropdown-date .dropdown-toggle').on('click', function() {
+    if ( !$(this).parent().hasClass('open') ) {
+      mixpanelEvents('clickReportsDateChange');
+    }
+  });
+
+  //
+  // RELOAD REPORT
+  //
+  $('#wz-modal-reports').find('.js-reload-report').click(function(){
+    manager.reload();
+  })
+
+
+  var filterStorage = localStorage.getItem('reportsDateRange')
+  if (!filterStorage) {
+    // Default date range (current year)
+      localStorage.setItem('reportsDateRange', 'today')
+        filterStorage = 'today';
+  }
+
+  var filter;
+  if(filterStorage.search(/\d/g) == -1){
+    // Not a timestamp, prefedined filter
+    filter = getDateRange(filterStorage);
+  } else {
+    filter = {
+      init:filterStorage.split(',')[0],
+      initText: moment(filterStorage.split(',')[0], 'x').format(DATE_FORMAT),
+      finish: filterStorage.split(',')[1],
+      finishText: moment(filterStorage.split(',')[1], 'x').format(DATE_FORMAT)
+    }
+  }
+
+  setDateValues(filter);
+
+  setDateParams({
+    date: 'range',
+    init: filter.init,
+    finish: filter.finish
+  });
+
+  //
+  // ONLOAD
+  //
+  $('#wz-modal-reports .wz-crm-menu li a').removeClass('active');
+  if (reportManager.reportsView) {
+    $('#wz-modal-reports .dropdown-export').show();
+    $('#wz-modal-reports .wz-crm-menu li[data-menu="'+reportManager.reportsView+'"] a').addClass('active');
+    reportManager.reset();
+    manager = reportManager;
+  } else {
+    $('#wz-modal-reports .dropdown-export').hide();
+    $('#wz-modal-reports .wz-crm-menu li[data-menu="dashboard"] a').addClass('active');
+    dashboardManager.load();
+    manager = dashboardManager;
+  }
+});
+</script>
+
+

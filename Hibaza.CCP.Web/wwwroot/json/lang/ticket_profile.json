@@ -1,0 +1,71 @@
+﻿{
+  "en": {
+    "back-customer": {
+      "text": "Back to customer",
+      "type": "text"
+    },
+    "open-in": {
+      "text": "Open in",
+      "type": "text"
+    },
+    "read-more": {
+      "text": "Read more...",
+      "type": "text"
+    },
+    "send-support": {
+      "text": "Send Support Message",
+      "type": "text"
+    },
+    "starred-messages": {
+      "text": "Starred Messages",
+      "type": "text"
+    },
+    "private-notes": {
+      "text": "Private notes",
+      "type": "text"
+    },
+    "files": {
+      "text": "Files",
+      "type": "text"
+    },
+    "locations": {
+      "text": "Locations",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "back-customer": {
+      "text": "Quay lại khách hàng",
+      "type": "text"
+    },
+    "open-in": {
+      "text": "Mở vào trong",
+      "type": "text"
+    },
+    "read-more": {
+      "text": "Xem thêm...",
+      "type": "text"
+    },
+    "send-support": {
+      "text": "Gửi tin nhắn hỗ trợ",
+      "type": "text"
+    },
+    "starred-messages": {
+      "text": "Thư được gắn dấu sao",
+      "type": "text"
+    },
+    "private-notes": {
+      "text": "Ghi chú riêng",
+      "type": "text"
+    },
+    "files": {
+      "text": "Files",
+      "type": "text"
+    },
+    "locations": {
+      "text": "Vị trí",
+      "type": "text"
+    }
+
+  }
+}

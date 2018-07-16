@@ -1,0 +1,170 @@
+﻿@model Hibaza.CCP.Domain.Models.TicketModel
+@{
+    Layout = null;
+}
+<div class="modal-dialog lg-ticket_add">
+    <div class="modal-content">
+        <!-- Modal Header-->
+        <div class="modal-header">
+            <button type="button" data-dismiss="modal" class="close">
+                <span aria-hidden="true">×</span><span class="sr-only lg-close">Close</span>
+            </button>
+            <h4 id="myModalLabel" class="modal-title lg-add-ticket">
+                Add a ticket
+            </h4>
+        </div>
+
+        <!-- Modal Body-->
+        <div class="modal-body">
+
+            <form id="ticket_form" role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label for="id_customer" class="control-label col-sm-3 lg-customer">
+                        Customer
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="customer_id" name="customer_id" required="">
+                            <option selected="selected" value="@(Model.customer_id)">@(Model.customer_name)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_short_description" class="control-label col-sm-3 lg-title">
+                        Title
+                    </label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="id_short_description" name="short_description" type="text">
+
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_description" class="control-label col-sm-3 lg-description">
+                        Description
+                    </label>
+                    <div class="col-sm-9">
+                        <textarea class="form-control" cols="40" id="id_description" name="description" rows="10"></textarea>
+
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_type" class="control-label col-sm-3 lg-type-of-ticket">
+                        Type of ticket
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="id_type" name="type" required="">
+                            <option selected="selected" value="0" class="lg-sale">Sale</option>
+                            <option value="1" class="lg-support">Support</option>
+                            @if (false)
+                            {
+                            <option value="2" class="lg-promotion">Promotion</option>
+                            }
+                        </select>
+
+
+                    </div>
+                </div>
+                <div class="form-group js-optional">
+                    <label for="id_status" class="control-label col-sm-3 lg-status">
+                        Status
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="id_status" name="status" required="">
+                            <option selected="selected" value="0" class="lg-pending">Pending</option>
+                            <option value="1" class="lg-attention">Attention</option>
+                            <option value="2" class="lg-completed">Completed</option>
+                            <option value="3" class="lg-rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group js-optional">
+                    <label for="id_responsability" class="control-label col-sm-3 lg-responsability">
+                        Responsability
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="id_responsability" name="responsability" required="">
+                            <option selected="selected" value="agent" class="lg-agent">Agent</option>
+                        </select>
+
+
+                    </div>
+                </div>
+                <div class="form-group js-optional">
+                    <label for="id_channel" class="control-label col-sm-3 lg-channel">
+                        Channel
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="id_channel" name="channel_id" required="">
+                            <option selected value="" class="lg-current-channel">Current Channel</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="id_subcathegory" class="control-label col-sm-3 lg-tags">
+                        Tags
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" data-role="tagsinput" class="taginput form-control" style="display: none;"><input class="wz-ticket-tags" id="id_tags" name="tags" type="hidden">
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Modal Footer-->
+        <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-default lg-cancel">
+                Cancel
+            </button>
+            <button id="js-add-ticket" type="button" class="btn btn-primary lg-save">
+                Save
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    readFileLang(localStorage.getItem("lang"), "ticket_add");
+    $("#js-add-ticket").on('click', function (e) {
+        e.preventDefault();
+        //- Add tags to hidden
+        var wzTags = $("input.taginput").tagsinput('items');
+        $('.wz-ticket-tags').val(wzTags);
+        //- End add tags to hidden
+        var url = cloud.getURLs().tickets.add + businessID + "/@(Model.thread_id)/";
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: JSON.stringify({ 
+                'customer_id': $('#customer_id').val(),
+                'customer_name': $('#customer_id option:selected').text(),
+                'description': $('#id_description').val(),
+                'short_description': $('#id_short_description').val(),
+                'type': $('#id_type').val(),
+                'status': $('#id_status').val(),
+                'tags': $('#id_tags').val()
+            }),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (t) {
+                if (!t.ok && t.view) $("#wz-modal-add-ticket").html(t.view);
+                else {
+                    cloud.getCustomerProfile(currentChat);
+                    cloud.getTicketProfile(t.data.id);
+                    viewProfileTicket(t.data.id);
+                    cloud.getLastTicket(currentChat);
+                    $("#wz-modal-add-ticket").modal('hide');
+                    mixpanelEvents("createTicketManual");
+                }
+            }
+        });
+
+    });
+</script>
+<script>
+    //- $('select[multiple="multiple"]').multipleSelect();
+    $('input.taginput').tagsinput({
+        confirmKeys: [13, 44]
+    });
+</script>

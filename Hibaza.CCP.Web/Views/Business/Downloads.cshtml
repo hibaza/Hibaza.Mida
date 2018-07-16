@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "Download conversation";
+    Layout = null;
+}
+<form enctype="multipart/form-data" class="download form-white-bg lg-download">
+    <div class="form-group-title">
+        <h3 class="lg-download-title">Conversation download</h3>
+    </div>
+    <div class="wz-container col-sm-12 col-md-12 col-lg-12">
+
+        <div class="form-group">
+            <div class="col-sm-2">
+                <label class="control-label lg-channel-select">
+                    Channel select
+                </label>
+            </div>
+            <div class="col-sm-10">
+                <select id="pagesList" class="form-control pages-list"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-2">
+                <label class="control-label lg-date-from">
+                    Date from
+                </label>
+            </div>
+            <div class="col-sm-10">
+                <input size="14" readonly="readonly" class="form-control js-filter-date-selector-init" type="text" style="display:  inline-block;">
+                <input class="form-control js-filter-date-init" type="hidden">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <label class="control-label lg-date-to">
+                    Date to
+                </label>
+            </div>
+            <div class="col-sm-10">
+                <input size="14" readonly="readonly" class="form-control js-filter-date-selector-finish" type="text" style=" display:  inline-block;">
+                <input class="form-control js-filter-date-finish" type="hidden">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <label class="control-label lg-messages">
+                    Messages
+                </label>
+            </div>
+            <div class="col-sm-10">
+                <input type="checkbox" value="checked" name="messages" class="messages">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <label class="control-label lg-comments">
+                    Comments
+                </label>
+            </div>
+            <div class="col-sm-10">
+                <input type="checkbox" value="checked" name="comments" class="comments">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12">
+                <div onclick="DownloadInit()" class="btn btn-save lg-submit">Download</div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    readFileLang(localStorage.getItem("lang"), "download");
+
+    var timestampDefault = "99999999999";
+    $(document).ready(function () {
+
+        try {
+            getChannels_download();
+            var filter = getDateRange("today");
+            $(".download .js-filter-date-selector-init").val(filter.initText);
+            $(".download .js-filter-date-init").val(filter.init);
+
+
+            $(".download .js-filter-date-selector-finish").val(filter.finishText);
+            $(".download .js-filter-date-finish").val(timestampDefault);
+
+            $('.download .js-filter-date-selector-init')
+                .on('click', function (e) { stopPropagation(e); })
+                .datepicker({
+                    dateFormat: "dd M yy",
+                    changeMonth: true,
+                    changeYear: true,
+
+                    onSelect: function (dateText, inst) {
+                        var date = new Date(dateText);
+                        var timestamp = date.getTime() / 1000;
+                        $(".download .js-filter-date-init").val(timestamp);
+                        $(".download .js-filter-date-selector-init").val(dateText);
+                    },
+                    beforeShow: function (input, inst) {
+                        inst.settings.maxDate = new Date($(".download .js-filter-date-selector-finish").val());
+                    }
+                });
+
+            //
+            // FINISH DATEPICKER
+            //
+            $('.download .js-filter-date-selector-finish')
+                .on('click', function (e) { stopPropagation(e); })
+                .datepicker({
+                    dateFormat: "dd M yy",
+                    changeMonth: true,
+                    changeYear: true,
+
+                    onSelect: function (dateText, inst) {
+                        var date = new Date(dateText);
+                        date.setDate(date.getDate() + 1);
+                        var timestamp = date.getTime() / 1000;
+                        $(".download .js-filter-date-finish").val(timestamp);
+                        $(".download .js-filter-date-selector-finish").val(dateText);
+                    },
+                    beforeShow: function (input, inst) {
+                        inst.settings.maxDate = new Date();
+                        inst.settings.minDate = new Date($(".download .js-filter-date-selector-init").val());
+                    }
+                });
+
+
+
+        } catch (e) { console.log(e); }
+    });
+
+    function DownloadInit() {
+        try {
+            var para = $(".pages-list option:selected").val() + "/" +
+                $(".js-filter-date-init").val() + "/" +
+                $(".js-filter-date-finish").val() + "/" +
+                $(".messages").prop('checked') + "/" +
+                $(".comments").prop('checked');
+          
+            $.post("business/downloads/init/" + para, function (t) {
+                var lang = localStorage.getItem("lang");
+                if (t.msg.toLowerCase().indexOf("download") >= 0) {
+                    new NotificationPlugin("OK", lang == "en" ? t.msg : "Bắt đầu tải cuộc hội thoại", 'icon-cross', null, null, longNotificationTimer);
+                }
+                else {
+                    new NotificationPlugin("Error", lang == "en" ? "Error" : "Lỗi tải cuộc hội thoại", 'icon-cross', null, null, longNotificationTimer);
+            }
+            })
+        } catch (e) { console.log(e); }
+    }
+
+    function getChannels_download() {
+        try {
+            var uri = baseUrls_Api + "brands/channels/list/" + businessID;
+            console.log(uri);
+            $.get(uri, function (o) {
+                bidingToCombobox(o.data);
+            })
+        } catch (ex) { console.log(ex); }
+    }
+
+    function bidingToCombobox(pages) {
+        $(".pages-list").removeData();
+        // pages = response.data;
+        if (pages) {
+            for (i = 0; i < pages.length; i++) {
+                $("<option>", {
+                    value: pages[i].id,
+                    text: pages[i].name
+                }).appendTo($(".pages-list"));
+            }
+        } else {
+            return false;
+        }
+
+    }
+/**
+* Document onload
+*/
+
+</script>

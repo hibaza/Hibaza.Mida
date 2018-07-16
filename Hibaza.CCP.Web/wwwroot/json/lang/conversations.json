@@ -1,0 +1,230 @@
+﻿{
+  "en": {
+    "search-customers": {
+      "text": "Search customers...",
+      "type": "text"
+    },
+    "info": {
+      "text": "Info",
+      "type": "text"
+    },
+    "conversations": {
+      "text": "Conversations",
+      "type": "text"
+    },
+    "reports": {
+      "text": "Reports",
+      "type": "text"
+    },
+    "settings": {
+      "text": "Settings",
+      "type": "text"
+    },
+    "logout": {
+      "text": "Log out",
+      "type": "text"
+    },
+    "notifications": {
+      "text": "Notifications",
+      "type": "text"
+    },
+    "no-new-alerts": {
+      "text": "No new alerts",
+      "type": "text"
+    },
+    "channels": {
+      "text": "Channels",
+      "type": "text"
+    },
+    "all": {
+      "text": "All",
+      "type": "text"
+    },
+    "agents": {
+      "text": "Agents",
+      "type": "text"
+    },
+    "pending": {
+      "text": "Pending",
+      "type": "text"
+    },
+    "assigned": {
+      "text": "Assigned",
+      "type": "text"
+    },
+    "nonreply": {
+      "text": "NonReply",
+      "type": "text"
+    },
+    "no-chats-human": {
+      "text": "No chats here, human.",
+      "type": "text"
+    },
+    "another-filter": {
+      "text": "Select another filter on the top or left menu",
+      "type": "text"
+    },
+    "view-ticket": {
+      "text": "VIEW TICKET",
+      "type": "text"
+    },
+    "unread": {
+      "text": "UNREAD",
+      "type": "text"
+    },
+    "readed": {
+      "text": "READED",
+      "type": "text"
+    },
+    "archive": {
+      "text": "ARCHIVE",
+      "type": "text"
+    },
+    "save-ticket": {
+      "text": "And save ticket as...",
+      "type": "text"
+    },
+    "opened": {
+      "text": "Opened",
+      "type": "text"
+    },
+    "successful": {
+      "text": "Successful",
+      "type": "text"
+    },
+    "rejected": {
+      "text": "Rejected",
+      "type": "text"
+    },
+    "search": {
+      "text": "SEARCH",
+      "type": "text"
+    },
+    "open": {
+      "text": "OPEN",
+      "type": "text"
+    },
+    "chat-in-facebook": {
+      "text": "Chat in Facebook",
+      "type": "text"
+    },
+    "private-reply": {
+      "text": "Private reply",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "search-customers": {
+      "text": "Tìm kiếm khách hàng...",
+      "type": "text"
+    },
+    "conversations": {
+      "text": "Hội thoại",
+      "type": "text"
+    },
+    "reports": {
+      "text": "Báo cáo",
+      "type": "text"
+    },
+    "settings": {
+      "text": "Cài đặt",
+      "type": "text"
+    },
+    "logout": {
+      "text": "Thoát",
+      "type": "text"
+    },
+    "notifications": {
+      "text": "Thông báo",
+      "type": "text"
+    },
+    "no-new-alerts": {
+      "text": "Không có thông báo mới",
+      "type": "text"
+    },
+    "channels": {
+      "text": "Các kênh",
+      "type": "text"
+    },
+    "all": {
+      "text": "Tất cả",
+      "type": "text"
+    },
+    "agents": {
+      "text": "Tài khoản ủy quyền",
+      "type": "text"
+    },
+    "pending": {
+      "text": "Chờ xử lý",
+      "type": "text"
+    },
+    "assigned": {
+      "text": "Phân tin",
+      "type": "text"
+    },
+    "nonreply": {
+      "text": "Chưa trả lời",
+      "type": "text"
+    },
+    "no-chats-human": {
+      "text": "Không có cuộc hội thoại nào.",
+      "type": "text"
+    },
+    "another-filter": {
+      "text": "Chọn lọc khác trên đỉnh hoặc menu bên trái",
+      "type": "text"
+    },
+    "view-ticket": {
+      "text": "Xem TICKET",
+      "type": "text"
+    },
+    "unread": {
+      "text": "CHƯA ĐỌC",
+      "type": "text"
+    },
+    "readed": {
+      "text": "ĐÃ ĐỌC",
+      "type": "text"
+    },
+    "archive": {
+      "text": "LƯU",
+      "type": "text"
+    },
+    "save-ticket": {
+      "text": "và lưu ticket...",
+      "type": "text"
+    },
+    "opened": {
+      "text": "Đã xem",
+      "type": "text"
+    },
+    "successful": {
+      "text": "Thành công",
+      "type": "text"
+    },
+    "rejected": {
+      "text": "Từ chối",
+      "type": "text"
+    },
+    "search": {
+      "text": "TÌM KIẾM",
+      "type": "text"
+    },
+    "open": {
+      "text": "MỞ",
+      "type": "text"
+    },
+    "chat-in-facebook": {
+      "text": "Chat in Facebook",
+      "type": "text"
+    },
+    "private-reply": {
+      "text": "Trả lời riêng",
+      "type": "text"
+    },
+    "info": {
+      "text": "Thông tin",
+      "type": "text"
+    }
+  }
+}

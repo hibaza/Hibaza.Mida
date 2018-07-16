@@ -1,0 +1,177 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hibaza - Signup</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="meta desc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=0" />
+    <link id="favicon" rel="icon" type="image/png" href="/partners/square/hibaza.png" />
+    <link rel="stylesheet" type="text/css" href="/css/site.css?v=@(ViewBag.Version)" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/config.js?v=@(ViewBag.Version)"></script>
+</head>
+<body style="background-image:url('/images/login-background.jpg')" class="wz-overflow">
+
+    <div class="container lg-register">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-md-offset-3 col-sm-offset-2 wz-margin-t-50">
+                <div class="steps">
+                    <div id="step-1">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <header>
+                                    <img src="/partners/white/hibaza.png" width="100" />
+                                    <h3 class="lg-ask-invitation">
+                                        Ask for your invitation<br /> to Hibaza
+                                    </h3>
+                                </header>
+                                <div class="form-container">
+
+                                    <form id="register-form" method="POST" class="form wz-margin-t-35">
+                                        <input type='hidden' name='csrfmiddlewaretoken' value='vv39agz184smvbJrhOD1y5QMMLV3KRJeWILFp6igytMYrc2MyNZZuB3G7vBhxOPf' />
+                                        <div class="form-group">
+                                            <label class="control-label lg-your-company">
+                                                Your company name
+                                            </label>
+                                            <input class="form-control" id="id_business" name="business_name" type="text" required />
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label lg-your-email">
+                                                Your email
+                                            </label>
+                                            <input class="form-control" id="id_email" name="email" type="email" required />
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label lg-password">
+                                                Password
+                                            </label>
+                                            <input class="form-control" id="id_password" name="password" type="password" required />
+
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label lg-repeat-password">
+                                                Repeat password
+                                            </label>
+                                            <input class="form-control" id="id_password_confirmation" name="password_confirmation" type="password" required />
+
+
+                                        </div>
+                                        <div id="accept-terms" class="form-group terms-conditions">
+                                            <span class="icon-none wz-check"></span><span><i class="lg-read-and-agree"> I have read and agree to the</i><a target="_blank" href="https://www.hibaza.com/terms/" class="lg-terms">Terms</a> <i class="lg-and">and </i><a target="_blank" href="https://www.hibaza.com/privacy/" class="lg-privacy-policy">Privacy Policy</a></span>
+                                        </div>
+                                    </form>
+                                    <script>
+                                        $('#accept-terms').on('click', function (e) {
+                                            if (e.target.nodeName != "A")
+                                                $('#accept-terms').toggleClass('active');
+                                        });
+                                    </script>
+                                </div>
+                                <footer class="wz-margin-t-35">
+                                    <div class="btn btn-default js-send-register lg-register">Register</div>
+                                    <p>
+                                       <span class="lg-already_account"> Already have an account?</span><a href="/login" class="lg-login">Login</a>
+                                    </p>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+var apiURL = '@(ViewBag.ApiUrl)';
+$(function(){
+
+
+    $('.js-send-register').on('click', function (e) {
+        e.preventDefault();
+    $("#accept-terms").removeClass("error");
+    if ($('#accept-terms').hasClass('active')) {
+      form = $("#register-form").submit();
+    } else {
+      setTimeout(function() {
+        $(".terms-conditions").addClass("error")
+      }, 200);
+    }
+
+  });
+  $('#register-form').on('submit', function (e) {
+      e.preventDefault();
+      $.ajax({
+          url: apiURL + "brands/agents/register/",
+          type: "POST",
+          data: new FormData(document.getElementById("register-form")),
+          contentType: false,
+          cache: false,
+          processData: false,
+          success: function (o) {
+              if (o.ok) {
+                  if (o.page) {
+                      $('.form-container').html(o.page);
+                  }
+                  else {
+                      //nextStep($('.js-send-register'));
+                      window.location.href = "/confirm/" + o.data;
+                  }
+              }
+          }
+      });
+  });
+
+ $('#register-form').keypress(function(e) {
+     if (e.keyCode == 13) {
+      e.preventDefault();
+      $('.js-send-register').trigger('click');
+    }
+  });
+});
+    </script>
+    <script type="text/javascript" src="/js/tagsinput.js"></script>
+    <script type="text/javascript" src="/js/lang.js"></script>
+    <script>
+        // SIGNUP SIGNIN JS FUNCTIONS
+        readFileLang(localStorage.getItem("lang"), "register");
+        signUp();
+        firstSetup();
+
+        function signUp() {
+            $('.js-step').click(function () {
+                var target = $(this).attr('data-target');
+                $(this).parent().parent().parent().parent().slideUp("slow", function () {
+                    $(target).slideDown();
+                });
+            });
+        }
+
+        function nextStep(launcher) {
+            var target = launcher.attr('data-target');
+            launcher.parent().parent().parent().parent().slideUp("slow", function () {
+                $(target).slideDown();
+            });
+
+        }
+
+
+        function firstSetup() {
+
+            if ($('#first-setup').length > 0) {
+                $('input.taginput').tagsinput({
+                    confirmKeys: [13, 44]
+                });
+            }
+
+        }
+    </script>
+</body>
+</html>

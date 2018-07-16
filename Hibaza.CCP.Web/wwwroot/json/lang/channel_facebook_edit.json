@@ -1,0 +1,128 @@
+﻿{
+  "en": {
+    "channels": {
+      "text": "Thêm kênh facebook",
+      "type": "text"
+    },
+    "instructions": {
+      "text": "Hướng dẫn",
+      "type": "text"
+    },
+    "log-into-facebook": {
+      "text": "1. Login vào tài khoản Facebook của bạn",
+      "type": "text"
+    },
+    "integrate-page": {
+      "text": "Hãy đảm bảo trình duyệt của bạn không chặn cửa sổ bật lên, nếu không, hãy nhấp vào nút Đăng nhập Facebook.",
+      "type": "text"
+    },
+    "select-facebook-page": {
+      "text": "2. Chọn một trang Facebook",
+      "type": "text"
+    },
+    "logged-facebook": {
+      "text": "Sau khi đăng nhập Facebook, chúng tôi có thể truy xuất các Trang Facebook liên quan đến tài khoản của bạn. Chọn một trang từ menu thả xuống.",
+      "type": "text"
+    },
+    "share-facebook-page": {
+      "text": "3. Chia sẻ trang Facebook của bạn",
+      "type": "text"
+    },
+    "submitted-share-page": {
+      "text": "Sau khi gửi, hãy chia sẻ trang Facebook của bạn với khách hàng của bạn để bắt đầu cuộc trò chuyện!",
+      "type": "text"
+    },
+    "first-log-into-facebook": {
+      "text": "Đầu tiên, bấm vào đây để đăng nhập vào Facebook",
+      "type": "text"
+    },
+    "advanced-options": {
+      "text": "Tùy chọn nâng cao",
+      "type": "text"
+    },
+    "channel-select": {
+      "text": "Chọn kênh",
+      "type": "text"
+    },
+
+    "channel-name-change": {
+      "text": "Thay tên",
+      "type": "text"
+    },
+    "send-messenger-code": {
+      "text": "'Gửi tới Messenger'",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Quay lại",
+      "type": "text"
+    },
+    "save": {
+      "text": "Cập nhật",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "channels": {
+      "text": "Channels",
+      "type": "text"
+    },
+    "instructions": {
+      "text": "Instructions",
+      "type": "text"
+    },
+    "log-into-facebook": {
+      "text": "1. Log into Facebook",
+      "type": "text"
+    },
+    "integrate-page": {
+      "text": "In ticket to integrate your FB Page, you need to log into Facebook. Please ensure your browser is not blocking pop-ups, otherwise click the Facebook Log In button.",
+      "type": "text"
+    },
+    "select-facebook-page": {
+      "text": "2. Select a Facebook page",
+      "type": "text"
+    },
+    "logged-facebook": {
+      "text": "Once logged in Facebook, we can retrieve the Facebook Pages related to your account. Select one from the dropdown.",
+      "type": "text"
+    },
+    "share-facebook-page": {
+      "text": "3. Share your Facebook page",
+      "type": "text"
+    },
+    "submitted-share-page": {
+      "text": "Once submitted, share your Facebook page with your customers to start talking!",
+      "type": "text"
+    },
+    "first-log-into-facebook": {
+      "text": "First, click here to log into Facebook",
+      "type": "text"
+    },
+    "advanced-options": {
+      "text": "Advanced options",
+      "type": "text"
+    },
+    "channel-select": {
+      "text": "Channel select",
+      "type": "text"
+    },
+
+    "channel-name-change": {
+      "text": "Name change",
+      "type": "text"
+    },
+    "send-messenger-code": {
+      "text": "'Send to Messenger' button code",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Back",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,146 @@
+﻿@model Hibaza.CCP.Domain.Models.AgentModel
+@{ 
+    ViewBag.Title = "Add-edit agent";
+    Layout = null;
+}
+
+    <form id="form-settings-agent" enctype="multipart/form-data" class="lg-agent_edit">
+        <div class="form-group-title">
+            <h3>
+                <a href="#" data-target="#agents-main" data-targethide="#agents-edit" class="js-show-edit lg-agents">Agents</a>&gt; @(Model.first_name) @(Model.last_name)
+            </h3>
+        </div>
+        <div class="form-group wz-container col-xs-12">
+            <div class="wz-icon-buttons">
+                <div class="dropdown wz-margin-l-20 wz-margin-t-15">
+                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div data-agent="@(Model.id)" class="btn btn-full agent">
+                            <div class="btn-subhead">
+                                <div href="#" data-toggle="tooltip" title="Online" data-placement="top" data-container="body" class="icon-ball Online"></div>
+                                <div class="icon-cog"></div>
+                            </div>
+                            <div style="background-image: url(@(string.IsNullOrWhiteSpace(Model.avatar) ? "/avatars/bot.png" : Model.avatar))" class="wz-agent-avatar js-picture-agent-@(Model.id)"></div>
+                        </div>
+                    </a>
+                    <ul aria-labelledby="dLabel" class="dropdown-menu">
+                        <li>
+                            <a href="#" class="js-show-edit-avatar"><span class="wz-font-s-md wz-font-w-med lg-edit"> Edit<i class="pull-right icon-image"></i></span></a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="wz-file-upload hide">
+                    <div class="row">
+                        <label class="control-label lg-avatar">
+                            Avatar
+                        </label><span class="js-custom-file">
+                            <input accept="image/*" class="form-control" id="id_avatar" name="avatar_file" type="file">
+
+                            <input type="text" class="wz-cursor-hand form-control" readonly="" placeholder="No file selected">
+                            <div class="btn btn-info btn-browse js-browse">
+                                <i class="icon-search"></i><span class="lg-browse">Browse</span>
+                            </div>
+                            <div class="btn btn-info btn-pink btn-upload js-upload hide">
+                                <i class="icon-upload"></i><span class="lg-upload">Upload</span>
+                            </div>
+                        </span>
+                        <label for="id_zipcode" class="error alert-danger js-custom-error hide lg-error-try-again">
+                            An error ocurred. Please, try again later or contact us.
+                        </label>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="control-label lg-first-name">
+                    First name
+                </label>
+                <input class="form-control input-big" id="id_first_name" name="first_name" type="text" value="@(Model.first_name)" required="">
+
+
+            </div>
+            <div class="row">
+                <label class="control-label lg-last-name">
+                    Last Name
+                </label>
+                <input class="form-control input-big" id="id_last_name" name="last_name" type="text" value="@(Model.last_name)" required="">
+
+
+            </div>
+            <div class="row">
+                <label class="control-label lg-password">
+                    Password
+                </label>
+                <input class="form-control" id="id_password" name="password" type="password">
+
+
+            </div>
+            <div class="row">
+                <label class="control-label lg-confirm-password">
+                    Confirm your password
+                </label>
+                <input class="form-control" id="id_password_confirmation" name="password_confirmation" type="password">
+
+
+            </div>
+            <div class="row">
+                <label class="control-label">
+                    Email
+                </label>
+                <input class="form-control" id="id_email" name="email" type="email" value="@(Model.email)">
+
+
+            </div>
+
+            <div class="form-group">
+                <div data-target="#agents-main" data-targethide="#agents-edit" class="btn btn-cancel js-show-edit lg-cancel">Cancel</div>
+                <div id="submit-settings-agent" class="btn btn-save lg-save">Save</div>
+            </div>
+        </div>
+    </form>
+    <script>
+/**
+* Document onload
+*/
+        $(function () {
+
+            readFileLang(localStorage.getItem("lang"), "agent_edit"); 
+  settingsUI('#form-settings-agent');
+            $("#form-settings-agent #submit-settings-agent").on("click", function () {
+               
+    $(this).attr('disabled', true);
+    saveAgent('@(Model.id)' == '' ? undefined : '@(Model.id)');
+  });
+  $('#form-settings-agent .js-show-edit-avatar').on("click", function(e){
+    $('#form-settings-agent .wz-file-upload').hide().removeClass('hide').fadeToggle(200);
+  });
+
+  $("#form-settings-agent .js-upload").on("click", function(e){
+    e.preventDefault();
+    var $self = $(this);
+    $self.parent().parent().find('.js-custom-error').addClass('hide');
+    $self.attr('disabled', true);
+    cloud.sendForm(
+      document.getElementById("form-settings-agent"),
+      cloud.getURLs().agents.data.save_avatar + '@(Model.id)',
+      function(data){
+        if(data.ok){
+          $.post(cloud.getURLs().agents.edit + '@(Model.id)', function(o){
+            if(o.view){
+              $('#agents-main').addClass('hide');
+              $('#agents-edit').addClass('col-lg-8');
+              $('#agents-edit').removeClass('hide');
+              $("#agents-edit").html(o.view);
+              $("#agents-edit .js-show-edit").on('click', cloud.loadSettingsAgents)
+            }
+          });
+        } else {
+          $self.parent().parent().find('.js-custom-error').removeClass('hide');
+          $self.attr('disabled', false);
+        }
+      });
+  });
+
+});
+</script>

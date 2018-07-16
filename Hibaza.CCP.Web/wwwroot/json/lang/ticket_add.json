@@ -1,0 +1,175 @@
+﻿{
+  "en": {
+    "close": {
+      "text": "Close",
+      "type": "text"
+    },
+    "add-ticket": {
+      "text": "Add a ticket",
+      "type": "text"
+    },
+    "customer": {
+      "text": "Customer",
+      "type": "text"
+    },
+    "title": {
+      "text": "Title",
+      "type": "text"
+    },
+    "description": {
+      "text": "Description",
+      "type": "text"
+    },
+    "type-of-ticket": {
+      "text": "Type of ticket",
+      "type": "text"
+    },
+    "sale": {
+      "text": "Sale",
+      "type": "text"
+    },
+    "support": {
+      "text": "Support",
+      "type": "text"
+    },
+    "promotion": {
+      "text": "Promotion",
+      "type": "text"
+    },
+    "status": {
+      "text": "Status",
+      "type": "text"
+    },
+    "pending": {
+      "text": "Pending",
+      "type": "text"
+    },
+    "attention": {
+      "text": "Attention",
+      "type": "text"
+    },
+    "completed": {
+      "text": "Completed",
+      "type": "text"
+    },
+    "rejected": {
+      "text": "Rejected",
+      "type": "text"
+    },
+    "responsability": {
+      "text": "Responsability",
+      "type": "text"
+    },
+    "agent": {
+      "text": "Agent",
+      "type": "text"
+    },
+    "channel": {
+      "text": "Channel",
+      "type": "text"
+    },
+    "current-channel": {
+      "text": "Current Channel",
+      "type": "text"
+    },
+    "tags": {
+      "text": "Tags",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Cancel",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+  "vi":{
+    "close": {
+      "text": "Đóng",
+      "type": "text"
+    },
+    "add-ticket": {
+      "text": "Thêm sự vụ",
+      "type": "text"
+    },
+    "customer": {
+      "text": "Khách hàng",
+      "type": "text"
+    },
+    "title": {
+      "text": "Chủ đề",
+      "type": "text"
+    },
+    "description": {
+      "text": "Mô tả",
+      "type": "text"
+    },
+    "type-of-ticket": {
+      "text": "Sự vụ dạng?",
+      "type": "text"
+    },
+    "sale": {
+      "text": "Bán hàng",
+      "type": "text"
+    },
+    "support": {
+      "text": "Hỗ trợ",
+      "type": "text"
+    },
+    "promotion": {
+      "text": "Khuyến mãi",
+      "type": "text"
+    },
+    "status": {
+      "text": "Trạng thái",
+      "type": "text"
+    },
+    "pending": {
+      "text": "Chờ xử lý",
+      "type": "text"
+    },
+    "attention": {
+      "text": "Chú ý",
+      "type": "text"
+    },
+    "completed": {
+      "text": "Sử lý xong",
+      "type": "text"
+    },
+    "rejected": {
+      "text": "Từ chối",
+      "type": "text"
+    },
+    "responsability": {
+      "text": "Trách nhiệm",
+      "type": "text"
+    },
+    "agent": {
+      "text": "Tài khoản ủy quyền",
+      "type": "text"
+    },
+    "channel": {
+      "text": "Kênh",
+      "type": "text"
+    },
+    "current-channel": {
+      "text": "Kênh hiện tại",
+      "type": "text"
+    },
+    "tags": {
+      "text": "Thẻ",
+      "type": "text"
+    },
+    "cancel": {
+      "text": "Thôi",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+
+  }
+}

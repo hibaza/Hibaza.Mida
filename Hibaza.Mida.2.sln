@@ -1,0 +1,106 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.Web", "Hibaza.CCP.Web\Hibaza.CCP.Web.csproj", "{0CADFBF2-9C5C-4799-AF5E-3E75B7D4B601}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.Api", "Hibaza.CCP.Api\Hibaza.CCP.Api.csproj", "{1E669A8E-8DEC-4C1D-975C-1E595754958A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.Core", "Hibaza.CCP.Core\Hibaza.CCP.Core.csproj", "{44CA8945-AD94-47B5-A900-C130493D2372}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.Data", "Hibaza.CCP.Data\Hibaza.CCP.Data.csproj", "{8D368DE3-1ED4-4156-80B4-EE3A2B75FFE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.Domain", "Hibaza.CCP.Domain\Hibaza.CCP.Domain.csproj", "{07142719-A8F3-4100-A4BB-F52EB075F9E1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.Firebase", "Hibaza.CCP.Firebase\Hibaza.CCP.Firebase.csproj", "{20DE9801-D754-426B-8C90-8002AD4F24B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.Firebase.Auth", "Hibaza.CCP.Firebase.Auth\Hibaza.CCP.Firebase.Auth.csproj", "{4C1D3361-4A94-42F7-80C6-93FE7D0454A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.FirebaseStorage", "Hibaza.CCP.FirebaseStorage\Hibaza.CCP.FirebaseStorage.csproj", "{C060147B-DB82-41D0-9B16-DA439432C2CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hibaza.CCP.Service", "Hibaza.CCP.Service\Hibaza.CCP.Service.csproj", "{619E04CA-0AF6-408D-BF17-204C4724DACA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0CADFBF2-9C5C-4799-AF5E-3E75B7D4B601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CADFBF2-9C5C-4799-AF5E-3E75B7D4B601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CADFBF2-9C5C-4799-AF5E-3E75B7D4B601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CADFBF2-9C5C-4799-AF5E-3E75B7D4B601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E669A8E-8DEC-4C1D-975C-1E595754958A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E669A8E-8DEC-4C1D-975C-1E595754958A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E669A8E-8DEC-4C1D-975C-1E595754958A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E669A8E-8DEC-4C1D-975C-1E595754958A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44CA8945-AD94-47B5-A900-C130493D2372}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44CA8945-AD94-47B5-A900-C130493D2372}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44CA8945-AD94-47B5-A900-C130493D2372}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44CA8945-AD94-47B5-A900-C130493D2372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D368DE3-1ED4-4156-80B4-EE3A2B75FFE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D368DE3-1ED4-4156-80B4-EE3A2B75FFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D368DE3-1ED4-4156-80B4-EE3A2B75FFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D368DE3-1ED4-4156-80B4-EE3A2B75FFE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07142719-A8F3-4100-A4BB-F52EB075F9E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07142719-A8F3-4100-A4BB-F52EB075F9E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07142719-A8F3-4100-A4BB-F52EB075F9E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07142719-A8F3-4100-A4BB-F52EB075F9E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20DE9801-D754-426B-8C90-8002AD4F24B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20DE9801-D754-426B-8C90-8002AD4F24B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20DE9801-D754-426B-8C90-8002AD4F24B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20DE9801-D754-426B-8C90-8002AD4F24B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C1D3361-4A94-42F7-80C6-93FE7D0454A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1D3361-4A94-42F7-80C6-93FE7D0454A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1D3361-4A94-42F7-80C6-93FE7D0454A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1D3361-4A94-42F7-80C6-93FE7D0454A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C060147B-DB82-41D0-9B16-DA439432C2CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C060147B-DB82-41D0-9B16-DA439432C2CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C060147B-DB82-41D0-9B16-DA439432C2CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C060147B-DB82-41D0-9B16-DA439432C2CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{619E04CA-0AF6-408D-BF17-204C4724DACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{619E04CA-0AF6-408D-BF17-204C4724DACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{619E04CA-0AF6-408D-BF17-204C4724DACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{619E04CA-0AF6-408D-BF17-204C4724DACA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {850F424E-B2F6-4557-9509-0B649C3C704F}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://hibaza.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Hibaza.CCP.Web\\Hibaza.CCP.Web.csproj
+		SccProjectName1 = Hibaza.CCP.Web
+		SccLocalPath1 = Hibaza.CCP.Web
+		SccProjectUniqueName2 = Hibaza.CCP.Api\\Hibaza.CCP.Api.csproj
+		SccProjectName2 = Hibaza.CCP.Api
+		SccLocalPath2 = Hibaza.CCP.Api
+		SccProjectUniqueName3 = Hibaza.CCP.Core\\Hibaza.CCP.Core.csproj
+		SccProjectName3 = Hibaza.CCP.Core
+		SccLocalPath3 = Hibaza.CCP.Core
+		SccProjectUniqueName4 = Hibaza.CCP.Data\\Hibaza.CCP.Data.csproj
+		SccProjectName4 = Hibaza.CCP.Data
+		SccLocalPath4 = Hibaza.CCP.Data
+		SccProjectUniqueName5 = Hibaza.CCP.Domain\\Hibaza.CCP.Domain.csproj
+		SccProjectName5 = Hibaza.CCP.Domain
+		SccLocalPath5 = Hibaza.CCP.Domain
+		SccProjectUniqueName6 = Hibaza.CCP.Firebase\\Hibaza.CCP.Firebase.csproj
+		SccProjectName6 = Hibaza.CCP.Firebase
+		SccLocalPath6 = Hibaza.CCP.Firebase
+		SccProjectUniqueName7 = Hibaza.CCP.Firebase.Auth\\Hibaza.CCP.Firebase.Auth.csproj
+		SccProjectName7 = Hibaza.CCP.Firebase.Auth
+		SccLocalPath7 = Hibaza.CCP.Firebase.Auth
+		SccProjectUniqueName8 = Hibaza.CCP.FirebaseStorage\\Hibaza.CCP.FirebaseStorage.csproj
+		SccProjectName8 = Hibaza.CCP.FirebaseStorage
+		SccLocalPath8 = Hibaza.CCP.FirebaseStorage
+		SccProjectUniqueName9 = Hibaza.CCP.Service\\Hibaza.CCP.Service.csproj
+		SccProjectName9 = Hibaza.CCP.Service
+		SccLocalPath9 = Hibaza.CCP.Service
+	EndGlobalSection
+EndGlobal

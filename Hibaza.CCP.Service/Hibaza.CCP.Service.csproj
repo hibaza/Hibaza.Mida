@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.7.0-beta1" />
+    <PackageReference Include="NETStandard.Library" Version="2.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hibaza.CCP.Data\Hibaza.CCP.Data.csproj" />
+    <ProjectReference Include="..\Hibaza.CCP.Domain\Hibaza.CCP.Domain.csproj" />
+    <ProjectReference Include="..\Hibaza.CCP.FirebaseStorage\Hibaza.CCP.FirebaseStorage.csproj" />
+    <ProjectReference Include="..\Hibaza.CCP.Firebase\Hibaza.CCP.Firebase.csproj" />
+  </ItemGroup>
+
+</Project>

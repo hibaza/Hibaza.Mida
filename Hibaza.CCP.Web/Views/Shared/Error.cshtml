@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="lg-shared_error">
+    <h1 class="text-danger lg-error">Error.</h1>
+    <h2 class="text-danger lg-error-processing">An error occurred while processing your request.</h2>
+
+    <h3 class="lg-development-mode">Development Mode</h3>
+    <p class="lg-development-environment">
+        Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
+    </p>
+    <p class="lg-environment-not-enabled">
+        <strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.
+    </p>
+</div>
+<script>
+    readFileLang(localStorage.getItem("lang"), "shared_error");
+
+</script>

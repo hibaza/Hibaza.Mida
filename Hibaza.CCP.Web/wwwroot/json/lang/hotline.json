@@ -1,0 +1,54 @@
+﻿{
+  "en": {
+    "outgoing-enable": {
+      "text": "Outgoing enable",
+      "type": "text"
+    },
+    "outgoing-display-name": {
+      "text": "Outgoing display name",
+      "type": "text"
+    },
+    "not-select": {
+      "text": "Not Select",
+      "type": "text"
+    },
+    "event-receive-enable": {
+      "text": "Event receive enable",
+      "type": "text"
+    },
+    "event-receive-hotline": {
+      "text": "Event receive hotline",
+      "type": "text"
+    },
+    "save": {
+      "text": "Save",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "outgoing-enable": {
+      "text": "Cho phép gọi ra ngoài",
+      "type": "text"
+    },
+    "outgoing-display-name": {
+      "text": "Tên hiển thị",
+      "type": "text"
+    },
+    "not-select": {
+      "text": "Chưa chọn",
+      "type": "text"
+    },
+    "event-receive-enable": {
+      "text": "Cho phép nhận sự kiện",
+      "type": "text"
+    },
+    "event-receive-hotline": {
+      "text": "Hotline nhận sự kiện",
+      "type": "text"
+    },
+    "save": {
+      "text": "Lưu",
+      "type": "text"
+    }
+  }
+}

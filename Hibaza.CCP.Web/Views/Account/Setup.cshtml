@@ -1,0 +1,206 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hibaza - Signup</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="meta desc" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1, user-scalable=0" />
+    <link id="favicon" rel="icon" type="image/png" href="/partners/square/hibaza.png" />
+    <link rel="stylesheet" type="text/css" href="/css/site.css?v=@(ViewBag.Version)" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/config.js?v=@(ViewBag.Version)"></script>
+    <script src="~/js/lang.js"></script>
+</head>
+<body style="background-image:url('/images/ui.jpg')" class="wz-overflow lg-account_setup">
+
+    <!-- TODO: vamos a pedir los mínimos datos obligatorios iniciales para que el cliente pueda empezar a usar la plataforma. El resto de datos obligatorios que no tengamos aquí los pondremos inicialmente por defecto y una vez completado este formulario le diremos al cliente que puede completar el resto de datos en settings.-->
+    <div id="first-setup" class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-md-offset-3 col-sm-offset-2 wz-margin-t-50">
+                <div class="steps">
+                    <div id="step-1">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <header>
+                                    <i class="icon-zami-01"></i>
+                                    <h3 class="wz-margin-t-35 lg-welcome-human">
+                                        Welcome, human.<br /><br />
+                                        My name is Zami and I'm going<br />to set up your account.
+                                    </h3>
+                                </header>
+                                <footer class="wz-margin-t-35">
+                                    <div data-target="#step-2" class="btn btn-default js-step btn-big btn-pink">
+                                        <div class="pull-left lg-let-go">
+                                            Let's go!
+                                        </div>
+                                        <div class="pull-right">
+                                            <i class="icon-pe-arrow-right"></i>
+                                        </div>
+                                    </div>
+                                    <p>
+                                        <span class="wz-progress-bar"><i style="width:20%;" class="wz-progress"></i></span>
+                                    </p>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-2" style="display:none;">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <header>
+                                    <i class="icon-zami-01"></i>
+                                    <h3 class="wz-margin-t-35 lg-who-you-are">
+                                        First, I need to know<br />who you are.
+                                    </h3>
+                                </header>
+                                <div class="container-form-agent">
+
+                                    <form id="form-agent" class="form wz-margin-t-35">
+                                        <div class="form-group">
+                                            <label class="control-label label-big lg-first-name">
+                                                Your first name
+                                            </label>
+                                            <input class="form-control input-big" id="id_first_name" name="first_name" type="text" required />
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label label-big lg-last-name">
+                                                Your last name
+                                            </label>
+                                            <input class="form-control input-big" id="id_last_name" name="last_name" type="text" required />
+
+                                        </div>
+
+
+                                    </form>
+                                </div>
+                                <footer class="wz-margin-t-35">
+                                    <div data-target="#step-3" class="btn btn-default btn-big js-agent-form-save lg-next">Next</div>
+                                    <p>
+                                        <span class="wz-progress-bar"><i style="width:60%;" class="wz-progress"></i></span>
+                                    </p>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-3" style="display:none;">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <header>
+                                    <i class="icon-zami-01"></i>
+                                    <h3 class="wz-margin-t-35 lg-invite-team-members">
+                                        Invite your team members
+                                    </h3>
+                                </header>
+                                <form class="form wz-margin-t-35">
+                                    <div class="form-group">
+                                        <label class="control-label label-big lg-emails-separated">
+                                            Emails separated by comas
+                                        </label><span class="help-block lg-add-later">*You can add it later</span>
+                                        <input id="member-emails" type="text" data-role="tagsinput" class="taginput form-control" />
+                                    </div>
+                                </form>
+                                <footer class="wz-margin-t-35">
+                                    <div class="btn btn-default btn-big btn-pink js-member-emails-send lg-finish">Finish</div>
+                                    <p>
+                                        <span class="wz-progress-bar"><i style="width:100%;" class="wz-progress"></i></span>
+                                    </p>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        readFileLang(localStorage.getItem("lang"), "account_setup"); 
+
+var apiURL = '@(ViewBag.ApiUrl)';
+$('.js-agent-form-save').on('click', function(){
+$.ajax({
+    url: apiURL + 'brands/agents/save_name/' + '@(ViewBag.agent_id)',
+    type: "POST",
+    data: new FormData(document.getElementById("form-agent")),
+    contentType: false,
+    cache: false,
+    processData: false,
+    success: function (o) {
+        if (o.ok) {
+            if (o.page) {
+                $('.container-form-agent').html(o.page);
+            }
+            else {
+                nextStep($('.js-agent-form-save'));
+            }
+        }
+    }
+  })
+});
+        $('.js-member-emails-send').on('click', function () {
+            $.ajax({
+                url: apiURL + 'brands/agents/invite/' + '@(ViewBag.agent_id)',
+                type: "POST",
+                data: JSON.stringify({emails : $('#member-emails').val() }),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (o) {
+                    if(o.ok){
+                        window.location.href = "/complete/" + @(ViewBag.agent_id);
+                    }
+                }
+            });
+        });
+
+// Fix to prevent display:none on .panel div
+$('.js-back-button').click(function(){
+  targetId = $(this).data('target');
+  $target = $(targetId);
+  $target.find('.panel').slideDown("slow");
+});
+$(function(){
+  //analytics.track("Submit Register Form");
+  //ga('send', 'event', 'forms', 'complete', 'complete-trial-register');
+})
+</script>
+<script type="text/javascript" src="/js/tagsinput.js"></script>
+<script>
+// SIGNUP SIGNIN JS FUNCTIONS
+signUp();
+firstSetup();
+
+function signUp(){
+  $('.js-step').click(function(){
+    var target = $(this).attr('data-target');
+    $(this).parent().parent().parent().parent().slideUp("slow",function(){
+      $(target).slideDown();
+    });
+  });
+}
+
+function nextStep(launcher){
+  var target = launcher.attr('data-target');
+  launcher.parent().parent().parent().parent().slideUp("slow",function(){
+    $(target).slideDown();
+  });
+}
+
+
+function firstSetup(){
+
+  if($('#first-setup').length > 0){
+    $('input.taginput').tagsinput({
+      confirmKeys: [13, 44]
+    });
+  }
+
+}
+
+    </script>
+</body>
+</html>

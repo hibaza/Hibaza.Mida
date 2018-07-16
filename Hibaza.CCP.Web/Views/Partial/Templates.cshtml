@@ -1,0 +1,462 @@
+﻿@{
+    Layout = null;
+}
+<div class="lg-partial_templates">
+    <script type="text/html" class="js-loadtemplate-ticket">
+        <li style="${hidden}" data-status="${status}" data-responsability="${responsability}" data-agent="${agent}" data-key="${key}" onclick="cloud.getTicketProfile(${key});viewProfileTicket();" class="list-group-item wz-flex-card js-ticket">
+            <!--class active-->
+            <div class="wz-flex-card-item">
+                <img src="/avatars/${phone}.jpg" alt="" WIDTH="40" class="img-circle" />
+            </div>
+            <div class="wz-flex-card-item js-ticket-search-field">
+                <p class="wz-font-w-med">${description}</p>
+                <p class="wz-font-w-med wz-font-s-sm">
+                    <span class="wz-client">${customer}</span><span class="wz-date">${date}</span>
+                </p>
+            </div>
+            <div class="wz-flex-card-item">
+                <div href="" onclick="" class="btn btn-info">
+                    ${status_display}
+                </div><br />
+                <div href="" onclick="" class="btn btn-info">
+                    ${responsability_display}
+                </div>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-contact">
+        <li timestamp="${date}" data-key="${key}" onclick="firebaseService.setMainChat('${key}'); viewProfileClient(); cloud.getLastTicket('${key}'); getCustomerAi('${id}', '${facebook_id}');" data-agent="${assigned}" data-status="${status}" data-selector="${selector}" class="list-group-item wz-flex-card js-contact-${key} ${unread} ${archived}">
+            <div class="wz-flex-card-item">
+                <div title="${name}" style="background-image:url(${picture})" class="wz-contact-avatar js-picture-${key} ${avatar_img}"></div>
+                <div title="${name}" class="wz-contact-avatar js-avatar-${key} ${avatar_div}">
+                    <p>${initials}</p>
+                </div>
+            </div>
+            <div class="wz-flex-card-item js-contacts-search-field">
+                <p class="wz-font-w-med">
+                    <span class="wz-contact-name js-name-${key}">${name}</span><i class="js-channel-icon ${unread} icon-${channel_ico}"></i>
+                </p>
+                <p class="${unread} wz-font-s-sm js-last-message-${key}">${last_message}</p>
+                <p class="wz-font-w-reg wz-font-s-sm">
+                    <span class="wz-date js-date-${key}"><span class="js-channel-name wz-padding-r-5 ${channel_status}">${channel_name}</span><span class="js-render-date">${render_date}</span></span>
+                </p>
+            </div>
+            <div class="wz-flex-card-item">
+                <div href="" onclick="${assigned_function}" class="js-status ${btn_class}">${assigned_text}</div>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-conversation">
+        <li timestamp="${date}" data-key="${key}" onclick="firebaseService.setMainChat('${id}', '${key}'); viewProfileClient(); cloud.getLastTicket('${id}');getCustomerAi('${id}', '${facebook_id}');" data-agent="${assigned}" data-status="${status}" data-selector="${selector}" class="list-group-item wz-flex-card js-contact-${key} ${unread} ${archived}">
+            <!--class active ...djfd ${channel_ico}-->
+            <div class="wz-flex-card-item" style="font-size:25px; padding-top:10px">
+                <i class="js-channel-icon icon-${channel_ico}"></i>
+            </div>
+            <div class="wz-flex-card-item js-contacts-search-field">
+                <p class="wz-font-w-reg wz-font-s-sm">
+                    <span class="wz-date js-date-${key}"><span class="js-channel-name ${channel_status} wz-padding-r-5">${channel_name}</span><span class="js-render-date">${render_date}</span></span>
+                </p>
+                <p class="wz-font-s-sm js-last-message-${key}">${last_message}</p>
+                <p class="wz-font-w-med">
+                    <span class="wz-contact-name  js-name-${key} ">${name}</span>
+                </p>
+            </div>
+            <div class="wz-flex-card-item">
+                <div href="" onclick="${assigned_function}" class="js-status ${btn_class}">${assigned_text}</div>
+            </div>
+        </li>
+    </script>
+
+    <script type="text/html" class="js-loadtemplate-assign">
+        <div class="dropdown">
+            <a href="#" role="button" ariaria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="assigned"></i><span class="status"></span><span class="caret"></span></a>
+        </div>
+        <div class="wz-search-popup">
+            <div class="js-assign-title wz-cursor-hand">
+                <span class="lg-assign-to">Assign to:</span><i class="icon-search"></i>
+            </div>
+            <div class="js-assign-search">
+                <input type="text" placeholder="Type and search..." /><i class="icon-cross wz-cursor-hand"></i>
+            </div>
+            <ul></ul>
+            <div class="js-unassign-footer wz-cursor-hand">
+                <span class="lg-unassign">Unassign</span><i class="icon-pe-arrow-right"></i>
+            </div>
+        </div>
+    </script>
+
+    <!-- Channel filter template-->
+    <script type="text/html" class="js-loadtemplate-channel">
+        <li role="presentation" data-option="channel" data-channel="${key}" class="js-tab-chats js-channel-list js-channel-offline">
+            <a href="#" data-option="channel" data-channel="${key}" class="js-chats-select"><span class="wz-font-s-sm wz-font-w-med"><i data-toggle="tooltip" title="${name}" data-placement="bottom" data-container="body" class="wz-sideleft-channel-icon icon-${type}"></i><span class="wz-channel-name">${name}</span></span><span class="badge wz-margin-r-5 js-chat-count-${key}">0</span></a>
+        </li>
+    </script>
+
+    <script type="text/html" class="js-loadtemplate-agent">
+        <li role="presentation" data-option="agent" data-agent="${key}" class="js-tab-chats js-agent-list js-agent-offline" style="position:relative">
+            <div class="icon-phone js-agent-phone hidden"></div>
+            <a href="#" data-option="agent" data-agent="${key}" class="js-chats-select"><span><i class="wz-agent-status"></i><i data-toggle="tooltip" title="${name}" data-placement="bottom" data-container="body" class="icon-${type}"></i><span class="wz-agent-name">${name}</span></span><span class="badge wz-margin-r-5 js-chat-count-${key}">0</span></a>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-message">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" data-agent="${agent}" class="list-group-item wz-flex-card js-chat-message ${dayClass}  ${deleted}">
+
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <div style="background-image: url(${author_picture})" class="wz-message-avatar js-picture-${author_key} ${avatar_img}"></div>
+                </a>
+                <div class="wz-message-avatar js-avatar-${author_key} ${avatar_div}">
+                    <p>${initials}</p>
+                </div><span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred group ${starred}"></span>
+            </div>
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank"><span class="wz-font-w-med wz-caption js-name-${author_key}">${author_name}</span></a>
+                <span class="wz-font-w-reg wz-caption wz-font-s-sm">
+                    <a href="${permalink}" target="_blank">
+                        ${date}
+                    </a>
+                    <span style="background-image:url(${readed_ico})" class="wz-checks ${readed}"></span>
+                    <a href="#" class="wz-margin-l-5 ${hidden} lg-reply" onclick="phoneInput.val('${key}'), txt.focus()">
+                        Reply
+                    </a>
+                    <a href="#" class="wz-margin-l-5 ${hidden}" onclick="firebaseService.likeMessage('${key}', this)">
+                        ${like}
+                    </a>
+                    <span style="background-image:url(/images/forward.png) ;width: 17px; height: 11px;background-repeat: no-repeat;" onclick="editToBot('${message}')" class="wz-checks wz-checks-1"></span>
+                    <span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred ${starred}"></span>
+
+                </span>
+                <pre class="js-chat-message-text">${message}
+      </pre>
+            </div>
+        </li>
+    </script>
+
+    <script type="text/html" class="js-loadtemplate-message-agent">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" data-agent="${agent}" class="list-group-item wz-flex-card js-chat-zami js-chat-message ${dayClass}  ${deleted}">
+            <div class="wz-flex-card-item">
+                <img src="${author_picture}" alt="" WIDTH="40" class="js-picture-${author_key}" />
+            </div>
+            <div class="wz-flex-card-item">
+                <div class="wz-message-text">
+                    <span class="wz-font-w-med wz-caption"><span class="wz-font-c-pink js-name-${author_key}">${author_name}</span></span>
+                    <span class="wz-font-w-reg wz-caption wz-font-s-sm">
+                        <a href="${permalink}" target="_blank">
+                            ${date}
+                        </a>
+                    </span>
+                    <span style="background-image:url(/images/forward.png) ;width: 17px; height: 11px;background-repeat: no-repeat;" onclick="editToBot('${message}')" class="wz-checks wz-checks-1"></span>
+                    <span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred ${starred}"></span>
+                    <div class="wz-container ${template}">
+                        <pre class="js-chat-message-text js-chat-zami-text wz-zami-note">${message}
+          </pre>
+                        <div class="wz-button-container"></div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </script>
+
+    <script type="text/html" class="js-loadtemplate-messageEmail">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" data-agent="${agent}" class="list-group-item wz-flex-card js-chat-message ${dayClass}">
+            <div class="wz-flex-card-item">
+                <div style="background-image: url(${author_picture})" class="wz-message-avatar js-picture-${author_key} ${avatar_img}"></div>
+                <div class="wz-message-avatar js-avatar-${author_key} ${avatar_div}">
+                    <p>${initials}</p>
+                </div><span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred group ${starred}"></span>
+            </div>
+            <div class="wz-flex-card-item">
+                <span class="wz-font-w-med wz-caption js-name-${author_key}">${author_name}</span><span class="wz-font-w-reg wz-caption wz-font-s-sm">${date}<span onclick="firebaseService.starMessage('${key}')" class="wz-starred ${starred}"></span><span style="background-image:url(${readed_ico})" class="wz-checks ${readed}"></span></span>
+                <pre class="js-chat-message-text js-chat-message-email">${message}
+        <!--                   //-->
+      </pre>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-messageImage">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" class="list-group-item wz-flex-card js-chat-message ${dayClass}  ${deleted}">
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <div style="background-image: url(${author_picture})" class="wz-message-avatar js-picture-${author_key} ${avatar_img}"></div>
+                </a>
+                <div class="wz-message-avatar js-avatar-${author_key} ${avatar_div}">
+                    <p>${initials}</p>
+                </div><span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred group ${starred}"></span>
+            </div>
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <span class="wz-font-w-med wz-caption js-name-${author_key}">${author_name}</span>
+                </a>
+                <span class="wz-font-w-reg wz-caption wz-font-s-sm">
+                    <a href="${permalink}" target="_blank">
+                        ${date}
+                    </a>
+                    <span style="background-image:url(${readed_ico})" class="wz-checks ${readed}"></span>
+                    <a href="#" class="wz-margin-l-5 ${hidden}" onclick="phoneInput.val('${key}'), txt.focus()">
+                        Reply
+                    </a>
+                    <a href="#" class="wz-margin-l-5 ${hidden}" onclick="firebaseService.likeMessage('${key}', this)">
+                        ${like}
+                    </a>
+                    <span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred ${starred}"></span>
+                </span>
+                <p>
+                    <img src="${url}" alt="" WIDTH="300" class="wz-chat-image js-chat-image" />
+                </p>
+                <p class="js-chat-message-text">${message}</p>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-messageMultipleImages">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" class="list-group-item wz-flex-card js-chat-message ${dayClass}  ${deleted}">
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <div style="background-image: url(${author_picture})" class="wz-message-avatar js-picture-${author_key} ${avatar_img}"></div>
+                </a>
+                <div class="wz-message-avatar js-avatar-${author_key} ${avatar_div}">
+                    <p>${initials}</p>
+                </div><span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred group ${starred}"></span>
+            </div>
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <span class="wz-font-w-med wz-caption js-name-${author_key}">${author_name}</span>
+                </a>
+                <span class="wz-font-w-reg wz-caption wz-font-s-sm">
+                    <a href="${permalink}" target="_blank">
+                        ${date}
+                    </a>
+                    <span style="background-image:url(${readed_ico})" class="wz-checks ${readed}"></span>
+                    <a href="#" class="wz-margin-l-5 ${hidden} lg-reply" onclick="phoneInput.val('${key}'), txt.focus()">
+                        Reply
+                    </a>
+                    <a href="#" class="wz-margin-l-5 ${hidden}" onclick="firebaseService.likeMessage('${key}', this)">
+                        ${like}
+                    </a>
+                    <span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred ${starred}"></span>
+                </span>
+                <p>
+                    {%each(i,url) urls %}
+                    <img src="${url}" alt="" WIDTH="300" class="wz-chat-image js-chat-image" />
+                    <div>${titles[i]}</div>
+                    {%/each%}
+
+
+                </p>
+                <p class="js-chat-message-text">${message}</p>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-messageFullImage">
+        <img src="${url}" alt="${message}" class="wz-chat-image js-chat-image" />
+    </script>
+    <script type="text/html" class="js-loadtemplate-messageAudio">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" class="list-group-item wz-flex-card js-chat-message ${dayClass}  ${deleted}">
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <div style="background-image: url(${author_picture})" class="wz-message-avatar js-picture-${author_key} ${avatar_img}"></div>
+                </a>
+                <div class="wz-message-avatar js-avatar-${author_key} ${avatar_div}">
+                    <p>${initials}</p>
+                </div><span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred group ${starred}"></span>
+            </div>
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <span class="wz-font-w-med wz-caption js-name-${author_key}">${author_name}</span>
+                </a>
+                <span class="wz-font-w-reg wz-caption wz-font-s-sm">
+                    <a href="${permalink}" target="_blank" onclick="if(event.preventDefault) event.preventDefault(); else event.returnValue = false;">
+                        ${date}
+                    </a>
+                    <span style="background-image:url(${readed_ico})" class="wz-checks ${readed}"></span>
+                    <a href="#" class="wz-margin-l-5 ${hidden}" onclick="phoneInput.val('${key}'), txt.focus()">
+                        Reply
+                    </a>
+                    <a href="#" class="wz-margin-l-5 ${hidden}" onclick="firebaseService.likeMessage('${key}', this)">
+                        ${like}
+                    </a>
+                    <span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred ${starred}"></span>
+                </span>
+                <p class="js-chat-message-text">
+
+                    <i class="material-icons" style="font-size: 26px;">${hotline_icon_status}</i>
+
+                    <audio style="width:89%;" src="${url}" controls="controls" class="wz-audioplayer ${hotline_status}"></audio>
+                    <i>${message}</i>
+                </p>
+
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-messageVideo">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" class="list-group-item wz-flex-card js-chat-message ${dayClass}  ${deleted}">
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <div style="background-image: url(${author_picture})" class="wz-message-avatar js-picture-${author_key} ${avatar_img}"></div>
+                </a>
+                <div class="wz-message-avatar js-avatar-${author_key} ${avatar_div}">
+                    <p>${initials}</p>
+                </div><span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred group ${starred}"></span>
+            </div>
+            <div class="wz-flex-card-item">
+                <a href="${author_url}" target="_blank">
+                    <span class="wz-font-w-med wz-caption js-name-${author_key}">${author_name}</span>
+                </a>
+                <span class="wz-font-w-reg wz-caption wz-font-s-sm">
+                    <a href="${permalink}" target="_blank" onclick="if(event.preventDefault) event.preventDefault(); else event.returnValue = false;">
+                        ${date}
+                    </a>
+                    <span style="background-image:url(${readed_ico})" class="wz-checks ${readed}"></span>
+                    <a href="#" class="wz-margin-l-5 ${hidden}" onclick="phoneInput.val('${key}'), txt.focus()">
+                        Reply
+                    </a>
+                    <a href="#" class="wz-margin-l-5 ${hidden}" onclick="firebaseService.likeMessage('${key}', this)">
+                        ${like}
+                    </a>
+                    <span onclick="firebaseService.starMessage('${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="wz-starred ${starred}"></span>
+                </span>
+                <p class="js-chat-message-text">
+                    <video src="${url}" controls="controls" class="js-chat-video wz-videoplayer"></video>
+                </p>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-messageFile">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" class="list-group-item wz-flex-card js-chat-message ${dayClass}">
+            <div class="wz-flex-card-item">
+                <div style="background-image: url(${author_picture})" class="wz-message-avatar js-picture-${author_key} ${avatar_img}"></div>
+                <div class="wz-message-avatar js-avatar-${author_key} ${avatar_div}">
+                    <p>${initials}</p>
+                </div><span onclick="firebaseService.starMessage('${key}')" class="wz-starred group ${starred}"></span>
+            </div>
+            <div class="wz-flex-card-item">
+                <span class="wz-font-w-med wz-caption js-name-${author_key}">${author_name}</span><span class="wz-font-w-reg wz-caption wz-font-s-sm">${date}<span style="background-image:url(${readed_ico})" class="wz-checks ${readed}"></span><span onclick="firebaseService.starMessage('${key}')" class="wz-starred ${starred}"></span></span>
+                <p class="js-chat-message-text">
+                    <a href="${url}" download="download" class="wz-file"><i class="icon-paper-clip"></i><span class="wz-filename">${file_name}</span><span class="wz-bites">${size}</span><i class="icon-download"></i></a>
+                </p>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-note">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" data-agent="${agent}" class="list-group-item wz-flex-card js-chat-zami js-chat-message ${dayClass}">
+            <div class="wz-flex-card-item">
+                <div style="background-image: url(${author_picture})" class="wz-message-avatar js-picture-${author_key}"></div>
+            </div>
+            <div class="wz-flex-card-item">
+                <span class="wz-message-text">
+                    <span class="wz-font-w-med wz-caption js-name-${author_key}"><span class="lg-private-note">Private note by</span><span class="wz-font-c-pink"> ${author_name}</span></span><span class="wz-font-w-reg wz-caption wz-font-s-sm">${date}</span>
+                    <div>
+                        <pre class="js-chat-message-text js-chat-zami-text wz-zami-note"> ${message}
+          </pre>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-messageZami">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" data-agent="${agent}" class="list-group-item wz-flex-card js-chat-zami js-chat-message ${dayClass}">
+            <div class="wz-flex-card-item">
+                <img src="${author_picture}" alt="" WIDTH="40" class="js-picture-${author_key}" />
+            </div>
+            <div class="wz-flex-card-item">
+                <div class="wz-message-text">
+                    <span class="wz-font-w-med wz-caption"><span class="wz-font-c-pink">ZamiBot</span></span><span class="wz-font-w-reg wz-caption wz-font-s-sm">${date}</span>
+                    <div class="wz-container ${template}"></div>
+                </div>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-messageZami-viewTicket">
+        <pre class="js-chat-message-text js-chat-zami-text wz-zami-note lg-ticket-opened">A ticket has been opened for this conversation.
+  </pre>
+        <div class="wz-button-container">
+            <a href="#" onclick="cloud.getTicketProfile(${data});viewProfileTicket(${data});" class="btn btn-pink btn-warning lg-view-ticket">View ticket</a>
+        </div>
+    </script>
+    <script type="text/html" class="js-messageZami-openTicket">
+        <pre class="js-chat-message-text js-chat-zami-text wz-zami-note lg-what-want-do">What do you want to do?
+  </pre>
+        <div class="wz-button-container">
+            <a href="#" onclick="cloud.setStatus(0, ${data}).done(firebaseService.deleteOptionMessages);" class="btn btn-pink btn-warning lg-reopen-last-ticket">Reopen last ticket</a><a href="#" onclick="cloud.createAutoTicket().done(firebase.deleteOptionMessages);" class="btn btn-pink btn-warning lg-create-ticket">Create new ticket</a><a href="#" onclick="firebase.deleteOptionMessages();" class="btn btn-pink btn-warning lg-nothing">Nothing</a>
+        </div>
+    </script>
+    <script type="text/html" class="js-loadtemplate-dialog">
+        <li data-key="${key}" data-day="${day}" data-timestamp="${timestamp}" data-author="${author_id}" data-agent="${agent}" class="list-group-item wz-flex-card js-chat-zami js-chat-message ${dayClass}">
+            <div class="wz-flex-card-item">
+                <img src="${author_picture}" alt="" WIDTH="40" class="js-picture-${author_key}" />
+            </div>
+            <div class="wz-flex-card-item">
+                <div class="wz-message-text">
+                    <span class="wz-font-w-med wz-caption"><span class="wz-font-c-pink">${author_name}</span></span><span class="wz-font-w-reg wz-caption wz-font-s-sm">${date}</span>
+                    <div class="wz-container ${template}">
+                        <pre class="js-chat-message-text js-chat-zami-text wz-zami-note">${title}
+          </pre>
+                        <div class="wz-button-container"></div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-notification">
+        <li>
+            <a href="#">
+                <p class="wz-notification-date wz-font-s-sm">
+                    <i class="icon-clock"></i>${date}
+                </p>
+                <p class="wz-notification-author">
+                    <i class="icon-tag"></i>${tag}
+                </p>
+                <p class="wz-notification-title wz-font-w-med wz-font-s-sm wz-font-u-uppercase wz-margin-0">
+                    <i class="icon-paper"></i>${message}
+                </p>
+            </a>
+        </li>
+    </script>
+    <script type="text/html" class="js-loadtemplate-disconnection">
+        <div class="alert alert-warning fade in">
+            <a href="#" data-dismiss="alert" aria-label="close" title="Close" class="close">×</a><strong class="lg-connection-active">Your connection is not active.</strong><span class="lg-trying-reconnect">Trying to reconnect with Hibaza...</span>
+        </div>
+    </script>
+    <script type="text/html" class="js-loadtemplate-ghost">
+        <li class="list-group-item wz-flex-card js-chat-message js-chat-ghost">
+            <div class="wz-flex-card-item">
+                <div style="background-image: url(${avatar})" class="wz-message-avatar"></div>
+            </div>
+            <div class="wz-flex-card-item">
+                <span class="wz-font-w-med">${name}</span><span class="wz-font-w-reg wz-font-s-sm">${date}</span><span style="background-image:url(/images/gray-check.png)" class="wz-checks wz-checks-1"></span>
+                <p class="js-chat-message-text">
+                    ${message}
+                </p>
+                <div class="js-chat-ghost-action">
+                    <i class="icon-zami-07"></i><span class="lg-message-not-sent">Message not sent, would you like to </span><a href="#" class="js-resend-message lg-resend">resend</a> or  <a href="#" class="js-remove-message lg-remove">remove</a>?
+                </div>
+            </div>
+        </li>
+    </script>
+
+    <script type="text/html" class="js-loadtemplate-trash">
+        <div class="dropdown wz-trash pull-right">
+            <span onclick="confirmMsgDel(this, '${key}')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" class="wz-trash-btn wz-font-s-sm wz-font-c-dark"><i data-toggle="tooltip" title="Delete this message" data-placement="top" data-container="body" class="icon-trash"></i></span>
+        </div>
+    </script>
+    <script type="text/html" class="js-loadtemplate-delconfirm">
+        <ul class="js-delconfirm dropdown-menu dropdown-menu-right">
+            <li class="dropdown-header">
+                <h6 class="lg-are-you-sure">
+                    Are you sure?
+                </h6>
+                <p class="wz-font-u-uppercase wz-font-s-xs lg-cannot-recovered">
+                    The message cannot be recovered
+                </p>
+            </li>
+            <li class="text-center">
+                <div class="btn-group">
+                    <a href="#" data-toggle="dropdown" role="button" class="js-cancel btn btn-default btn-xs"><span class="wz-font-s-xs wz-font-w-med wz-font-u-uppercase wz-font-c-dark lg-cancel">Cancel</span></a><a onclick="cloud.deleteMessage($(this),'${key}')" data-toggle="tooltip" title="Star this message" data-placement="top" data-container="body" class="js-delete btn btn-pink btn-xs"><span class="wz-font-s-xs wz-font-w-med wz-font-u-uppercase wz-font-c-white lg-delete">Delete</span></a>
+                </div>
+            </li>
+        </ul>
+    </script>
+</div>
+<script>
+    readFileLang(localStorage.getItem("lang"), "partial_templates");
+
+</script>

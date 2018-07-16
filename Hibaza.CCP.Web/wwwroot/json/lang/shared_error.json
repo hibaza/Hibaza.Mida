@@ -1,0 +1,47 @@
+﻿{
+  "en": {
+    "error": {
+      "text": "Error.",
+      "type": "text"
+    },
+    "error-processing": {
+      "text": "An error occurred while processing your request.",
+      "type": "text"
+    },
+    "development-mode": {
+      "text": "Development Mode",
+      "type": "text"
+    },
+    "development-environment": {
+      "text": "Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.",
+      "type": "text"
+    },
+    "environment-not-enabled": {
+      "text": "<strong>Development environment should not be enabled in deployed applications</strong>, as it can result in sensitive information from exceptions being displayed to end users. For local debugging, development environment can be enabled by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>, and restarting the application.",
+      "type": "text"
+    }
+  },
+  "vi": {
+   "error": {
+      "text": "Lỗi.",
+      "type": "text"
+    },
+    "error-processing": {
+      "text": "Đã xảy ra lỗi trong khi xử lý yêu cầu của bạn.",
+      "type": "text"
+    },
+    "development-mode": {
+      "text": "Chế độ phát triển",
+      "type": "text"
+    },
+    "development-environment": {
+      "text": "Đổi sang môi trường <strong> Phát triển </strong> sẽ hiển thị thông tin chi tiết hơn về lỗi xảy ra.",
+      "type": "text"
+    },
+    "environment-not-enabled": {
+      "text": "<strong> Không nên bật môi trường phát triển trong các ứng dụng được triển khai </strong> vì có thể dẫn đến thông tin nhạy cảm từ các ngoại lệ được hiển thị cho người dùng cuối. Để gỡ lỗi cục bộ, bạn có thể bật môi trường phát triển bằng cách đặt biến môi trường <strong> ASPNETCORE_ENVIRONMENT </strong> thành <strong> Phát triển </strong> và khởi động lại ứng dụng.",
+      "type": "text"
+    }
+
+  }
+}

@@ -1,0 +1,56 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\ServiceChatHibaza - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\testservicess - Web Deploy.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire.Mongo" Version="0.5.9" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.3.0-beta1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
+    <PackageReference Include="WinInsider.System.Net.Http.Formatting" Version="1.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hibaza.CCP.Core\Hibaza.CCP.Core.csproj" />
+    <ProjectReference Include="..\Hibaza.CCP.Data\Hibaza.CCP.Data.csproj" />
+    <ProjectReference Include="..\Hibaza.CCP.Domain\Hibaza.CCP.Domain.csproj" />
+    <ProjectReference Include="..\Hibaza.CCP.FirebaseStorage\Hibaza.CCP.FirebaseStorage.csproj" />
+    <ProjectReference Include="..\Hibaza.CCP.Firebase\Hibaza.CCP.Firebase.csproj" />
+    <ProjectReference Include="..\Hibaza.CCP.Service\Hibaza.CCP.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="log\" />
+  </ItemGroup>
+
+</Project>

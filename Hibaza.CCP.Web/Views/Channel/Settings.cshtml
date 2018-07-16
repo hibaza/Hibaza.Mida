@@ -1,0 +1,202 @@
+﻿@model Hibaza.CCP.Web.Models.ChannelSettings
+@{
+    ViewBag.Title = "Channel settings";
+    Layout = null;
+}
+<div id="channels-main" class="col-xs-12 lg-channel_settings">
+    @*<button onclick="tests()">aaa</button>*@
+    <form class="form-horizontal form-white-bg">
+        <div class="form-group-title">
+            <h3 class="lg-add-channel">Add a channel</h3>
+
+        </div>
+        <div id="channels-addgroup" role="group" aria-label="..." class="btn-group wz-icon-buttons">
+            <div data-channeltype="facebook" class="btn btn-pink facebook">
+                <div class="btn-head">
+                    <i class="icon-facebook"></i>
+                </div>
+                <div class="btn-foot">
+                    <span class="lg-add-messenger">Add Messenger</span><span class="added"><span class="lg-messenger">Messenger</span><i class="icon-circle-check"></i></span>
+                </div>
+            </div>
+            <div data-channeltype="webchat" class="btn btn-pink webchat hidden">
+                <div class="btn-head">
+                    <i class="icon-webchat"></i>
+                </div>
+                <div class="btn-foot">
+                    <span>Add Webchat</span><span class="added"><span>Webchat</span><i class="icon-circle-check"></i></span>
+                </div>
+            </div>
+
+            <div data-channeltype="zalo_page" class="btn btn-pink zalo_page" style="margin: 0 10px 0 10px !important">
+
+                <div class="btn-head">
+                    <i class="icon_zalo_page"></i>
+                </div>
+                <div class="btn-foot">
+                    <span class="lg-add-zalo-page">Add Zalo Page</span><span class="added"><span class="lg-zalo-page">Zalo Page</span><i class="icon-circle-check"></i></span>
+                </div>
+            </div>
+
+            <div data-channeltype="zalo_personal" class="btn btn-pink zalo_personal" style="margin: 0 10px 0 10px !important">
+                <div class="btn-head">
+                    <i class="icon_zalo_personal"></i>
+                </div>
+                <div class="btn-foot">
+                    <span class="lg-add-zalo-personal">Add Zalo Personal</span><span class="added"><span class="lg-zalo-personal">Zalo Personal</span><i class="icon-circle-check"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group-title">
+            <h6>
+                <span class="lg-interested-in"> Interested in </span><a href="#" data-toggle="tooltip" title="" data-placement="bottom" data-container="body" class="js-sms-email lg-sms-or-email" data-original-title="Smooch is a third party API to let you integrate EMAIL or SMS in Hibaza. Go to smooch.io, create an account and integrate here with your credentials!">SMS or EMAIL</a> ?
+            </h6>
+        </div>
+
+        <div class="form-group-title">
+            <h3 class="lg-your-channels">Your channels</h3>
+        </div>
+        <div id="channels-group" role="group" aria-label="..." class="wz-icon-buttons">
+            @if (Model.Channels != null)
+            {
+                foreach (var item in Model.Channels)
+                {
+                    <div id="settings-channel-@(item.id)" class="dropdown">
+                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div data-channeltype="@(item.type)" data-channel="@(item.id)" class="btn btn-pink actived @(item.type)">
+                                <div class="btn-head">
+                                    <div class="btn-subhead">
+                                        <div href="#" data-toggle="tooltip" title="" data-placement="top" data-container="body" class="icon-ball" data-original-title="Active"></div>
+                                        <div class="icon-cog"></div>
+                                    </div><i class="icon-@(item.type)"></i>
+                                </div>
+                                <div class="btn-foot">
+                                    <span>@(item.name)</span><span class="added"><span>@(item.name)</span><i class="icon-circle-check"></i></span>
+                                </div>
+                            </div>
+                        </a>
+                        <ul aria-labelledby="dLabel" class="dropdown-menu">
+                            <li>
+                                <a href="#" onclick="editChannel('@(item.id)','@(item.type)')" class="js-edit-channel"><span class="wz-font-s-md wz-font-w-med lg-edit">Edit<i class="pull-right icon-pencil"></i></span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="js-delete"><span class="wz-font-s-md wz-font-w-med lg-delete">Delete<i class="pull-right icon-trash"></i></span><span class="wz-font-s-md wz-font-w-med hide lg-are-you-sure">Are you sure?<i class="pull-right icon-trash"></i></span></a>
+                                <div class="wz-sub-dropdown">
+                                    <a href="#" onclick="deleteChannel('@(item.id)');" class="btn-white-pink"><span class="wz-font-s-md wz-font-w-med lg-yes">Yes<i class="pull-right icon-check"></i></span></a><a href="#" class="js-delete-cancel btn-default"><span class="wz-font-s-md wz-font-w-med lg-no">No<i class="pull-right icon-cross"></i></span></a>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#" data-share-value="https://m.me/@(item.ext_id)" data-value-type="Facebook URL" class="js-share-channel"><span class="wz-font-s-md wz-font-w-med lg-share">Share<i class="pull-right icon-share"></i></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            }
+        </div>
+    </form>
+</div>
+<div id="channels-edit" class="col-xs-12 channels-edit">
+</div>
+<script>
+    readFileLang(localStorage.getItem("lang"), "channel_settings");
+    function editChannel(id, type) {
+  if(typeof id != "undefined" && type=="facebook"){
+      $.get(cloud.getURLs().channels.edit + businessID + '/' + id, function (o) {
+        if (o.data) {
+
+        $('#channels-main').addClass('hide');
+        $('#channels-edit').removeClass('hide');
+          $('#channels-edit').html(o.data);
+          //AppId = _appSettings.ClientId, BusinessId = business_id, Channels = rs.Data, ChannelId = id, PageId = data.ext_id, PageName = data.name ,Secret = data.secret
+
+
+      }
+    });
+    }
+    if (typeof id != "undefined" && type == "zalo_page") {
+        $.get(cloud.getURLs().channels.edit_page_zalo + businessID + '/' +id, function(o){
+      if(o.data){
+        $('#channels-main').addClass('hide');
+        $('#channels-edit').removeClass('hide');
+        $('#channels-edit').html(o.data);
+      }
+        });
+        }
+
+        if (typeof id != "undefined" && type == "zalo_personal") {
+            $.get(cloud.getURLs().channels.edit_personal_zalo + businessID + '/' + id, function (o) {
+                if (o.data) {
+                    $('#channels-main').addClass('hide');
+                    $('#channels-edit').removeClass('hide');
+                    $('#channels-edit').html(o.data);
+                }
+            });
+        }
+}
+
+/**
+ * Adds a channel
+ */
+    function addChannel() {
+        var channel_type = $(this).data('channeltype');
+
+        if (typeof channel_type != "undefined") {
+            $.post(cloud.getURLs().channels.new + channel_type + '/' + '@(Model.business_id)', function (o) {
+                if (o.ok) {
+                    $('#channels-main').addClass('hide');
+                    $('#channels-edit').removeClass('hide');
+                    $('.channels-edit').html(o.data);
+                }
+            });
+        }
+
+    }
+
+
+function deleteChannel(id) {
+  if(typeof id != "undefined"){
+    var $channel = $('#settings-channel-' + id);
+    $channel.addClass('loading');
+      $.post(cloud.getURLs().channels.data.delete + '@(Model.business_id)' + '/' + id)
+      .fail(showDefaultErrorNotification)
+      .done(function(){
+        $channel.fadeOut(500, function(){ $(this).remove()});
+        refreshChannels();
+      });
+  }
+}
+
+function reloadChannel(id) {
+  if(typeof id != "undefined"){
+    $.post(cloud.getURLs().channels.reload + businessID + '/' + id, function(data){
+      if(data.okd && data.view){
+        $('#channels-main').addClass('hide');
+        $('#channels-edit').removeClass('hide');
+        $('#channels-edit').html(data.view);
+      }
+    });
+  }
+}
+
+/**
+* Document onload
+*/
+$(function() {
+  settingsUI('#channels-main');
+  tooltips('#channels-main');
+
+  $('#channels-addgroup .btn').on('click', addChannel);
+
+  $('#channels-main .js-share-channel').bind('click', {}, copyToClipboard);
+
+    });
+
+
+    function tests() {
+        setCookie("id_zalo_name", "Đinh quốc cường", 1000);
+        try {
+            $.get("/zalos/test", function (o) { });
+        }   catch (e) { console.log(e);}
+    }
+
+</script>

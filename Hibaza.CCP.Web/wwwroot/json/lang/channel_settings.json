@@ -1,0 +1,134 @@
+﻿{
+  "en": {
+    "add-channel": {
+      "text": "Add a channel",
+      "type": "text"
+    },
+    "add-messenger": {
+      "text": "Add Messenger",
+      "type": "text"
+    },
+    "messenger": {
+      "text": "Messenger",
+      "type": "text"
+    },
+    "add-zalo-page": {
+      "text": "Add Zalo Page",
+      "type": "text"
+    },
+    "zalo-page": {
+      "text": "Zalo Page",
+      "type": "text"
+    },
+    "add-zalo-personal": {
+      "text": "Add Zalo Personal",
+      "type": "text"
+    },
+    "zalo-personal": {
+      "text": "Zalo Personal",
+      "type": "text"
+    },
+    "interested-in": {
+      "text": "Interested in",
+      "type": "text"
+    },
+    "sms-or-email": {
+      "text": "SMS or EMAIL",
+      "type": "text"
+    },
+    "your-channels": {
+      "text": "Your channels",
+      "type": "text"
+    },
+    "edit": {
+      "text": "Edit",
+      "type": "text"
+    },
+    "delete": {
+      "text": "Delete",
+      "type": "text"
+    },
+    "are-you-sure": {
+      "text": "Are you sure?",
+      "type": "text"
+    },
+    "yes": {
+      "text": "Yes",
+      "type": "text"
+    },
+    "no": {
+      "text": "No",
+      "type": "text"
+    },
+    "share": {
+      "text": "Share",
+      "type": "text"
+    }
+  },
+  "vi":{
+    "add-channel": {
+      "text": "Add a channel",
+      "type": "text"
+    },
+    "add-messenger": {
+      "text": "Thêm Messenger",
+      "type": "text"
+    },
+    "messenger": {
+      "text": "Messenger",
+      "type": "text"
+    },
+    "add-zalo-page": {
+      "text": "Thêm kênh Zalo",
+      "type": "text"
+    },
+    "zalo-page": {
+      "text": "Trang Zalo",
+      "type": "text"
+    },
+    "add-zalo-personal": {
+      "text": "Thêm Zalo cá nhân",
+      "type": "text"
+    },
+    "zalo-personal": {
+      "text": "Zalo cá nhân",
+      "type": "text"
+    },
+    "interested-in": {
+      "text": "Quan tâm",
+      "type": "text"
+    },
+    "sms-or-email": {
+      "text": "SMS hay EMAIL",
+      "type": "text"
+    },
+    "your-channels": {
+      "text": "Các kênh của bạn",
+      "type": "text"
+    },
+    "edit": {
+      "text": "Sửa",
+      "type": "text"
+    },
+    "delete": {
+      "text": "Xóa",
+      "type": "text"
+    },
+    "are-you-sure": {
+      "text": "Chắc chắn muốn sửa?",
+      "type": "text"
+    },
+    "yes": {
+      "text": "Đồng ý",
+      "type": "text"
+    },
+    "no": {
+      "text": "Không",
+      "type": "text"
+    },
+    "share": {
+      "text": "Chia sẻ",
+      "type": "text"
+    }
+  }
+}

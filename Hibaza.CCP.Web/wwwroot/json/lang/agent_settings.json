@@ -1,0 +1,68 @@
+﻿{
+  "en": {
+    "agents": {
+      "text": "Agents",
+      "type": "text"
+    },
+    "make-admin": {
+      "text": "Make admin",
+      "type": "text"
+    },
+    "revoke-admin": {
+      "text": "Revoke admin",
+      "type": "text"
+    },
+    "edit-info": {
+      "text": "Edit info",
+      "type": "text"
+    },
+    "delete": {
+      "text": "Delete",
+      "type": "text"
+    },
+    "are-you-sure": {
+      "text": "Are you sure?",
+      "type": "text"
+    },
+    "yes": {
+      "text": "Yes",
+      "type": "text"
+    },
+    "no": {
+      "text": "No",
+      "type": "text"
+    }
+  },
+  "vi": {
+    "text": "Tài khoản ủy quyền",
+    "type": "text"
+  },
+  "make-admin": {
+    "text": "Đặt làm quản trị",
+    "type": "text"
+  },
+  "revoke-admin": {
+    "text": "Bỏ quản trị",
+    "type": "text"
+  },
+  "edit-info": {
+    "text": "Thông tin chỉnh sửa",
+    "type": "text"
+  },
+  "delete": {
+    "text": "Xóa",
+    "type": "text"
+  },
+  "are-you-sure": {
+    "text": "Chắc chắn muốn thực hiện?",
+    "type": "text"
+  },
+  "yes": {
+    "text": "Đồng ý",
+    "type": "text"
+  },
+  "no": {
+    "text": "Thôi",
+    "type": "text"
+  }
+}

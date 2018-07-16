@@ -1,0 +1,8 @@
+﻿GET /messages/autoupdatecusomterid
+GET /customers/autoassign limit 5
+GET /customers/autoupdateunreadcustomercounters
+GET /notes/autoupdatecusomterid
+GET /referrals/autoupdatecusomterid
+GET /tickets/autoupdatecusomterid
+GET /brands/agents/autobusy minutes 3
+GET /brands/agents/autologout minutes 30
